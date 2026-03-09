@@ -1,72 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Contact | Portfolio</title>
+    <meta name="description" content="Contactez-moi pour échanger sur DAFA ou vos projets UI/UX.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="index.html">Acceuil</a></li>
-            <li><a href="about.html">A propos</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            
-        </ul>
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">DESIGNER.PRO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">CV & Parcours</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
     </nav>
-    <header>
-        <h1>Vous pouvez me retrouver ici</h1>
-            <main>
-                <section>
-                    <h2>Contact</h2>
-                    <p><a href="mailto:libertessam1999@outlook.com">Email</a></p>
-                    <p><a href="http://www.linkedin.com/in/essam-libert-b0673a38b">Linkedin</a></p>
-                </section>
-                <section>
-                    <h2>Mes projets</h2>
-                        <article>
-                            <h3>Projet DAFA</h3>
-                                <h4>Je vous Présente DAFA : Diagnostique automatique de Flux Audio/Vidéo</h4>
-                                <p>Ce projet vise à automatiser l'analyse des flux audio et vidéo pour en faciliter le diagnostic.</p>
-                                    <section>
-                                        <h5>🚨 AVERTISSEMENT : Propriété Intellectuelle Conceptuelle
+</header>
 
-Ce concept (DAFA) est une Propriété Intellectuelle Conceptuelle du designer. L'analyse technique, l'algorithme de compatibilité (ROUGE/BLEU) et la boucle d'apprentissage automatique constituent un actif à haute valeur. La reproduction ou l'utilisation sans accord écrit de l'auteur est strictement interdite.</h5>
-                                        <p>I. La Problématique : Un Problème à Plusieurs Millions
-Le marché du Home Cinéma est freiné par un taux de retour élevé et une frustration client massive. La cause principale ? L'incompatibilité protocolaire entre les appareils (EDID, HDCP, normes HDMI). Les clients achètent un produit 4K/Atmos qui finit par ne pas fonctionner avec leur système existant, ce qui coûte des millions aux détaillants et aux fabricants.
+<main class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <h1 class="text-center mb-4">Travaillons ensemble</h1>
+            <p class="text-center text-muted mb-5">Intéressé par le projet DAFA ou besoin d'un designer ? Laissez-moi un message.</p>
+            
+            <form action="#" method="POST" class="shadow-sm p-4 bg-white rounded border">
+                <div class="mb-3">
+                    <label for="nom" class="form-label fw-bold">Votre Nom</label>
+                    <input type="text" class="form-control" id="nom" name="nom" placeholder="John Doe" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label fw-bold">Votre Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="john@exemple.com" required>
+                </div>
+                <div class="mb-4">
+                    <label for="message" class="form-label fw-bold">Votre Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="5" placeholder="Bonjour, je vous contacte pour..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 py-2">Envoyer le message</button>
+            </form>
+        </div>
+    </div>
+</main>
 
-Mon Objectif : Éliminer la frustration et garantir la décision d'achat.</p>
-                                        <p>II. La Solution UX : Un Algorithme Auto-Apprenant
-DAFA n'est pas une simple checklist, c'est une plateforme d'intelligence artificielle qui s'intègre dans le parcours d'achat de l'utilisateur :
-
-1. Scanner le Produit en Magasin (Le Moment Wouah)
-
-L'utilisateur enregistre son équipement domestique (Inventaire). En magasin, il scanne le code-barres d'une nouvelle TV ou Barre de Son. L'application croise instantanément les spécifications du nouvel appareil avec l'Inventaire de l'utilisateur pour générer un Rapport de Compatibilité Personnalisé.
-
-2. La Traduction Visuelle : Le Guide ROUGE/BLEU
-
-J'ai transformé les problèmes complexes de flux de données en un guide visuel simple :
-
-Flux ROUGE : Assure la sécurité du flux Audio (Atmos/7.1).
-Flux BLEU : Assure la sécurité du flux Vidéo (4K/60Hz).
-(Voir le schéma FigJam ci-dessous qui illustre la séparation des flux et la recommandation d'extracteur.)</p>
-                                        <P>3. L'Avantage Concurrentiel : La Boucle d'Apprentissage
-
-L'application intègre une Frame de Consentement (F6). En donnant leur accord anonyme, les utilisateurs permettent à DAFA de collecter les données de succès ou d'échecs de leur configuration finale. Cette base de données d'expériences réelles fait de DAFA la plateforme la plus fiable du marché, un actif non copiable pour la concurrence.
-
-III. Démonstration du Flux et Maquettes</P>
-                                    </section>
-                        </article>
-                        <article>
-                            <h3>Projet 2</h3>
-                                <p>Je vous présente ma nouvelle carte de visite</p>
-                        </article>
-                </section>
-            </main>            
-    </header>
-</body>
-<footer>
-    <p>&copy; 2024 Essam Libert. Tous droits réservés.</p>
-    <p>Email : libertessam1999@outlook.com</p>
+<footer class="bg-dark text-white text-center py-4 mt-auto">
+    <div class="container">
+        <p class="mb-0">&copy; 2026 - Portfolio Personnel.</p>
+    </div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

@@ -1,44 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>À propos | Portfolio</title>
+    <meta name="description" content="Mon parcours, mon CV et la genèse du projet d'optimisation DAFA.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="index.html">Acceuil</a></li>
-            <li><a href="about.html">A propos</a></li>
-            <li><a href="contact.html">Contact</a></li>            
-        </ul>
-    </nav>
-    <header>
-        <h1>Profil</h1>
-            <main>
-                <section>
-                    <h2>Biographie</h2>
-                        <p>Je suis Essam, UX/Product Designer. Ma mission : forger les clés qui déverrouillent le potentiel de vos produits. Expert en simplification de la complexité (IA & UX), je transforme les 'flux ROUGES' (coûts SAV, incompatibilités techniques) en 'flux BLEUS' (marge optimisée, expérience fluide). Prêt à révéler la valeur cachée.
 
-Mon projet DAFA est l'incarnation de cette approche : une clé pour des systèmes plus intelligents et des utilisateurs plus sereins</p>
-                    <img src="/images/CV_A4_UX_compressed.jpeg" alt="CV Essam Libert">
-                    <p>Présention du texte Notion ICI</p>
-                </section>
-                <section>
-                    <h2>Mes compétences</h2>
-                       <ul>
-                            <li>Photoshop</li>
-                            <li>Figma</li>
-                            <li>Adobe Illustartor</li>
-                            <li>Ux/Ui Design</li>
-                            <li>Prototypage & Wireframing</li>
-                            <li>Création graphique & animation</li>
-                            <li>Automatisation de processus (Google Forms + Autocrat)</li>
-                            <li>Intelligence artificielle (Stable Diffusion) / GTP / Prompt / Gemini</li>
-                       </ul>
-                </section>
-            </main>            
-    </header>
-    
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">DESIGNER.PRO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="about.html">CV & Parcours</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class="container py-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6 mb-4 mb-md-0">
+            <h1 class="display-5 fw-bold mb-3">Mon Parcours</h1>
+            <p class="lead">Passionné par les technologies et l'optimisation, j'ai développé mes compétences en UI/UX pour rendre l'information complexe accessible à tous.</p>
+            <p class="text-muted">C'est cette volonté d'aider les utilisateurs à tirer le meilleur de leur matériel (PS5, Smart TV OLED) qui a donné naissance au concept DAFA.</p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="images/profil-ou-dafa.jpg" alt="Aperçu des maquettes DAFA et de mon espace de travail" class="img-fluid rounded shadow">
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="mb-4 text-center">Compétences & Projet DAFA</h2>
+            <div class="accordion shadow-sm" id="accordionCV">
+                
+                <div class="accordion-item border-0 mb-2">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button bg-light fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                            UI/UX Design (Figma)
+                        </button>
+                    </h3>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionCV">
+                        <div class="accordion-body">
+                            Création de Design Systems complets, maquettage haute fidélité, et prototypage interactif. Expertise sur la gestion des composants et des auto-layouts.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 mb-2">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed bg-light fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                            Le Concept DAFA
+                        </button>
+                    </h3>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionCV">
+                        <div class="accordion-body">
+                            <strong>DAFA</strong> est un écosystème conçu pour analyser l'équipement des utilisateurs et proposer des optimisations via un système de "Grades" allant de D à S+. Le but : s'assurer qu'un câble HDMI ne bride pas une PS5 Pro.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed bg-light fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                            Développement Front-End
+                        </button>
+                    </h3>
+                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionCV">
+                        <div class="accordion-body">
+                            Intégration HTML5/CSS3 propre, sémantique et accessible. Maîtrise des frameworks CSS comme Bootstrap 5 pour des rendus responsives.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-dark text-white text-center py-4 mt-5">
+    <div class="container">
+        <p class="mb-0">&copy; 2026 - Portfolio Personnel.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
