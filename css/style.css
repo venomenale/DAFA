@@ -2,95 +2,104 @@
     --text-dark: #1d1d1f;
     --text-gray: #86868b;
     --bg-white: #ffffff;
-    --bg-light-gray: #f5f5f7;
+    --bg-light-apple: #f5f5f7;
     --accent: #0071e3;
 }
 
 body.apple-theme {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, sans-serif;
     color: var(--text-dark);
     background-color: var(--bg-white);
-    font-size: 16px; 
-}
-
-.text-primary { color: var(--accent) !important; }
-.bg-primary { background-color: var(--accent) !important; }
-
-.glass-nav {
-    background-color: rgba(29, 29, 31, 0.95) !important;
-}
-
-.hero-personal {
-    min-height: 70vh;
-    padding-top: 60px;
-}
-
-.btn-apple { transition: all 0.3s ease; }
-.btn-apple:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
-
-.apple-input {
-    background-color: var(--bg-light-gray);
-    border: 1px solid #e5e5ea;
-    border-radius: 8px;
-    transition: all 0.2s;
-}
-.apple-input:focus {
-    background-color: var(--bg-white);
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2) !important;
-}
-
-a:focus, button:focus, input:focus, textare:focus {
-    outline: 2px solid var(--accent) !important;
-    outline-offset: 2px;
-}
-
-.display-1, .display-2 { font-weight: 800; letter-spacing: -0.04em; }
-.display-4, .display-5, .display-6 { font-weight: 700; letter-spacing: -0.03em; }
-
-.bg-light-apple { background-color: #f5f5f7; }
-
-.profile-image-wrapper {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-}
-
-.bento-box {
-    border-radius: 24px;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-.bento-box:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
-}
-
-.premium-accordion .accordion-button { transition: all 0.3s ease; }
-.premium-accordion .accordion-button::after { filter: invert(1); }
-.premium-accordion .accordion-button:not(.collapsed) {
-    color: #fff !important; 
-    background-color: transparent !important;
-}
-.premium-accordion .accordion-button:not(.collapsed)::after {
-    filter: invert(0.5) sepia(1) saturate(5) hue-rotate(200deg); 
-}
-
-@keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(40px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-in {
-    opacity: 0; 
-    animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    -webkit-font-smoothing: antialiased;
 }
 
 .text-gradient {
-    background: linear-gradient(90deg, #0071e3 0%, #4facfe 100%);
+    background: linear-gradient(90deg, #1d1d1f 0%, #86868b 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
-.form-floating > .form-control.apple-input {
-    border-radius: 16px;
+.glass-nav {
+    background-color: rgba(29, 29, 31, 0.95) !important;
+    backdrop-filter: blur(20px);
+}
+
+.hero-section { min-height: 80vh; }
+
+/* Conteneur pour fixer le problème de la barre de scroll Figma */
+.phone-frame-container {
+    max-width: 400px;
+    background: #000;
+    border: 12px solid #111;
+    border-radius: 45px;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+}
+
+.phone-iframe {
+    width: 100%;
+    height: 700px;
+    border: none;
+    display: block;
+}
+
+.bento-box {
+    border-radius: 32px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-box:hover { transform: translateY(-8px); }
+
+.apple-input {
+    border: 1px solid #d2d2d7 !important;
+    background-color: #f5f5f7 !important;
+    border-radius: 16px !important;
+}
+
+.btn-apple { transition: all 0.3s ease; }
+.btn-apple:hover { transform: scale(1.02); }
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    opacity: 0;
+    animation: fadeInUp 1s forwards;
+}
+
+.shadow-2xl { box-shadow: 0 35px 70px rgba(0,0,0,0.2); }
+/* Style pour la photo de profil */
+.profile-image-wrapper {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #111;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Correction pour le cadre du téléphone */
+.phone-frame-container {
+    max-width: 420px;
+    background: #000;
+    border: 14px solid #1a1a1a;
+    border-radius: 55px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+}
+
+.phone-iframe {
+    width: 100%;
+    height: 800px;
+    border: none;
+    display: block;
 }
