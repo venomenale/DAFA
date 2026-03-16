@@ -3,28 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="DAFA : L'application nouvelle génération. Découvrez notre prototype UI/UX de 60 écrans.">
-    <meta property="og:title" content="DAFA App | Portfolio UX/UI">
-    <meta property="og:description" content="Présentation du prototype DAFA.">
-    <meta property="og:image" content="images/dafa-mockup.png">
-    <title>DAFA App | Accueil</title>
+    <meta name="description" content="Découvrez DAFA : L'application de gestion centralisée avec une interface utilisateur optimisée.">
+    <meta property="og:title" content="DAFA | L'application de gestion réinventée">
+    <meta property="og:description" content="Découvrez notre prototype de 20 écrans dédié à la productivité.">
+    <meta property="og:image" content="images/dafa-preview.jpg">
+    <title>DAFA | Accueil de l'application</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="bg-light">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
             <div class="container">
-                <a class="navbar-brand fw-bold" href="index.html">DAFA APP</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Menu">
+                <a class="navbar-brand fw-bold tracking-wide" href="index.html">
+                    <i class="bi bi-hexagon-fill text-primary me-2"></i>DAFA
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Menu principal">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Accueil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">Le Prototype</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">UX & Prototype</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                     </ul>
                 </div>
@@ -35,42 +38,48 @@
     <main>
         <section class="hero-section text-center d-flex align-items-center justify-content-center">
             <div class="container animate-fade-in">
-                <h1 class="display-3 fw-bold text-white">L'expérience DAFA</h1>
-                <p class="lead text-light">Un prototype d'interface de 60 écrans pensé pour l'utilisateur.</p>
-                <a href="#features" class="btn btn-primary btn-lg mt-3">Explorer les fonctionnalités</a>
-                
-                <button type="button" class="btn btn-outline-light btn-lg mt-3 ms-2" data-bs-toggle="modal" data-bs-target="#demoModal">
-                    Voir la Démo
+                <h1 class="display-3 fw-bold text-white mb-4">Centralisez votre flux de travail.</h1>
+                <p class="lead text-light mb-4 mx-auto" style="max-width: 700px;">
+                    DAFA est un prototype d'application (20 écrans) pensé pour éliminer la friction. De la visualisation de données à la gestion de tâches complexes, chaque interaction a été optimisée.
+                </p>
+                <button type="button" class="btn btn-primary btn-lg px-5 py-3 fw-bold" data-bs-toggle="modal" data-bs-target="#featuresModal">
+                    Voir la démo du prototype
                 </button>
             </div>
         </section>
 
-        <section id="features" class="py-5 bg-light">
-            <div class="container">
-                <h2 class="text-center mb-5">Fonctionnalités Clés</h2>
-                <div class="row g-4">
+        <section class="py-5 bg-white">
+            <div class="container my-5">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold display-6">Fonctionnalités Principales</h2>
+                    <p class="text-muted">L'architecture de l'application est divisée en 3 modules clés.</p>
+                </div>
+                
+                <div class="row g-4 justify-content-center">
                     <div class="col-12 col-md-6 col-lg-4">
-                        <article class="card h-100 border-0 shadow-sm badge-card">
-                            <div class="card-body text-center mt-3">
-                                <h3 class="h5 card-title">Navigation Fluide</h3>
-                                <p class="card-text text-muted">Une architecture d'information optimisée sur plus de 50 écrans pour éviter la surcharge cognitive.</p>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <article class="card h-100 border-0 shadow-sm badge-card">
-                            <img src="images/badge8.png" class="card-img-top p-5" alt="Aperçu du système de classement">
+                        <article class="card h-100 border-0 shadow-sm feature-card p-3">
                             <div class="card-body text-center">
-                                <h3 class="h5 card-title">Système de Rangs S+</h3>
-                                <p class="card-text text-muted">Un système de progression visuelle allant de l'acier au verre premium pour engager l'utilisateur.</p>
+                                <i class="bi bi-bar-chart-line display-4 text-primary mb-3 d-block"></i>
+                                <h3 class="h5 card-title fw-bold">Dashboard Analytique</h3>
+                                <p class="card-text text-muted">Une vue d'ensemble personnalisable permettant de suivre vos KPIs en temps réel. Les graphiques interactifs offrent un drill-down intuitif sur vos données.</p>
                             </div>
                         </article>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
-                        <article class="card h-100 border-0 shadow-sm badge-card">
-                            <div class="card-body text-center mt-3">
-                                <h3 class="h5 card-title">Design Minimaliste</h3>
-                                <p class="card-text text-muted">Interface épurée "Apple-like" basée sur des nuances de gris et un système de composants stricts.</p>
+                        <article class="card h-100 border-0 shadow-sm feature-card p-3">
+                            <div class="card-body text-center">
+                                <i class="bi bi-kanban display-4 text-primary mb-3 d-block"></i>
+                                <h3 class="h5 card-title fw-bold">Gestion de Projet Intégrée</h3>
+                                <p class="card-text text-muted">Organisez vos sprints avec notre vue Kanban fluide. Le drag-and-drop a été pensé pour réduire la charge cognitive lors de la réassignation des tâches.</p>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <article class="card h-100 border-0 shadow-sm feature-card p-3">
+                            <div class="card-body text-center">
+                                <i class="bi bi-bell display-4 text-primary mb-3 d-block"></i>
+                                <h3 class="h5 card-title fw-bold">Centre de Notifications Intelligent</h3>
+                                <p class="card-text text-muted">Ne soyez plus submergé. Notre algorithme trie les alertes par niveau de priorité pour garantir que l'information critique soit toujours visible.</p>
                             </div>
                         </article>
                     </div>
@@ -79,22 +88,22 @@
         </section>
     </main>
 
-    <div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="demoModalLabel">Prototype Figma</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+    <div class="modal fade" id="featuresModal" tabindex="-1" aria-labelledby="featuresModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-dark text-white border-0">
+                    <h5 class="modal-title fw-bold" id="featuresModalLabel">Lancement prochain</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
                 </div>
-                <div class="modal-body">
-                    Le prototype complet DAFA sera bientôt disponible en test interactif.
+                <div class="modal-body p-4 text-muted">
+                    <p>Le lien vers le prototype interactif Figma (20 écrans) sera bientôt disponible ici. Il vous permettra de naviguer dans l'application comme un véritable utilisateur.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <footer class="bg-dark text-white text-center py-4">
-        <p class="mb-0">&copy; 2026 DAFA App - UI/UX Portfolio.</p>
+        <p class="mb-0 small">&copy; 2026 DAFA App - Tous droits réservés.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

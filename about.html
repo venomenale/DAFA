@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Le processus de conception derrière l'application DAFA.">
-    <title>DAFA App | Le Projet UX/UI</title>
+    <meta name="description" content="L'étude UX/UI derrière le développement du prototype DAFA.">
+    <title>DAFA | UX & Prototype</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
             <div class="container">
-                <a class="navbar-brand fw-bold" href="index.html">DAFA APP</a>
+                <a class="navbar-brand fw-bold tracking-wide" href="index.html">
+                    <i class="bi bi-hexagon-fill text-primary me-2"></i>DAFA
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Menu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="about.html">Le Prototype</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="about.html">UX & Prototype</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                     </ul>
                 </div>
@@ -29,51 +32,66 @@
     </header>
 
     <main class="container py-5 flex-grow-1">
-        <div class="row mb-5 text-center">
-            <div class="col-12">
-                <h1 class="fw-bold">La conception de DAFA</h1>
-                <p class="lead mt-3">De l'idéation au prototype interactif de 60 écrans.</p>
+        <div class="row mb-5 text-center justify-content-center">
+            <div class="col-md-8 animate-fade-in">
+                <h1 class="fw-bold display-5">Les Coulisses du Prototype</h1>
+                <p class="lead mt-3 text-muted">Créer une application de 20 écrans exige une rigueur absolue en matière d'ergonomie et de Design System.</p>
             </div>
         </div>
 
-        <div class="row align-items-center g-5">
-            <div class="col-md-6">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6 order-2 order-lg-1">
                 <div class="accordion shadow-sm" id="uxAccordion">
                     <div class="accordion-item border-0">
                         <h2 class="accordion-header">
                             <button class="accordion-button bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                                Le Défi : 60 écrans cohérents
+                                <i class="bi bi-diagram-3 me-2 text-primary"></i> L'Architecture de l'Information
                             </button>
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#uxAccordion">
-                            <div class="accordion-body text-muted">
-                                Concevoir une application massive implique une rigueur absolue. J'ai mis en place un Design System strict pour garantir l'homogénéité visuelle sur l'ensemble des vues de l'application.
+                            <div class="accordion-body text-muted small">
+                                Sur un total de 20 écrans, la priorité était de ne jamais perdre l'utilisateur. En appliquant l'heuristique de <strong>"Cohérence et standards"</strong>, la barre de navigation latérale et les filtres de recherche restent toujours exactement au même endroit.
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item border-0 mt-2">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                                L'Intégration du système S+
+                                <i class="bi bi-palette me-2 text-primary"></i> Design Minimaliste et Esthétique
                             </button>
                         </h2>
                         <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#uxAccordion">
-                            <div class="accordion-body text-muted">
-                                Pour la gamification, j'ai designé des éléments 3D (badges de niveaux) qui s'intègrent parfaitement dans l'UI minimaliste globale, créant un effet "Premium" sans surcharger l'écran.
+                            <div class="accordion-body text-muted small">
+                                L'interface de DAFA est épurée. Les informations secondaires sont cachées derrière des tooltips ou des menus contextuels pour ne pas surcharger l'écran (Heuristique de <strong>Design esthétique et minimaliste</strong>), favorisant la concentration sur la tâche principale.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mt-2">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-white text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                <i class="bi bi-shield-check me-2 text-primary"></i> Prévention des erreurs
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#uxAccordion">
+                            <div class="accordion-body text-muted small">
+                                Les actions destructrices (comme la suppression d'un projet) nécessitent une confirmation explicite via une modale. De plus, les formulaires de l'application utilisent des messages d'aide en temps réel pour éviter les erreurs de saisie.
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 text-center animate-fade-in">
-                <img src="images/dafa-mockup.png" class="img-fluid rounded drop-shadow" alt="Aperçu des écrans du prototype DAFA sur Figma">
-                <p class="small text-muted mt-2">Aperçu de l'espace de travail</p>
+            
+            <div class="col-lg-6 order-1 order-lg-2 text-center animate-fade-in">
+                <div class="p-4 bg-white rounded shadow-sm border">
+                    <img src="images/app-screens.png" class="img-fluid rounded" alt="Aperçu des maquettes de l'application DAFA sur fond gris">
+                    <p class="small text-muted mt-3 fw-semibold mb-0">Aperçu du wireframing et de l'UI</p>
+                </div>
             </div>
         </div>
     </main>
 
-    <footer class="bg-dark text-white text-center py-4">
-        <p class="mb-0">&copy; 2026 DAFA App</p>
+    <footer class="bg-dark text-white text-center py-4 mt-auto">
+        <p class="mb-0 small">&copy; 2026 DAFA App - Tous droits réservés.</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
