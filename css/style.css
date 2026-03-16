@@ -1,85 +1,69 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ton Nom | Portfolio Digital</title>
-    <meta name="description" content="Développeur et concepteur UI/UX. Découvrez mes projets dont l'écosystème DAFA.">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+:root {
+    --primary-dark: #1a1a1a;
+    --accent-gold: #d4af37;
+    --accent-blue: #0047ab;
+    --text-main: #333333;
+    --bg-light: #f8f9fa;
+}
 
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">DESIGNER.PRO</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="index.html">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">CV & Parcours</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px; 
+    color: var(--text-main);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-<main>
-    <section class="hero text-center py-5 bg-light">
-        <div class="container">
-            <h1 class="display-4 fw-bold">Concepteur d'Expériences Digitales</h1>
-            <p class="lead text-muted">Spécialisé en UI/UX Design et développement Front-End.</p>
-            <a href="contact.html" class="btn btn-primary btn-lg px-4 gap-3">Me contacter</a>
-        </div>
-    </section>
+/* Hero Section */
+.hero-section {
+    background-color: var(--primary-dark);
+    height: 70vh;
+    border-bottom: 2px solid var(--accent-gold);
+}
 
-    <section class="container py-5">
-        <h2 class="text-center mb-5">Mes Créations</h2>
-        <div class="row g-4">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <img src="images/dafa-preview.jpg" class="card-img-top" alt="Aperçu du projet DAFA">
-                    <div class="card-body">
-                        <h3 class="h5 card-title">DAFA Ecosystem</h3>
-                        <p class="card-text text-muted">Système intelligent d'optimisation d'équipements tech et domotique.</p>
-                        <span class="badge bg-success">UI/UX Design</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <img src="images/project2.jpg" class="card-img-top" alt="Aperçu d'un autre projet">
-                    <div class="card-body">
-                        <h3 class="h5 card-title">Site Vitrine BTP</h3>
-                        <p class="card-text text-muted">Refonte visuelle complète pour une entreprise locale.</p>
-                        <span class="badge bg-primary">Développement</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <img src="images/project3.jpg" class="card-img-top" alt="Aperçu projet 3">
-                    <div class="card-body">
-                        <h3 class="h5 card-title">Mobile App Concept</h3>
-                        <p class="card-text text-muted">Application de gestion de finances personnelles.</p>
-                        <span class="badge bg-dark">Mobile</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
+/* Animations CSS (@keyframes et transform demandés) */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-<footer class="bg-dark text-white text-center py-4">
-    <div class="container">
-        <p class="mb-0">&copy; 2026 - Portfolio Personnel - Réalisé avec Passion.</p>
-    </div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+.animate-fade-in {
+    animation: fadeIn 1s cubic-bezier(0.1, 0.7, 0.1, 1) forwards;
+}
+
+/* Effets Hover */
+.badge-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.badge-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+}
+
+.border-gold {
+    border: 2px solid var(--accent-gold) !important;
+}
+
+.drop-shadow {
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15));
+}
+
+.btn-hover-gold {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-hover-gold:hover {
+    background-color: var(--accent-gold);
+    color: var(--primary-dark);
+    border-color: var(--accent-gold);
+}
+
+/* Accessibilité (WCAG) : Focus visible au clavier */
+a:focus, button:focus, input:focus, textarea:focus {
+    outline: 3px solid var(--accent-blue) !important;
+    outline-offset: 3px;
+    box-shadow: none !important;
+}

@@ -3,63 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact | Portfolio</title>
-    <meta name="description" content="Contactez-moi pour échanger sur DAFA ou vos projets UI/UX.">
+    <meta name="description" content="Contactez l'équipe de conception DAFA.">
+    <title>DAFA Evolution | Contact</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="bg-light">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="index.html">DAFA</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">Le Projet</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">DESIGNER.PRO</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">CV & Parcours</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
-                </ul>
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="text-center mb-4">
+                    <h1 class="fw-bold">Accéder à l'élite</h1>
+                    <p class="text-muted">Une question sur le prototype ? Envoyez-nous un message.</p>
+                </div>
+                
+                <form action="#" class="bg-white p-5 shadow-sm rounded border-0 animate-fade-in">
+                    <div class="mb-4">
+                        <label for="name" class="form-label fw-bold">Nom d'utilisateur <span class="text-danger">*</span></label>
+                        <input type="text" id="name" class="form-control bg-light" required placeholder="Ex: John Doe">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="form-label fw-bold">Adresse Email <span class="text-danger">*</span></label>
+                        <input type="email" id="email" class="form-control bg-light" required placeholder="contact@domaine.com">
+                    </div>
+                    <div class="mb-4">
+                        <label for="message" class="form-label fw-bold">Votre requête <span class="text-danger">*</span></label>
+                        <textarea id="message" class="form-control bg-light" rows="5" required placeholder="Décrivez votre besoin en détail..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100 py-3 fw-bold btn-hover-gold">Soumettre la requête</button>
+                    <p class="text-muted small mt-3 text-center">Les champs avec un astérisque (*) sont obligatoires pour traiter votre demande.</p>
+                </form>
             </div>
         </div>
-    </nav>
-</header>
+    </main>
 
-<main class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6">
-            <h1 class="text-center mb-4">Travaillons ensemble</h1>
-            <p class="text-center text-muted mb-5">Intéressé par le projet DAFA ou besoin d'un designer ? Laissez-moi un message.</p>
-            
-            <form action="#" method="POST" class="shadow-sm p-4 bg-white rounded border">
-                <div class="mb-3">
-                    <label for="nom" class="form-label fw-bold">Votre Nom</label>
-                    <input type="text" class="form-control" id="nom" name="nom" placeholder="John Doe" required>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label fw-bold">Votre Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="john@exemple.com" required>
-                </div>
-                <div class="mb-4">
-                    <label for="message" class="form-label fw-bold">Votre Message</label>
-                    <textarea class="form-control" id="message" name="message" rows="5" placeholder="Bonjour, je vous contacte pour..." required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary w-100 py-2">Envoyer le message</button>
-            </form>
-        </div>
-    </div>
-</main>
-
-<footer class="bg-dark text-white text-center py-4 mt-auto">
-    <div class="container">
-        <p class="mb-0">&copy; 2026 - Portfolio Personnel.</p>
-    </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <p class="mb-0">&copy; 2026 DAFA Evolution</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
