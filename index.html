@@ -3,31 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Découvrez DAFA : L'application de gestion centralisée avec une interface utilisateur optimisée.">
-    <meta property="og:title" content="DAFA | L'application de gestion réinventée">
-    <meta property="og:description" content="Découvrez notre prototype de 20 écrans dédié à la productivité.">
-    <meta property="og:image" content="images/dafa-preview.jpg">
-    <title>DAFA | Accueil de l'application</title>
-    
+    <meta name="description" content="Portfolio UX/UI Designer. Découvrez comment le design redonne le pouvoir d'achat aux consommateurs avec le projet DAFA.">
+    <title>Portfolio | UX/UI Designer</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-light">
+<body class="apple-theme">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-nav">
             <div class="container">
-                <a class="navbar-brand fw-bold tracking-wide" href="index.html">
-                    <i class="bi bi-hexagon-fill text-primary me-2"></i>DAFA
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Menu principal">
+                <a class="navbar-brand fw-bold" href="index.html">Portfolio</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Menu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Accueil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">UX & Prototype</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">CV & Méthode</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                     </ul>
                 </div>
@@ -36,74 +29,73 @@
     </header>
 
     <main>
-        <section class="hero-section text-center d-flex align-items-center justify-content-center">
-            <div class="container animate-fade-in">
-                <h1 class="display-3 fw-bold text-white mb-4">Centralisez votre flux de travail.</h1>
-                <p class="lead text-light mb-4 mx-auto" style="max-width: 700px;">
-                    DAFA est un prototype d'application (20 écrans) pensé pour éliminer la friction. De la visualisation de données à la gestion de tâches complexes, chaque interaction a été optimisée.
+        <section class="hero-personal d-flex align-items-center text-center">
+            <div class="container animate-fade-in mt-5">
+                <h1 class="display-3 fw-bold text-dark tracking-tight mb-3">Le design au service de l'utilisateur.</h1>
+                <p class="lead text-muted mx-auto" style="max-width: 700px;">
+                    Je suis UX/UI Designer. Ma mission : créer des interfaces claires qui résolvent des problèmes réels. Mon travail allie esthétique minimaliste et efficacité redoutable pour redonner le contrôle aux utilisateurs.
                 </p>
-                <button type="button" class="btn btn-primary btn-lg px-5 py-3 fw-bold" data-bs-toggle="modal" data-bs-target="#featuresModal">
-                    Voir la démo du prototype
-                </button>
+                <div class="mt-4">
+                    <a href="#dafa-project" class="btn btn-dark btn-apple rounded-pill px-4 py-2 me-3">Découvrir le projet DAFA</a>
+                </div>
             </div>
         </section>
 
-        <section class="py-5 bg-white">
-            <div class="container my-5">
+        <section id="dafa-project" class="py-5 bg-dark text-white">
+            <div class="container py-5">
                 <div class="text-center mb-5">
-                    <h2 class="fw-bold display-6">Fonctionnalités Principales</h2>
-                    <p class="text-muted">L'architecture de l'application est divisée en 3 modules clés.</p>
+                    <h2 class="display-5 fw-bold tracking-tight">Projet DAFA</h2>
+                    <p class="fs-4 text-gray">Rendre le pouvoir d'achat aux consommateurs.</p>
                 </div>
-                
-                <div class="row g-4 justify-content-center">
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <article class="card h-100 border-0 shadow-sm feature-card p-3">
-                            <div class="card-body text-center">
-                                <i class="bi bi-bar-chart-line display-4 text-primary mb-3 d-block"></i>
-                                <h3 class="h5 card-title fw-bold">Dashboard Analytique</h3>
-                                <p class="card-text text-muted">Une vue d'ensemble personnalisable permettant de suivre vos KPIs en temps réel. Les graphiques interactifs offrent un drill-down intuitif sur vos données.</p>
+
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6 order-2 order-lg-1">
+                        <h3 class="fw-bold mb-3">Déjouer les biais de la grande distribution</h3>
+                        <p class="text-gray mb-4">
+                            Les grandes enseignes utilisent le marketing et des fiches techniques opaques pour biaiser l'acte d'achat. DAFA est une application conçue pour briser cette asymétrie d'information. Elle décode les caractéristiques réelles des produits pour vous faire gagner du temps et de l'argent.
+                        </p>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <div class="p-3 bg-secondary bg-opacity-25 rounded-3 border border-secondary border-opacity-25 h-100">
+                                    <h4 class="h6 fw-bold text-white">100% Transparent</h4>
+                                    <p class="small text-gray mb-0">Comparaison de specs réelles, loin des promesses marketing.</p>
+                                </div>
                             </div>
-                        </article>
+                            <div class="col-md-6">
+                                <div class="p-3 bg-secondary bg-opacity-25 rounded-3 border border-secondary border-opacity-25 h-100">
+                                    <h4 class="h6 fw-bold text-white">Gain de Temps</h4>
+                                    <p class="small text-gray mb-0">L'interface premium va à l'essentiel pour des décisions rapides et éclairées.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-light rounded-pill px-4 py-2" data-bs-toggle="modal" data-bs-target="#dafaModal">
+                            Voir le statut du prototype
+                        </button>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <article class="card h-100 border-0 shadow-sm feature-card p-3">
-                            <div class="card-body text-center">
-                                <i class="bi bi-kanban display-4 text-primary mb-3 d-block"></i>
-                                <h3 class="h5 card-title fw-bold">Gestion de Projet Intégrée</h3>
-                                <p class="card-text text-muted">Organisez vos sprints avec notre vue Kanban fluide. Le drag-and-drop a été pensé pour réduire la charge cognitive lors de la réassignation des tâches.</p>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <article class="card h-100 border-0 shadow-sm feature-card p-3">
-                            <div class="card-body text-center">
-                                <i class="bi bi-bell display-4 text-primary mb-3 d-block"></i>
-                                <h3 class="h5 card-title fw-bold">Centre de Notifications Intelligent</h3>
-                                <p class="card-text text-muted">Ne soyez plus submergé. Notre algorithme trie les alertes par niveau de priorité pour garantir que l'information critique soit toujours visible.</p>
-                            </div>
-                        </article>
+                    <div class="col-lg-6 order-1 order-lg-2 text-center">
+                        <img src="images/dafa-app-screen.png" class="img-fluid rounded-4 shadow-lg" alt="Interface de l'application DAFA montrant une comparaison de produits claire">
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <div class="modal fade" id="featuresModal" tabindex="-1" aria-labelledby="featuresModalLabel" aria-hidden="true">
+    <div class="modal fade" id="dafaModal" tabindex="-1" aria-labelledby="dafaModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow">
-                <div class="modal-header bg-dark text-white border-0">
-                    <h5 class="modal-title fw-bold" id="featuresModalLabel">Lancement prochain</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            <div class="modal-content border-0 rounded-4 shadow-lg text-dark">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title fw-bold" id="dafaModalLabel">Prototype en cours</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                 </div>
-                <div class="modal-body p-4 text-muted">
-                    <p>Le lien vers le prototype interactif Figma (20 écrans) sera bientôt disponible ici. Il vous permettra de naviguer dans l'application comme un véritable utilisateur.</p>
+                <div class="modal-body">
+                    <p class="text-muted">Le prototype interactif de DAFA a été modélisé sur Figma. Il retrace le parcours complet de l'utilisateur, de la recherche d'un produit jusqu'à la lecture des fiches comparatives assainies de tout biais marketing.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer class="bg-dark text-white text-center py-4">
-        <p class="mb-0 small">&copy; 2026 DAFA App - Tous droits réservés.</p>
+    <footer class="bg-light text-center py-4 border-top">
+        <p class="mb-0 text-muted small">&copy; 2026 Portfolio. Conçu avec rigueur.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

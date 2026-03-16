@@ -3,27 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Contactez l'équipe de développement de DAFA pour participer aux tests utilisateurs.">
-    <title>DAFA | Contact & Tests</title>
+    <meta name="description" content="Contactez-moi pour discuter design, UX/UI, ou du projet DAFA.">
+    <title>Portfolio | Contact</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-light d-flex flex-column min-vh-100">
+<body class="apple-theme d-flex flex-column min-vh-100">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
             <div class="container">
-                <a class="navbar-brand fw-bold tracking-wide" href="index.html">
-                    <i class="bi bi-hexagon-fill text-primary me-2"></i>DAFA
-                </a>
+                <a class="navbar-brand fw-bold" href="index.html">Portfolio</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Menu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">UX & Prototype</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">CV & Méthode</a></li>
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="contact.html">Contact</a></li>
                     </ul>
                 </div>
@@ -31,42 +28,40 @@
         </nav>
     </header>
 
-    <main class="container py-5 flex-grow-1">
-        <div class="row justify-content-center">
+    <main class="container py-5 flex-grow-1 d-flex align-items-center justify-content-center">
+        <div class="row w-100 justify-content-center">
             <div class="col-md-8 col-lg-6">
-                <div class="text-center mb-4">
-                    <h1 class="fw-bold display-6">Devenir Testeur Beta</h1>
-                    <p class="text-muted">Participez à l'amélioration de DAFA. Remplissez ce formulaire pour avoir accès au prototype complet.</p>
+                <div class="text-center mb-5 animate-fade-in">
+                    <h1 class="display-5 fw-bold tracking-tight">Démarrons un projet.</h1>
+                    <p class="text-muted fs-5">Une question sur mon approche ou sur le prototype DAFA ? Parlons-en.</p>
                 </div>
                 
-                <form action="#" class="bg-white p-4 p-md-5 shadow-sm rounded border-0 animate-fade-in">
-                    <div class="alert alert-primary border-0 small mb-4" role="alert">
-                        <i class="bi bi-info-circle-fill me-2"></i> Les champs marqués d'un astérisque (<span class="text-danger fw-bold">*</span>) sont requis.
-                    </div>
+                <form action="#" class="animate-fade-in" style="animation-delay: 0.1s;">
+                    <p class="small text-muted mb-4">Les champs suivis d'un astérisque (<span class="text-danger" aria-hidden="true">*</span>) sont obligatoires.</p>
 
-                    <div class="mb-4">
-                        <label for="name" class="form-label fw-bold small text-uppercase">Nom ou Pseudo <span class="text-danger" aria-hidden="true">*</span></label>
-                        <input type="text" id="name" class="form-control bg-light p-3" required placeholder="Ex: Alex Doe">
+                    <div class="mb-3">
+                        <label for="name" class="form-label fw-semibold text-muted small text-uppercase">Nom complet <span class="text-danger" aria-hidden="true">*</span></label>
+                        <input type="text" class="form-control apple-input py-2" id="name" placeholder="Votre nom" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label fw-semibold text-muted small text-uppercase">Adresse email <span class="text-danger" aria-hidden="true">*</span></label>
+                        <input type="email" class="form-control apple-input py-2" id="email" placeholder="nom@exemple.com" required>
                     </div>
                     
                     <div class="mb-4">
-                        <label for="email" class="form-label fw-bold small text-uppercase">Email de contact <span class="text-danger" aria-hidden="true">*</span></label>
-                        <input type="email" id="email" class="form-control bg-light p-3" required placeholder="alex@domaine.com">
+                        <label for="message" class="form-label fw-semibold text-muted small text-uppercase">Votre message <span class="text-danger" aria-hidden="true">*</span></label>
+                        <textarea class="form-control apple-input" id="message" placeholder="Comment puis-je vous aider ?" style="height: 150px" required></textarea>
                     </div>
                     
-                    <div class="mb-4">
-                        <label for="message" class="form-label fw-bold small text-uppercase">Votre Profil UX/UI <span class="text-danger" aria-hidden="true">*</span></label>
-                        <textarea id="message" class="form-control bg-light p-3" rows="4" required placeholder="Êtes-vous designer, développeur ou simple curieux ? Décrivez-vous brièvement."></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary w-100 py-3 fw-bold custom-btn">Envoyer ma candidature</button>
+                    <button type="submit" class="btn btn-dark w-100 rounded-pill py-3 fw-bold btn-apple">Envoyer le message</button>
                 </form>
             </div>
         </div>
     </main>
 
-    <footer class="bg-dark text-white text-center py-4 mt-auto">
-        <p class="mb-0 small">&copy; 2026 DAFA App - Tous droits réservés.</p>
+    <footer class="bg-light text-center py-4 border-top mt-auto">
+        <p class="mb-0 text-muted small">&copy; 2026 Portfolio.</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
