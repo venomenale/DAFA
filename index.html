@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="DAFA Evolution : Le standard ultime du design d'interface.">
-    <meta property="og:title" content="DAFA Evolution">
-    <meta property="og:description" content="Découvrez les grades DAFA.">
+    <meta name="description" content="DAFA Evolution : Découvrez l'élite du design d'interface à travers nos grades exclusifs.">
+    <meta property="og:title" content="DAFA Evolution | Accueil">
+    <meta property="og:description" content="Découvrez les grades de mon prototype de 60 écrans.">
     <meta property="og:image" content="images/badge8.png">
     <title>DAFA Evolution | Accueil</title>
     
@@ -18,12 +18,12 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
             <div class="container">
                 <a class="navbar-brand fw-bold" href="index.html">DAFA</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Menu de navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link active" href="index.html">Accueil</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Accueil</a></li>
                         <li class="nav-item"><a class="nav-link" href="about.html">Le Projet</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                     </ul>
@@ -36,8 +36,12 @@
         <section class="hero-section text-center d-flex align-items-center justify-content-center">
             <div class="container animate-fade-in">
                 <h1 class="display-3 fw-bold text-white">L'évolution du Grade S+</h1>
-                <p class="lead text-light">Un écosystème conçu pour la performance et l'esthétique pure.</p>
+                <p class="lead text-light">Un écosystème de 60 écrans conçu pour la performance.</p>
                 <a href="#levels" class="btn btn-outline-light btn-lg mt-3">Découvrir les Grades</a>
+                
+                <button type="button" class="btn btn-warning btn-lg mt-3 ms-2" data-bs-toggle="modal" data-bs-target="#infoModal">
+                    Concept
+                </button>
             </div>
         </section>
 
@@ -47,7 +51,7 @@
                 <div class="row g-4">
                     <div class="col-12 col-md-6 col-lg-4">
                         <article class="card h-100 border-0 shadow-sm badge-card">
-                            <img src="images/badge5.png" class="card-img-top p-4" alt="Badge Niveau 5 DAFA">
+                            <img src="images/badge5.png" class="card-img-top p-4" alt="Badge Niveau 5 DAFA en verre et acier">
                             <div class="card-body text-center">
                                 <h3 class="h5 card-title">Niveau 5 : Fondations</h3>
                                 <p class="card-text text-muted">Structure CPU argentée protégée par un verre trempé de haute résistance.</p>
@@ -56,7 +60,7 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
                         <article class="card h-100 border-0 shadow-sm badge-card">
-                            <img src="images/badge6.png" class="card-img-top p-4" alt="Badge Niveau 6 DAFA">
+                            <img src="images/badge6.png" class="card-img-top p-4" alt="Badge Niveau 6 DAFA en platine">
                             <div class="card-body text-center">
                                 <h3 class="h5 card-title">Niveau 6 : Architecture</h3>
                                 <p class="card-text text-muted">Géométrie multicouche complexe avec finition platine brossé.</p>
@@ -65,7 +69,7 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
                         <article class="card h-100 border-0 shadow-sm badge-card border-gold">
-                            <img src="images/badge8.png" class="card-img-top p-4" alt="Badge Niveau 8 DAFA">
+                            <img src="images/badge8.png" class="card-img-top p-4" alt="Badge Niveau 8 DAFA avec détails dorés">
                             <div class="card-body text-center">
                                 <h3 class="h5 card-title">Niveau 8 : Pinnacle</h3>
                                 <p class="card-text text-muted">L'excellence ultime. Cœur bleu profond et liserés dorés de précision.</p>
@@ -76,6 +80,20 @@
             </div>
         </section>
     </main>
+
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoModalLabel">Le Concept DAFA</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body">
+                    Ce site vitrine présente l'évolution esthétique d'un projet d'interface utilisateur massif, passant de matériaux bruts à des finitions premium.
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="bg-dark text-white text-center py-4">
         <p class="mb-0">&copy; 2026 DAFA Evolution - Design épuré, performance absolue.</p>
