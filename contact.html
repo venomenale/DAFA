@@ -6,6 +6,7 @@
     <meta name="description" content="Contactez-moi pour discuter design, UX/UI, ou du projet DAFA.">
     <title>Portfolio | Contact</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -28,16 +29,46 @@
         </nav>
     </header>
 
-    <main class="container py-5 flex-grow-1 d-flex align-items-center justify-content-center">
-        <div class="row w-100 justify-content-center">
-            <div class="col-md-8 col-lg-6">
-                <div class="text-center mb-5 animate-fade-in">
-                    <h1 class="display-5 fw-bold tracking-tight">Démarrons un projet.</h1>
-                    <p class="text-muted fs-5">Une question sur mon approche ou sur le prototype DAFA ? Parlons-en.</p>
+    <main class="container py-5 flex-grow-1">
+        <div class="text-center mb-5 animate-fade-in">
+            <h1 class="display-5 fw-bold tracking-tight">Démarrons un projet.</h1>
+            <p class="text-muted fs-5">Une question sur mon profil ou sur l'application DAFA ? Écrivez-moi.</p>
+        </div>
+
+        <div class="row g-5 justify-content-center">
+            <div class="col-md-4 animate-fade-in" style="animation-delay: 0.1s;">
+                <div class="bg-white p-4 rounded-4 shadow-sm border h-100">
+                    <h2 class="h4 fw-bold mb-4">Mes Coordonnées</h2>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="bi bi-envelope-fill fs-3 text-primary me-3"></i>
+                        <div>
+                            <p class="mb-0 fw-bold small text-muted text-uppercase">Email Professionnel</p>
+                            <a href="mailto:contact@monportfolio.com" class="text-dark text-decoration-none">contact@monportfolio.com</a>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="bi bi-linkedin fs-3 text-primary me-3"></i>
+                        <div>
+                            <p class="mb-0 fw-bold small text-muted text-uppercase">Réseau Professionnel</p>
+                            <a href="#" class="text-dark text-decoration-none">Profil LinkedIn</a>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-geo-alt-fill fs-3 text-primary me-3"></i>
+                        <div>
+                            <p class="mb-0 fw-bold small text-muted text-uppercase">Localisation</p>
+                            <p class="text-dark mb-0">Disponible en Remote</p>
+                        </div>
+                    </div>
                 </div>
-                
-                <form action="#" class="animate-fade-in" style="animation-delay: 0.1s;">
-                    <p class="small text-muted mb-4">Les champs suivis d'un astérisque (<span class="text-danger" aria-hidden="true">*</span>) sont obligatoires.</p>
+            </div>
+
+            <div class="col-md-8 col-lg-6 animate-fade-in" style="animation-delay: 0.2s;">
+                <form action="#" class="bg-white p-4 rounded-4 shadow-sm border">
+                    <p class="small text-muted mb-4 border-bottom pb-3">Les champs suivis d'un astérisque (<span class="text-danger" aria-hidden="true">*</span>) sont obligatoires pour valider l'envoi.</p>
 
                     <div class="mb-3">
                         <label for="name" class="form-label fw-semibold text-muted small text-uppercase">Nom complet <span class="text-danger" aria-hidden="true">*</span></label>
@@ -61,7 +92,7 @@
     </main>
 
     <footer class="bg-light text-center py-4 border-top mt-auto">
-        <p class="mb-0 text-muted small">&copy; 2026 Portfolio.</p>
+        <p class="mb-0 text-muted small">&copy; 2026 Portfolio UX/UI.</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
