@@ -6,15 +6,16 @@
     <meta name="description" content="Mon parcours professionnel, mon CV UX/UI et la méthodologie de conception de l'application DAFA.">
     <title>Portfolio | CV & Méthode</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="apple-theme d-flex flex-column min-vh-100">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top glass-nav border-bottom border-secondary border-opacity-25">
             <div class="container">
-                <a class="navbar-brand fw-bold" href="index.html">Portfolio</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Menu">
+                <a class="navbar-brand fw-bold tracking-tight" href="index.html">Portfolio</a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
@@ -28,92 +29,104 @@
         </nav>
     </header>
 
-    <main class="container py-5 flex-grow-1">
-        <section class="row align-items-center mb-5 mt-4">
-            <div class="col-md-4 text-center animate-fade-in">
-                <img src="images/mon-profil.jpg" alt="Portrait du designer" class="img-fluid rounded-4 shadow-sm mb-4" style="max-width: 250px;">
-            </div>
-            <div class="col-md-8 animate-fade-in" style="animation-delay: 0.1s;">
-                <h1 class="display-5 fw-bold tracking-tight mb-3">Concevoir par la preuve.</h1>
-                <p class="fs-5 text-muted mb-4">
-                    Je suis convaincu que le design est un outil d'émancipation. Mon approche consiste à analyser des problèmes complexes (comme l'opacité des prix ou les interfaces surchargées) et à les résoudre par une architecture d'information claire et sans compromis.
-                </p>
-                <a href="contact.html" class="btn btn-dark btn-apple rounded-pill px-4 py-2">Me contacter</a>
-            </div>
-        </section>
-
-        <section class="mb-5 pt-4">
-            <h2 class="fw-bold mb-4 border-bottom pb-2">Mon Parcours</h2>
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="p-4 bg-white border rounded-3 shadow-sm h-100">
-                        <h3 class="h5 fw-bold text-primary">Création du Projet DAFA</h3>
-                        <p class="small text-muted mb-2">2025 - Présent | Projet Fil Rouge</p>
-                        <p class="small mb-0">Développement complet d'une application anti-biais cognitifs. Recherche utilisateur, création du Design System sur Figma, et prototypage de l'ensemble des parcours d'achat et de comparaison.</p>
+    <main class="flex-grow-1">
+        <section class="py-5 mt-4">
+            <div class="container">
+                <div class="row align-items-center mb-5">
+                    <div class="col-lg-7 animate-fade-in">
+                        <h1 class="display-2 fw-bold tracking-tight text-dark mb-4">
+                            Penser. <br>
+                            <span class="text-primary">Structurer.</span> <br>
+                            Émanciper.
+                        </h1>
+                        <p class="fs-4 text-muted mb-5 pe-lg-5" style="line-height: 1.4;">
+                            Je suis convaincu que le design est une arme. Mon approche : analyser des problèmes réels (opacité des prix, biais marketing) et les résoudre par une architecture d'information sans compromis.
+                        </p>
                     </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="p-4 bg-white border rounded-3 shadow-sm h-100">
-                        <h3 class="h5 fw-bold text-primary">Formation Développement Web & UI</h3>
-                        <p class="small text-muted mb-2">2024 - 2026 | Études Supérieures</p>
-                        <p class="small mb-0">Acquisition des compétences fondamentales en intégration web (HTML5, CSS3, Bootstrap) et en ergonomie des interfaces (Heuristiques de Nielsen, accessibilité WCAG).</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="mt-5 pt-5 border-top">
-            <h2 class="fw-bold mb-4 text-center">Étude de Cas : La méthode DAFA</h2>
-            <p class="text-center text-muted mb-5">Comment j'ai structuré l'application pour protéger le consommateur, en respectant les heuristiques de Nielsen.</p>
-            
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="accordion accordion-flush shadow-sm border rounded-3 overflow-hidden" id="dafaAccordion">
-                        <div class="accordion-item">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button fw-bold fs-5 bg-white text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                                    01. Design esthétique et minimaliste
-                                </button>
-                            </h3>
-                            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#dafaAccordion">
-                                <div class="accordion-body text-muted bg-light">
-                                    L'interface premium de DAFA n'est pas qu'un choix visuel, c'est une nécessité cognitive. En purgeant l'écran de tout marketing (bannières, couleurs agressives propres aux grandes surfaces), l'utilisateur n'est confronté qu'à la donnée brute essentielle à sa décision.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button collapsed fw-bold fs-5 bg-white text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                                    02. Correspondance avec le monde réel
-                                </button>
-                            </h3>
-                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#dafaAccordion">
-                                <div class="accordion-body text-muted bg-light">
-                                    Le jargon technique des fiches produits est souvent conçu pour tromper. DAFA traduit ces caractéristiques techniques en bénéfices clairs et compréhensibles, parlant le langage de l'utilisateur du quotidien pour l'aider à comparer objectivement.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button collapsed fw-bold fs-5 bg-white text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
-                                    03. Visibilité et Prévention des erreurs
-                                </button>
-                            </h3>
-                            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#dafaAccordion">
-                                <div class="accordion-body text-muted bg-light">
-                                    Lorsqu'un produit présente un mauvais rapport qualité/prix ou un label trompeur, le système alerte clairement l'utilisateur avant l'achat. L'information est donnée au bon moment pour prévenir les erreurs de consommation.
-                                </div>
-                            </div>
+                    <div class="col-lg-5 text-center animate-fade-in" style="animation-delay: 0.1s;">
+                        <div class="profile-image-wrapper mx-auto shadow-lg">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=500&auto=format&fit=crop" alt="Portrait du designer UX/UI" class="img-fluid profile-image">
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    </main>
 
-    <footer class="bg-light text-center py-4 border-top mt-auto">
-        <p class="mb-0 text-muted small">&copy; 2026 Portfolio. Conçu avec rigueur.</p>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+        <section class="py-5 bg-light-apple">
+            <div class="container py-5">
+                <h2 class="display-5 fw-bold tracking-tight mb-5 text-center">Mon Parcours</h2>
+                
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="bento-box bg-dark text-white p-5 h-100 shadow-sm animate-fade-in" style="animation-delay: 0.2s;">
+                            <h3 class="display-6 fw-bold mb-3">Projet DAFA</h3>
+                            <p class="text-uppercase tracking-wide text-primary fw-bold small mb-4">2025 - Présent</p>
+                            <p class="fs-5 text-gray mb-0">
+                                Un prototype fonctionnel comprenant entre 50 et 60 écrans, luttant contre les biais cognitifs en magasin. Recherche utilisateur, création intégrale du Design System sur Figma, et prototypage des flux de comparaison. L'objectif : redonner le pouvoir d'achat par la clarté.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="bento-box bg-white p-5 h-100 shadow-sm border animate-fade-in" style="animation-delay: 0.3s;">
+                            <h3 class="h4 fw-bold mb-4">Stack & Outils</h3>
+                            <ul class="list-unstyled mb-0">
+                                <li class="d-flex align-items-center mb-3 fs-5"><i class="bi bi-figma text-dark me-3"></i> Figma (Avancé)</li>
+                                <li class="d-flex align-items-center mb-3 fs-5"><i class="bi bi-code-slash text-dark me-3"></i> HTML / CSS</li>
+                                <li class="d-flex align-items-center mb-3 fs-5"><i class="bi bi-bootstrap text-dark me-3"></i> Bootstrap 5</li>
+                                <li class="d-flex align-items-center fs-5"><i class="bi bi-diagram-3 text-dark me-3"></i> User flows</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="bento-box bg-white p-5 h-100 shadow-sm border animate-fade-in" style="animation-delay: 0.4s;">
+                            <h3 class="h2 fw-bold mb-3">Formation UX/UI</h3>
+                            <p class="text-uppercase tracking-wide text-muted fw-bold small mb-4">2024 - 2026</p>
+                            <p class="fs-5 text-muted mb-0">
+                                Maîtrise de l'intégration web et de l'ergonomie des interfaces. Focus sur l'accessibilité (WCAG) et l'application stricte des heuristiques de Nielsen pour des produits viables.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="bento-box bg-primary text-white p-5 h-100 shadow-sm animate-fade-in" style="animation-delay: 0.5s;">
+                            <i class="bi bi-quote display-4 opacity-50 mb-3 d-block"></i>
+                            <h3 class="h2 fw-bold mb-0" style="line-height: 1.3;">
+                                "Le bon design est invisible. Il ne décore pas, il fluidifie la prise de décision."
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5 bg-dark text-white">
+            <div class="container py-5">
+                <div class="row mb-5">
+                    <div class="col-lg-8">
+                        <h2 class="display-4 fw-bold tracking-tight mb-3">La méthode derrière DAFA.</h2>
+                        <p class="fs-4 text-gray">Comment protéger le consommateur en respectant les heuristiques de Nielsen.</p>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="accordion accordion-flush premium-accordion" id="dafaAccordion">
+                            <div class="accordion-item bg-transparent border-bottom border-secondary border-opacity-25">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button bg-transparent text-white fw-bold display-6 py-4 px-0 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                        <span class="text-primary me-4">01.</span> Minimalisme radical
+                                    </button>
+                                </h3>
+                                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#dafaAccordion">
+                                    <div class="accordion-body px-0 pb-5 pt-3 fs-5 text-gray w-75">
+                                        L'interface premium de DAFA n'est pas qu'un choix visuel, c'est une nécessité cognitive. En purgeant l'écran de tout marketing (bannières, couleurs agressives), l'utilisateur n'est confronté qu'à la donnée brute essentielle à sa décision.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item bg-transparent border-bottom border-secondary border-opacity-25">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button bg-transparent text-white fw-bold display-6 py-4 px-0 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                        <span class="text-primary me-4
