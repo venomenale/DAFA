@@ -73,7 +73,7 @@ body.apple-theme {
 .shadow-2xl { box-shadow: 0 35px 70px rgba(0,0,0,0.2); }
 /* Style pour la photo de profil */
 .profile-image-wrapper {
-    width: 320px;
+    width: 240px;
     height: 320px;
     border-radius: 50%;
     overflow: hidden;
