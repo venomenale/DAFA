@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3MCZVBHXH2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3MCZVBHXH2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3MCZVBHXH2');
+    </script>
 
-  gtag('config', 'G-3MCZVBHXH2');
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="W4olpr1DWLgIyNxRhppD37EovzWgMPHk9Vs7uoFKLzc" />
@@ -17,14 +16,15 @@
     <title>Essam Libert | UX Designer & DAFA</title>
     
     <link rel="canonical" href="https://venomenale.github.io/DAFA/" />
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="apple-theme d-flex flex-column min-vh-100">
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-nav border-bottom border-secondary border-opacity-25">
@@ -135,24 +135,27 @@
             </div>
         </section>
     </main>
-<section class="py-5 bg-dark text-white text-center border-top border-secondary border-opacity-25">
-    <div class="container py-4">
-        <h2 class="display-5 fw-bold mb-3 tracking-tight">Rejoignez la Forge DAFA.</h2>
-        <p class="fs-5 mb-4 opacity-75 mx-auto" style="max-width: 600px;">
-            Le prototype évolue chaque jour. Laissez votre e-mail pour être averti en priorité de l'ouverture de la phase de test.
-        </p>
-        <form action="https://formspree.io/f/xeerrkzy" method="POST" class="d-flex flex-column flex-sm-row justify-content-center gap-3 max-width-500 mx-auto" style="max-width: 500px;">
-            <input type="email" name="email" class="form-control form-control-lg rounded-pill bg-white bg-opacity-10 border-secondary text-white px-4" placeholder="votre@email.com" required>
-            <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm">S'inscrire</button>
-        </form>
-    </div>
-</section>
 
+    <section class="waitlist-section text-white text-center border-top border-secondary border-opacity-25">
+        <div class="container py-4">
+            <h2 class="display-5 fw-bold mb-3 tracking-tight">Rejoignez la Forge DAFA.</h2>
+            <p class="fs-5 mb-4 opacity-75 mx-auto" style="max-width: 600px;">
+                Le prototype de près de 60 écrans évolue chaque jour. Laissez votre e-mail pour être averti en priorité de l'ouverture de la phase de test.
+            </p>
+            <form action="https://formspree.io/f/mlgodddl" method="POST" class="d-flex flex-column flex-sm-row justify-content-center gap-3 max-width-500 mx-auto" style="max-width: 500px;">
+                <input type="email" name="email" class="form-control form-control-lg rounded-pill bg-white bg-opacity-10 border-secondary text-white px-4" placeholder="votre@email.com" required>
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm">S'inscrire</button>
+            </form>
+        </div>
+    </section>
 
     <footer class="bg-dark text-white py-5">
         <div class="container text-center">
             <p class="fw-bold mb-2">ESSAM LIBERT | UX DESIGNER</p>
-            <p class="small text-muted mb-0">&copy; 2026 DAFA Project.</p>
+            <p class="small text-muted mb-0">
+                &copy; 2026 DAFA Project. | 
+                <a href="legal.html" class="text-muted text-decoration-none">Mentions Légales & RGPD</a>
+            </p>
         </div>
     </footer>
 
