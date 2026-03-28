@@ -21,28 +21,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="apple-theme bg-light-apple d-flex flex-column min-vh-100">
-    <div class="container py-5 mt-5 flex-grow-1">
-        <h1 class="display-4 fw-bold mb-5 tracking-tight">Mentions Légales & RGPD</h1>
+    
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-nav border-bottom border-secondary border-opacity-25">
+            <div class="container">
+                <a class="navbar-brand fw-bold tracking-tight" href="index.html">ESSAM LIBERT</a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Accueil & DAFA</a></li>
+                        <li class="nav-item"><a class="nav-link" href="case-study.html">Étude de Cas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">CV & Expertise</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-5 pt-5 mt-5 flex-grow-1">
+        <h1 class="display-4 fw-bold mb-5 tracking-tight mt-4">Mentions Légales & RGPD</h1>
         
-        <section class="mb-5 bg-white p-4 rounded-4 shadow-sm border">
+        <section class="mb-5 bg-white p-4 rounded-4 shadow-sm border animate-fade-in">
             <h3 class="fw-bold mb-3">1. Éditeur du site</h3>
             <p class="text-muted mb-1"><strong>Nom :</strong> Essam Libert</p>
             <p class="text-muted mb-1"><strong>Statut :</strong> Particulier (Portfolio étudiant / Projet personnel)</p>
             <p class="text-muted mb-1"><strong>Localisation :</strong> Amay, Liège, Belgique</p>
-            <p class="text-muted mb-1"><strong>Contact :</strong> libertessam1999@outlook.com</p>
+            <p class="text-muted mb-1"><strong>Contact :</strong> <a href="mailto:libertessam1999@outlook.com" class="text-primary text-decoration-none">libertessam1999@outlook.com</a></p>
         </section>
 
-        <section class="mb-5 bg-white p-4 rounded-4 shadow-sm border">
+        <section class="mb-5 bg-white p-4 rounded-4 shadow-sm border animate-fade-in">
             <h3 class="fw-bold mb-3">2. Hébergement</h3>
             <p class="text-muted mb-1">Le site est hébergé par <strong>GitHub Inc.</strong></p>
             <p class="text-muted mb-0">Adresse : 88 Colin P Kelly Jr St, San Francisco, CA 94107, États-Unis.</p>
         </section>
 
-        <section class="mb-5 bg-white p-4 rounded-4 shadow-sm border">
+        <section class="mb-5 bg-white p-4 rounded-4 shadow-sm border animate-fade-in">
             <h3 class="fw-bold mb-3">3. Politique de confidentialité (RGPD)</h3>
             <p class="text-muted mb-3">Conformément au Règlement Général sur la Protection des Données (RGPD), voici comment sont traitées vos données :</p>
             <ul class="text-muted">
@@ -54,18 +75,26 @@
             </ul>
         </section>
 
-        <section class="mb-5 bg-white p-4 rounded-4 shadow-sm border">
+        <section class="mb-5 bg-white p-4 rounded-4 shadow-sm border animate-fade-in">
             <h3 class="fw-bold mb-3">4. Cookies et mesure d'audience</h3>
             <p class="text-muted mb-0">Ce site utilise Google Analytics uniquement à des fins de mesure d'audience strictement statistique. Le suivi est configuré pour minimiser la collecte de données (anonymisation) et ne permet pas d'identifier ou de cibler individuellement un utilisateur à des fins publicitaires.</p>
         </section>
 
         <div class="text-center mt-5">
-            <a href="index.html" class="btn btn-dark rounded-pill px-5 py-3 fw-bold shadow-sm">Retour à l'accueil</a>
+            <a href="index.html" class="btn btn-outline-dark btn-apple rounded-pill px-5 py-3 fw-bold shadow-sm">Retour à l'accueil</a>
         </div>
-    </div>
+    </main>
 
-    <footer class="bg-dark text-white py-4 text-center mt-auto">
-        <p class="small mb-0">&copy; 2026 Essam Libert - Portfolio UX Designer</p>
+    <footer class="bg-dark text-white py-5 mt-auto border-top border-secondary border-opacity-25">
+        <div class="container text-center">
+            <p class="fw-bold mb-2">ESSAM LIBERT | UX DESIGNER</p>
+            <p class="small text-white-50 mb-0">
+                &copy; 2026 DAFA Project. | 
+                <a href="legal.html" class="text-white-50 text-decoration-none border-bottom border-secondary pb-1">Mentions Légales & RGPD</a>
+            </p>
+        </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 </body>
 </html>
