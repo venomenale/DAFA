@@ -3,7 +3,11 @@
    Essam Libert · UX Designer · 2026
    ============================================================ */
 
-/* --- VARIABLES --- */
+
+/* ============================================================
+   VARIABLES
+   ============================================================ */
+
 :root {
     --text-dark: #1d1d1f;
     --text-gray: #86868b;
@@ -55,6 +59,16 @@ body.apple-theme {
 
 .text-gray {
     color: var(--text-gray);
+}
+
+/* Surcharge Bootstrap : ratio de contraste WCAG AA (4.5:1 minimum) */
+.text-muted {
+    color: #5a6268 !important;
+}
+
+/* Texte blanc atténué sur fonds sombres ou colorés — contraste garanti */
+.text-white-75 {
+    color: rgba(255, 255, 255, 0.88) !important;
 }
 
 
@@ -145,6 +159,23 @@ body.apple-theme {
     border-color: var(--accent) !important;
     box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15) !important;
     background-color: var(--bg-white) !important;
+}
+
+/* Fieldset pour groupes radio — reset visuel, structure accessible */
+fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+}
+
+fieldset legend {
+    float: none;
+    width: auto;
+    padding: 0;
+    margin-bottom: 0.75rem;
+    font-size: inherit;
+    line-height: inherit;
 }
 
 
@@ -282,7 +313,4 @@ body.apple-theme {
     .max-width-800 {
         max-width: 100%;
     }
-}
-.text-muted {
-    color: #5a6268 !important; 
 }
