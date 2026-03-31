@@ -283,3 +283,6 @@ body.apple-theme {
         max-width: 100%;
     }
 }
+.text-muted {
+    color: #5a6268 !important; 
+}
