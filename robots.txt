@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://venomenale.github.io/DAFA/sitemap.xml
