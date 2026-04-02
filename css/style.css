@@ -314,3 +314,12 @@ fieldset legend {
         max-width: 100%;
     }
 }
+/* Accessibilité : Désactivation des animations pour les utilisateurs sensibles */
+@media (prefers-reduced-motion: reduce) {
+    .animate-fade-in, .bento-box {
+        animation: none !important;
+        transform: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+    }
+}
