@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://venomenale.github.io/DAFA/</loc>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://venomenale.github.io/DAFA/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://venomenale.github.io/DAFA/"/>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://venomenale.github.io/DAFA/case-study.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://venomenale.github.io/DAFA/case-study.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://venomenale.github.io/DAFA/case-study.html"/>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://venomenale.github.io/DAFA/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://venomenale.github.io/DAFA/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://venomenale.github.io/DAFA/about.html"/>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://venomenale.github.io/DAFA/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://venomenale.github.io/DAFA/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://venomenale.github.io/DAFA/contact.html"/>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://venomenale.github.io/DAFA/legal.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://venomenale.github.io/DAFA/legal.html"/>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>
+
 
   <url>
     <loc>https://venomenale.github.io/DAFA/</loc>
