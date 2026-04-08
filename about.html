@@ -40,6 +40,7 @@
 
 
 <body class="apple-theme d-flex flex-column min-vh-100">
+<div id="scroll-progress" aria-hidden="true"></div>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-nav border-bottom border-secondary border-opacity-25">
             <div class="container">
@@ -80,7 +81,7 @@
                     <div class="row g-3">
                         <div class="col-6 col-md-3">
                             <div class="p-3 bg-light-apple border rounded-4 text-center">
-                                <div class="fs-4 fw-bold text-primary">200h</div>
+                                <div class="fs-4 fw-bold text-primary" data-counter="200" data-suffix="h">200h</div>
                                 <div class="small text-muted text-uppercase">Formation IA</div>
                             </div>
                         </div>
@@ -92,13 +93,13 @@
                         </div>
                         <div class="col-6 col-md-3">
                             <div class="p-3 bg-light-apple border rounded-4 text-center">
-                                <div class="fs-4 fw-bold text-primary">99/100</div>
+                                <div class="fs-4 fw-bold text-primary" data-counter="99" data-suffix="/100">99/100</div>
                                 <div class="small text-muted text-uppercase">PageSpeed</div>
                             </div>
                         </div>
                         <div class="col-6 col-md-3">
                             <div class="p-3 bg-light-apple border rounded-4 text-center">
-                                <div class="fs-4 fw-bold text-primary">8 mois</div>
+                                <div class="fs-4 fw-bold text-primary" data-counter="8" data-suffix=" mois">8 mois</div>
                                 <div class="small text-muted text-uppercase">Projet DAFA</div>
                             </div>
                         </div>
@@ -123,7 +124,7 @@
 
     <!-- BENTO : PROFIL -->
     <section class="py-5">
-        <div class="container py-4">
+        <div class="container py-4 reveal">
             <span class="badge bg-primary rounded-pill px-3 py-2 mb-4 text-uppercase tracking-widest">Profil</span>
             <div class="row g-4">
 
@@ -199,7 +200,7 @@
 
     <!-- PONT VERS L'ALTERNANCE -->
     <section class="py-5 bg-white border-top border-bottom">
-        <div class="container py-4">
+        <div class="container py-4 reveal">
             <span class="badge bg-primary rounded-pill px-3 py-2 mb-4 text-uppercase tracking-widest">Pourquoi l'alternance UX</span>
             <div class="row align-items-center g-5">
                 <div class="col-lg-6">
@@ -242,7 +243,7 @@
 
     <!-- APPROCHE UX -->
     <section class="py-5">
-        <div class="container py-4">
+        <div class="container py-4 reveal">
             <span class="badge bg-primary rounded-pill px-3 py-2 mb-4 text-uppercase tracking-widest">Approche UX</span>
             <h2 class="display-5 fw-bold mb-2 text-dark">4 principes non négociables.</h2>
             <p class="fs-5 text-muted mb-5 max-width-800">Ce ne sont pas des valeurs d'agence. Ce sont les règles que DAFA m'a forcé à appliquer sous contrainte réelle.</p>
@@ -327,6 +328,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+<script src="js/animations.js" defer></script>
 
 </body>
 </html>

@@ -43,6 +43,7 @@
 
 
 <body class="apple-theme bg-light-apple d-flex flex-column min-vh-100">
+<div id="scroll-progress" aria-hidden="true"></div>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-nav border-bottom border-secondary border-opacity-25">
             <div class="container">
@@ -116,7 +117,7 @@
 
     <!-- PHASE 1 : DÉCOUVERTE -->
     <section class="py-5">
-        <div class="container py-5">
+        <div class="container py-5 reveal">
             <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 1 · Découverte</span>
             <div class="row align-items-start g-5">
                 <div class="col-lg-5">
@@ -158,7 +159,7 @@
 
     <!-- PHASE 2 : DÉFINITION -->
     <section class="py-5 bg-white border-top border-bottom">
-        <div class="container py-5">
+        <div class="container py-5 reveal">
             <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 2 · Définition</span>
             <h2 class="display-5 fw-bold mb-2">Qui est vraiment touché ?</h2>
             <p class="fs-5 text-muted mb-5 max-width-800">
@@ -221,7 +222,7 @@
 
     <!-- PHASE 3 : IDÉATION -->
     <section class="py-5">
-        <div class="container py-5">
+        <div class="container py-5 reveal">
             <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 3 · Idéation</span>
             <h2 class="display-5 fw-bold mb-2">Les décisions de conception et pourquoi.</h2>
             <p class="fs-5 text-muted mb-5 max-width-800">Chaque choix structurant a une justification UX. Voici les trois décisions clés avec leur raisonnement.</p>
@@ -293,7 +294,7 @@
 
     <!-- PHASE 4 : ARCHITECTURE & DESIGN SYSTEM -->
     <section class="py-5 bg-white border-top border-bottom">
-        <div class="container py-5">
+        <div class="container py-5 reveal">
             <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 4 · Architecture & Design</span>
             <h2 class="display-5 fw-bold mb-2">Structure de l'application et Design System.</h2>
             <p class="fs-5 text-muted mb-5 max-width-800">Toute complexité technique doit être absorbée par l'interface, pas transférée à l'utilisateur.</p>
@@ -351,7 +352,7 @@
 
     <!-- PHASE 5 : PROTOTYPE -->
     <section class="py-5">
-        <div class="container py-5">
+        <div class="container py-5 reveal">
             <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 5 · Prototype haute-fidélité</span>
             <div class="row align-items-center g-5">
                 <div class="col-lg-6">
@@ -412,7 +413,7 @@
 
     <!-- APERÇU ÉCRANS PROTOTYPE -->
     <section class="py-5 bg-light-apple border-top">
-        <div class="container py-4">
+        <div class="container py-4 reveal">
             <div class="text-center mb-5">
                 <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Aperçu du prototype V3</span>
                 <h2 class="display-5 fw-bold mb-2">4 écrans clés.</h2>
@@ -462,7 +463,7 @@
 
     <!-- PHASE 6 : TESTS À VENIR -->
     <section class="py-5 bg-white border-top border-bottom">
-        <div class="container py-5">
+        <div class="container py-5 reveal">
             <span class="badge bg-warning text-dark rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 6 · Tests utilisateurs — à venir</span>
             <h2 class="display-5 fw-bold mb-2">Ce qui vient ensuite.</h2>
             <p class="fs-5 text-muted mb-5 max-width-800">
@@ -503,7 +504,7 @@
 
     <!-- CTA FINAL -->
     <section class="py-5 bg-dark text-white">
-        <div class="container py-5 text-center">
+        <div class="container py-5 text-center reveal">
             <h2 class="display-5 fw-bold mb-5">Ce projet, c'est ma façon de travailler.</h2>
             <div class="row justify-content-center">
                 <div class="col-lg-8">
@@ -553,6 +554,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+<script src="js/animations.js" defer></script>
 
 </body>
 </html>
