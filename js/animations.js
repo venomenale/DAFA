@@ -71,7 +71,24 @@
   }
 
   /* ----------------------------------------------------------
-     4. Magnetic buttons — .btn-apple follows cursor slightly
+     4. Sticky CTA — appears after 300px, hides near footer
+  ---------------------------------------------------------- */
+  const stickyCta = document.getElementById('sticky-cta');
+  if (stickyCta) {
+    const updateSticky = () => {
+      const scrollY    = window.scrollY;
+      const bottomEdge = document.documentElement.scrollHeight - window.innerHeight - 160;
+      const visible    = scrollY > 300 && scrollY < bottomEdge;
+      stickyCta.style.opacity       = visible ? '1' : '0';
+      stickyCta.style.pointerEvents = visible ? 'auto' : 'none';
+      stickyCta.style.transform     = visible ? 'translateY(0)' : 'translateY(12px)';
+    };
+    window.addEventListener('scroll', updateSticky, { passive: true });
+    updateSticky();
+  }
+
+  /* ----------------------------------------------------------
+     5. Magnetic buttons — .btn-apple follows cursor slightly
   ---------------------------------------------------------- */
   document.querySelectorAll('.btn-apple').forEach(btn => {
     btn.addEventListener('mousemove', (e) => {
