@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /legal.html
 
-Sitemap: https://venomenale.github.io/DAFA/sitemap.xml
+Sitemap: https://essamlibert.com/sitemap.xml
