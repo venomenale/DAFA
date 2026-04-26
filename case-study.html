@@ -780,7 +780,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="js/animations.js" defer></script>
 
-<!-- DAFA 3D Sphere Animation v3 -->
+<!-- DAFA 3D Sphere Animation v5 -->
 <script>
 (function () {
   'use strict';
@@ -792,7 +792,7 @@
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     canvas.style.display = 'none';
     const el = document.createElement('span');
-    el.style.cssText = 'font-family:Inter,-apple-system,sans-serif;font-weight:800;font-size:clamp(4rem,18vw,10rem);color:#5ac8fa;letter-spacing:-0.03em;';
+    el.style.cssText = 'font-family:Inter,-apple-system,sans-serif;font-weight:800;font-size:clamp(4rem,18vw,10rem);color:#5ac8fa;letter-spacing:-0.03em;display:block;text-align:center;padding:2rem;';
     el.textContent = 'DAFA';
     section.insertBefore(el, canvas);
     return;
@@ -802,10 +802,10 @@
   const DPR = Math.min(window.devicePixelRatio || 1, 2);
   const mob = window.innerWidth < 600;
 
-  const W   = window.innerWidth;
-  const H   = Math.min(mob ? Math.round(W * 1.05) : Math.round(W * 0.62), mob ? 560 : 520);
-  const CX  = W / 2, CY = H / 2;
-  const R   = Math.min(W, H) * (mob ? 0.32 : 0.28);
+  const W  = window.innerWidth;
+  const H  = Math.min(mob ? Math.round(W * 1.05) : Math.round(W * 0.62), mob ? 560 : 520);
+  const CX = W / 2, CY = H / 2;
+  const R  = Math.min(W, H) * (mob ? 0.32 : 0.28);
   const FOV = R * 3.5;
 
   canvas.width  = W * DPR;
@@ -816,10 +816,9 @@
   section.style.minHeight = H + 'px';
   canvas.style.cursor = 'grab';
 
-  /* ── Couleurs sphère ── */
   const C = ['#5ac8fa','#3ba8e0','#ffffff','#7dd8fc','#0071e3'];
 
-  /* ── Sphère Fibonacci ── */
+  /* Sphère Fibonacci */
   const N   = mob ? 1600 : 3200;
   const PHI = Math.PI * (3 - Math.sqrt(5));
   const pts = Array.from({length: N}, (_, i) => {
@@ -829,12 +828,14 @@
       nx: Math.cos(PHI * i) * r, ny: y, nz: Math.sin(PHI * i) * r,
       sz: Math.random() * 1.2 + 0.5,
       ci: i % C.length,
-      fade: Math.random() * 1.8,
+      fade: Math.random() * 1.2,
       dafa: false,
+      dafaTx: 0, dafaTy: 0,
+      ph: Math.random() * Math.PI * 2,
     };
   });
 
-  /* ── Mots — carousel un par un ── */
+  /* Mots orbitaux */
   const WORD_LIST = [
     {t:'DIAGNOSTIC',   a: 0.40, b: 0.20},
     {t:'AUTOMATIQUE',  a:-0.45, b: 1.10},
@@ -855,44 +856,44 @@
     nz: Math.cos(w.a) * Math.sin(w.b),
   }));
 
-  /* Durées du carousel */
-  const W_IN   = 0.30; /* fade-in  */
-  const W_SHOW = 2.60; /* lisible  */
-  const W_OUT  = 0.30; /* fade-out */
-  const W_GAP  = 0.40; /* silence  */
-  const W_PER  = W_IN + W_SHOW + W_OUT + W_GAP; /* ~3.6s par mot */
-  const W_START = 1.4; /* premier mot dès t=1.4s */
+  const W_IN   = 0.50;
+  const W_SHOW = 2.40;
+  const W_OUT  = 0.45;
+  const W_GAP  = 0.25;
+  const W_PER  = W_IN + W_SHOW + W_OUT + W_GAP;
+  const W_START = 2.0;
 
-  /* ── Particules DAFA (timing par modulo, pas de capture) ── */
-  const DAFA_N    = mob ? 200 : 360;
-  const DAFA_START = 1.8;  /* première apparition */
-  const DAFA_CYCLE = 9.0;  /* se répète toutes les 9s */
-  const DAFA_FORM  = 1.6;
-  const DAFA_HOLD  = 2.6;
-  const DAFA_RET   = 1.6;
-  /* gap sur sphère = 9 - (1.6+2.6+1.6) = 3.2s */
+  /* Timing DAFA */
+  const DAFA_N     = mob ? 280 : 560;
+  const DAFA_START = 3.0;
+  const DAFA_CYCLE = 11.0;
+  const DAFA_FORM  = 2.0;
+  const DAFA_HOLD  = 3.0;
+  const DAFA_RET   = 2.0;
 
   let dafaReady = false;
 
-  /* Échantillonnage du texte DAFA sur canvas caché */
-  document.fonts.ready.then(() => {
-    const tW  = Math.min(W * 0.70, 500);
-    const tH  = Math.round(tW * 0.27);
+  /* Échantillonnage du texte DAFA — plusieurs tentatives pour fiabilité */
+  function sampleDafaText() {
+    if (dafaReady) return;
+    const tW  = Math.min(W * 0.68, 560);
+    const tH  = Math.round(tW * 0.30);
     const off = document.createElement('canvas');
     off.width = tW; off.height = tH;
     const oc  = off.getContext('2d');
+    const fs  = Math.round(tH * 0.78);
     oc.fillStyle = '#fff';
-    oc.font = `800 ${Math.round(tH * 0.80)}px Inter,-apple-system,sans-serif`;
+    oc.font = `900 ${fs}px Inter,-apple-system,Arial,sans-serif`;
     oc.textAlign = 'center'; oc.textBaseline = 'middle';
     oc.fillText('DAFA', tW / 2, tH / 2);
-    const px  = oc.getImageData(0, 0, tW, tH).data;
+    const imgData = oc.getImageData(0, 0, tW, tH).data;
     const gap = mob ? 5 : 4;
     const targets = [];
     for (let y = 0; y < tH; y += gap)
       for (let x = 0; x < tW; x += gap)
-        if (px[(y * tW + x) * 4 + 3] > 128)
+        if (imgData[(y * tW + x) * 4 + 3] > 80)
           targets.push({ x: CX + x - tW / 2, y: CY + y - tH / 2 });
-    /* Shuffle */
+    if (targets.length < 40) return;
     for (let i = targets.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [targets[i], targets[j]] = [targets[j], targets[i]];
@@ -904,9 +905,15 @@
       pts[i].dafaTy = targets[i].y;
     }
     dafaReady = true;
-  });
+  }
 
-  /* ── Queue (flux depuis le haut) ── */
+  /* Tentatives multiples : police rapide ou lente */
+  document.fonts.ready.then(sampleDafaText);
+  setTimeout(sampleDafaText, 400);
+  setTimeout(sampleDafaText, 1200);
+  setTimeout(sampleDafaText, 2500);
+
+  /* Flux de particules depuis le haut */
   const SN = mob ? 45 : 90;
   const mkStream = () => ({
     sx: CX + (Math.random() - 0.5) * 28,
@@ -919,7 +926,7 @@
   });
   const stream = Array.from({length: SN}, mkStream);
 
-  /* ── Rotation ── */
+  /* Rotation interactive */
   let rotX = 0.25, rotY = 0, velX = 0, velY = 0.003, drag = false, lx = 0, ly = 0;
   const onDown = e => { drag=true; canvas.style.cursor='grabbing'; lx=e.clientX??e.touches[0].clientX; ly=e.clientY??e.touches[0].clientY; velX=velY=0; };
   const onUp   = () => { drag=false; canvas.style.cursor='grab'; };
@@ -935,7 +942,7 @@
   window.addEventListener('mousemove',  onMove);
   window.addEventListener('touchmove',  onMove, {passive:true});
 
-  /* ── 3D helpers ── */
+  /* Helpers 3D */
   function rot3(px, py, pz) {
     const cx=Math.cos(rotX),sx=Math.sin(rotX),cy=Math.cos(rotY),sy=Math.sin(rotY);
     const y1=py*cx-pz*sx, z1=py*sx+pz*cx;
@@ -943,29 +950,33 @@
   }
   const proj = (x,y,z) => { const sc=FOV/(FOV+z); return {sx:CX+x*sc,sy:CY+y*sc,sc}; };
 
-  /* ── Calcul phase DAFA (modulo pur, sans état externe) ── */
+  /* Phase DAFA — modulo pur */
   function dafaPhase(elapsed) {
     if (!dafaReady || elapsed < DAFA_START) return null;
     const t = (elapsed - DAFA_START) % DAFA_CYCLE;
-    if (t < DAFA_FORM)                           return {mode:'forming',   p: t / DAFA_FORM};
-    if (t < DAFA_FORM + DAFA_HOLD)               return {mode:'hold',      p:(t-DAFA_FORM)/DAFA_HOLD};
-    if (t < DAFA_FORM + DAFA_HOLD + DAFA_RET)   return {mode:'returning', p:(t-DAFA_FORM-DAFA_HOLD)/DAFA_RET};
+    if (t < DAFA_FORM)                         return {mode:'forming',   p: t / DAFA_FORM};
+    if (t < DAFA_FORM + DAFA_HOLD)             return {mode:'hold',      p:(t-DAFA_FORM)/DAFA_HOLD};
+    if (t < DAFA_FORM + DAFA_HOLD + DAFA_RET) return {mode:'returning', p:(t-DAFA_FORM-DAFA_HOLD)/DAFA_RET};
     return null;
   }
 
-  /* ── Boucle ── */
+  /* Easing cubique */
+  const easeOut3 = p => 1 - Math.pow(1 - Math.min(p, 1), 3);
+  const easeIn2  = p => p * p;
+
+  /* Boucle principale */
   let t0 = null;
   function frame(ts) {
     if (!t0) t0 = ts;
     const elapsed = (ts - t0) / 1000;
 
-    if (!drag) { rotY+=0.003; rotX+=velX; rotY+=velY; velX*=0.94; velY*=0.94; }
+    if (!drag) { rotY += 0.003; rotX += velX; rotY += velY; velX *= 0.94; velY *= 0.94; }
     ctx.clearRect(0, 0, W, H);
 
-    /* Queue */
+    /* Flux */
     stream.forEach(s => {
       s.t += s.sp;
-      if (s.t >= 1) Object.assign(s, mkStream(), {t:0});
+      if (s.t >= 1) Object.assign(s, mkStream(), {t: 0});
       const e   = 1 - Math.pow(1 - s.t, 2);
       const alp = s.t < 0.12 ? s.t/0.12 : s.t > 0.82 ? (1-s.t)/0.18 : 1;
       ctx.globalAlpha = alp * 0.65;
@@ -975,73 +986,105 @@
       ctx.fill();
     });
 
-    /* Sphère + DAFA */
+    /* Sphère + particules DAFA */
     ctx.globalAlpha = 1;
     const dafa = dafaPhase(elapsed);
+
     pts.forEach(p => {
-      const alpha = Math.min((elapsed - p.fade) / 0.7, 1);
+      const alpha = Math.min((elapsed - p.fade) / 0.8, 1);
       if (alpha <= 0) return;
-      const r3 = rot3(p.nx*R, p.ny*R, p.nz*R);
+      const r3 = rot3(p.nx * R, p.ny * R, p.nz * R);
       const pr = proj(r3.x, r3.y, r3.z);
 
       if (p.dafa && dafa) {
-        /* Particule DAFA animée */
-        const ease = 1 - Math.pow(1 - Math.min(dafa.p, 1), 3);
-        let px, py;
+        const ease = easeOut3(dafa.p);
+        let drawX, drawY;
+
         if (dafa.mode === 'forming') {
-          px = pr.sx + (p.dafaTx - pr.sx) * ease;
-          py = pr.sy + (p.dafaTy - pr.sy) * ease;
+          drawX = pr.sx + (p.dafaTx - pr.sx) * ease;
+          drawY = pr.sy + (p.dafaTy - pr.sy) * ease;
+          const glow = dafa.p < 0.4 ? 12 : 5;
+          ctx.globalAlpha = alpha;
+          ctx.fillStyle = '#34c759';
+          ctx.shadowColor = '#34c759';
+          ctx.shadowBlur = glow;
+          ctx.beginPath(); ctx.arc(drawX, drawY, p.sz * 2.5, 0, Math.PI * 2); ctx.fill();
+          ctx.shadowBlur = 0;
+          return;
+
         } else if (dafa.mode === 'hold') {
-          const shimmer = 0.82 + Math.sin(elapsed*4.5+p.fade)*0.18;
+          const shimmer = 0.82 + Math.sin(elapsed * 4 + p.ph) * 0.18;
           ctx.globalAlpha = alpha * shimmer;
           ctx.fillStyle = '#34c759';
-          ctx.beginPath(); ctx.arc(p.dafaTx, p.dafaTy, p.sz*1.5, 0, Math.PI*2); ctx.fill();
+          ctx.shadowColor = '#34c759';
+          ctx.shadowBlur = 9;
+          ctx.beginPath(); ctx.arc(p.dafaTx, p.dafaTy, p.sz * 2.5, 0, Math.PI * 2); ctx.fill();
+          ctx.shadowBlur = 0;
           return;
+
         } else {
-          px = p.dafaTx + (pr.sx - p.dafaTx) * ease;
-          py = p.dafaTy + (pr.sy - p.dafaTy) * ease;
+          drawX = p.dafaTx + (pr.sx - p.dafaTx) * ease;
+          drawY = p.dafaTy + (pr.sy - p.dafaTy) * ease;
+          ctx.globalAlpha = alpha * (1 - easeIn2(dafa.p) * 0.5);
+          ctx.fillStyle = '#34c759';
+          ctx.shadowColor = '#34c759';
+          ctx.shadowBlur = 4;
+          ctx.beginPath(); ctx.arc(drawX, drawY, p.sz * 2.5, 0, Math.PI * 2); ctx.fill();
+          ctx.shadowBlur = 0;
+          return;
         }
-        ctx.globalAlpha = alpha;
-        ctx.fillStyle = '#34c759';
-        ctx.beginPath(); ctx.arc(px, py, p.sz*1.5, 0, Math.PI*2); ctx.fill();
-        return;
       }
 
       /* Sphère normale */
-      const depth = (r3.z + R + FOV) / (2*R + FOV);
-      ctx.globalAlpha = alpha * (0.2 + 0.8*depth);
+      const depth = (r3.z + R + FOV) / (2 * R + FOV);
+      ctx.globalAlpha = alpha * (0.2 + 0.8 * depth);
       ctx.fillStyle = C[p.ci];
-      ctx.beginPath(); ctx.arc(pr.sx, pr.sy, p.sz*pr.sc, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(pr.sx, pr.sy, p.sz * pr.sc, 0, Math.PI * 2); ctx.fill();
     });
 
-    /* Mot carousel */
+    /* Mots — émergent du centre de la sphère vers leur orbite */
     if (elapsed >= W_START) {
       const idx = Math.floor((elapsed - W_START) / W_PER) % WORD_LIST.length;
       const age = (elapsed - W_START) % W_PER;
       const w   = WORD_LIST[idx];
-      const r3  = rot3(w.nx*R*1.16, w.ny*R*1.16, w.nz*R*1.16);
+      const r3  = rot3(w.nx * R * 1.20, w.ny * R * 1.20, w.nz * R * 1.20);
       const pr  = proj(r3.x, r3.y, r3.z);
-      const depth = (r3.z + R + FOV) / (2*R + FOV);
+      const depth = (r3.z + R + FOV) / (2 * R + FOV);
 
-      let wAlpha = 0;
-      if      (age < W_IN)                    wAlpha = age / W_IN;
-      else if (age < W_IN + W_SHOW)           wAlpha = 1;
-      else if (age < W_IN + W_SHOW + W_OUT)   wAlpha = 1 - (age - W_IN - W_SHOW) / W_OUT;
+      let wAlpha = 0, progress = 0;
+      if (age < W_IN) {
+        progress = age / W_IN;
+        wAlpha   = progress;
+      } else if (age < W_IN + W_SHOW) {
+        progress = 1;
+        wAlpha   = 1;
+      } else if (age < W_IN + W_SHOW + W_OUT) {
+        const t  = (age - W_IN - W_SHOW) / W_OUT;
+        progress = 1 - t;
+        wAlpha   = 1 - t;
+      }
 
-      if (wAlpha > 0.01) {
+      if (wAlpha > 0.01 && depth > 0.15) {
+        /* Trajectory : centre sphère → orbite (entrée) / orbite → centre (sortie) */
+        const ease  = easeOut3(progress);
+        const drawX = CX + (pr.sx - CX) * ease;
+        const drawY = CY + (pr.sy - CY) * ease;
+
         ctx.save();
-        ctx.textAlign = 'center';
-        ctx.font = `700 ${mob ? 13 : 16}px "Courier New",monospace`;
+        ctx.textAlign    = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = `700 ${mob ? 12 : 15}px "Courier New",monospace`;
         ctx.shadowColor = '#34c759';
-        ctx.shadowBlur  = age < 0.45 ? 16 : 6;
-        ctx.globalAlpha = wAlpha * Math.max(depth, 0.3);
+        ctx.shadowBlur  = progress < 0.35 ? 22 : 8;
+        ctx.globalAlpha = wAlpha * Math.max(depth, 0.4);
         ctx.fillStyle   = '#34c759';
-        ctx.fillText(w.text, pr.sx, pr.sy);
+        ctx.fillText(w.text, drawX, drawY);
         ctx.restore();
       }
     }
 
     ctx.globalAlpha = 1;
+    ctx.shadowBlur  = 0;
     requestAnimationFrame(frame);
   }
 
