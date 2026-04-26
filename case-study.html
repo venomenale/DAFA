@@ -39,6 +39,15 @@
     <link rel="stylesheet" href="css/style.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" media="print" onload="this.media='all'">
+
+    <script type="importmap">
+    {
+      "imports": {
+        "three":         "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+    </script>
 </head>
 
 
@@ -65,8 +74,13 @@
 <main class="flex-grow-1">
 
     <!-- ANIMATION LOGO DAFA — Particles -->
-    <section id="dafa-particle-section" class="pt-5 mt-5" style="background:linear-gradient(to bottom,#111 0%,#111 55%,#ffffff 100%);overflow:hidden;line-height:0;">
-        <canvas id="dafa-canvas" aria-label="Sphère de données DAFA — interactive" role="img" style="display:block;width:100%;touch-action:none;"></canvas>
+    <section id="dafa-particle-section" class="pt-5 mt-5" style="background:#000;overflow:hidden;line-height:0;position:relative;">
+        <canvas id="dafa-canvas" aria-label="Sphère holographique DAFA — interactive" role="img" style="display:block;width:100%;touch-action:none;"></canvas>
+        <div style="position:absolute;top:10px;left:14px;width:16px;height:16px;border-top:1.5px solid rgba(0,242,255,.3);border-left:1.5px solid rgba(0,242,255,.3);pointer-events:none;"></div>
+        <div style="position:absolute;top:10px;right:14px;width:16px;height:16px;border-top:1.5px solid rgba(0,242,255,.3);border-right:1.5px solid rgba(0,242,255,.3);pointer-events:none;"></div>
+        <div style="position:absolute;bottom:6px;left:14px;width:16px;height:16px;border-bottom:1.5px solid rgba(0,242,255,.3);border-left:1.5px solid rgba(0,242,255,.3);pointer-events:none;"></div>
+        <div style="position:absolute;bottom:6px;right:14px;width:16px;height:16px;border-bottom:1.5px solid rgba(0,242,255,.3);border-right:1.5px solid rgba(0,242,255,.3);pointer-events:none;"></div>
+        <p id="dafa-hint" style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font:500 9px 'Courier New',monospace;color:rgba(0,242,255,.28);letter-spacing:.14em;pointer-events:none;margin:0;white-space:nowrap;">DRAG · SCROLL · CLICK</p>
     </section>
 
     <!-- HERO -->
@@ -780,315 +794,241 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="js/animations.js" defer></script>
 
-<!-- DAFA 3D Sphere Animation v6 -->
-<script>
-(function () {
-  'use strict';
+<!-- DAFA 3D Sphere Animation v7 — Three.js holographic -->
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls }  from 'three/addons/controls/OrbitControls.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass }     from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass }from 'three/addons/postprocessing/UnrealBloomPass.js';
 
-  const section = document.getElementById('dafa-particle-section');
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
   const canvas  = document.getElementById('dafa-canvas');
+  const section = document.getElementById('dafa-particle-section');
   if (!canvas || !section) return;
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    canvas.style.display = 'none';
-    const el = document.createElement('span');
-    el.style.cssText = 'font-family:Inter,-apple-system,sans-serif;font-weight:800;font-size:clamp(4rem,18vw,10rem);color:#5ac8fa;letter-spacing:-0.03em;display:block;text-align:center;padding:2rem;';
-    el.textContent = 'DAFA';
-    section.insertBefore(el, canvas);
-    return;
-  }
-
-  const ctx = canvas.getContext('2d');
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
   const mob = window.innerWidth < 600;
+  const W   = window.innerWidth;
+  const H   = Math.min(mob ? Math.round(W * 1.05) : Math.round(W * 0.62), mob ? 560 : 520);
 
-  const W  = window.innerWidth;
-  const H  = Math.min(mob ? Math.round(W * 1.05) : Math.round(W * 0.62), mob ? 560 : 520);
-  const CX = W / 2, CY = H / 2;
-  const R  = Math.min(W, H) * (mob ? 0.32 : 0.28);
-  const FOV = R * 3.5;
+  /* ── Renderer ── */
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !mob, alpha: false });
+  renderer.setSize(W, H);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 1);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.2;
 
-  canvas.width  = W * DPR;
-  canvas.height = H * DPR;
-  canvas.style.width  = W + 'px';
-  canvas.style.height = H + 'px';
-  ctx.scale(DPR, DPR);
-  section.style.minHeight = H + 'px';
-  canvas.style.cursor = 'grab';
+  /* ── Scene & Camera ── */
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, W / H, 0.1, 100);
+  camera.position.z = 7;
 
-  const C = ['#5ac8fa','#3ba8e0','#ffffff','#7dd8fc','#0071e3'];
+  /* ── OrbitControls ── */
+  const controls = new OrbitControls(camera, canvas);
+  controls.enableDamping   = true;
+  controls.dampingFactor   = 0.05;
+  controls.autoRotate      = true;
+  controls.autoRotateSpeed = 0.4;
+  controls.enablePan       = false;
+  controls.minDistance     = 4;
+  controls.maxDistance     = 14;
 
-  /* Sphère Fibonacci */
-  const N   = mob ? 1600 : 3200;
-  const PHI = Math.PI * (3 - Math.sqrt(5));
-  const pts = Array.from({length: N}, (_, i) => {
-    const y = 1 - (i / (N - 1)) * 2;
-    const r = Math.sqrt(1 - y * y);
-    return {
-      nx: Math.cos(PHI * i) * r, ny: y, nz: Math.sin(PHI * i) * r,
-      sz: Math.random() * 1.2 + 0.5,
-      ci: i % C.length,
-      fade: Math.random() * 1.2,
-      dafa: false,
-      dafaTx: 0, dafaTy: 0,
-      ph: Math.random() * Math.PI * 2,
-    };
+  /* ── Perlin Noise 3D ── */
+  const _p = new Uint8Array(512);
+  { const a=Array.from({length:256},(_,i)=>i); for(let i=255;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} for(let i=0;i<512;i++) _p[i]=a[i&255]; }
+  const _fd=t=>t*t*t*(t*(t*6-15)+10), _lp=(a,b,t)=>a+t*(b-a);
+  const _gr=(h,x,y,z)=>{const u=h<8?x:y,v=h<4?y:(h===12||h===14)?x:z;return((h&1)?-u:u)+((h&2)?-v:v);};
+  function noise3(x,y,z){
+    const X=Math.floor(x)&255,Y=Math.floor(y)&255,Z=Math.floor(z)&255;
+    x-=Math.floor(x);y-=Math.floor(y);z-=Math.floor(z);
+    const u=_fd(x),v=_fd(y),w=_fd(z);
+    const A=_p[X]+Y,AA=_p[A]+Z,AB=_p[A+1]+Z,B=_p[X+1]+Y,BA=_p[B]+Z,BB=_p[B+1]+Z;
+    return _lp(w,_lp(v,_lp(u,_gr(_p[AA],x,y,z),_gr(_p[BA],x-1,y,z)),_lp(u,_gr(_p[AB],x,y-1,z),_gr(_p[BB],x-1,y-1,z))),_lp(v,_lp(u,_gr(_p[AA+1],x,y,z-1),_gr(_p[BA+1],x-1,y,z-1)),_lp(u,_gr(_p[AB+1],x,y-1,z-1),_gr(_p[BB+1],x-1,y-1,z-1))));
+  }
+
+  /* ── Constants ── */
+  const R      = 2.2;
+  const N_REG  = mob ? 3000 : 6000;
+  const N_SPEC = mob ? 450  : 1400;
+  const N_TOT  = N_REG + N_SPEC;
+  const PHI_G  = Math.PI * (3 - Math.sqrt(5));
+  const T_OFF  = Math.PI * 1.618;
+
+  /* ── Particle buffers ── */
+  const positions  = new Float32Array(N_TOT * 3);
+  const basePos    = new Float32Array(N_TOT * 3);
+  const colors     = new Float32Array(N_TOT * 3);
+  const specTarget = new Float32Array(N_SPEC * 3);
+
+  /* Regular (cyan) — Fibonacci sphere */
+  for (let i=0; i<N_REG; i++) {
+    const y=1-(i/(N_REG-1))*2, r=Math.sqrt(1-y*y), th=PHI_G*i;
+    const bx=Math.cos(th)*r*R, by=y*R, bz=Math.sin(th)*r*R;
+    basePos[i*3]=positions[i*3]=bx; basePos[i*3+1]=positions[i*3+1]=by; basePos[i*3+2]=positions[i*3+2]=bz;
+    colors[i*3]=0; colors[i*3+1]=0.95; colors[i*3+2]=1;
+  }
+
+  /* Special (white) — Fibonacci sphere with thetaOffset (bug fix: no index offset) */
+  for (let i=0; i<N_SPEC; i++) {
+    const ii=N_REG+i;
+    const y=1-(i/(N_SPEC-1))*2, r=Math.sqrt(1-y*y), th=PHI_G*i+T_OFF;
+    const bx=Math.cos(th)*r*R, by=y*R, bz=Math.sin(th)*r*R;
+    basePos[ii*3]=positions[ii*3]=bx; basePos[ii*3+1]=positions[ii*3+1]=by; basePos[ii*3+2]=positions[ii*3+2]=bz;
+    colors[ii*3]=1; colors[ii*3+1]=1; colors[ii*3+2]=1;
+  }
+
+  /* ── Sample DAFA text → 3D target positions ── */
+  (function () {
+    const tw=360, th=120;
+    const off=document.createElement('canvas');
+    off.width=tw; off.height=th;
+    const oc=off.getContext('2d');
+    oc.fillStyle='#fff';
+    oc.font='bold 88px Arial,sans-serif';
+    oc.textAlign='center'; oc.textBaseline='middle';
+    oc.fillText('DAFA', tw/2, th/2);
+    const d=oc.getImageData(0,0,tw,th).data;
+    const pts=[]; const step=mob?6:5;
+    for(let y=0;y<th;y+=step) for(let x=0;x<tw;x+=step)
+      if(d[(y*tw+x)*4+3]>60) pts.push([(x/tw-0.5)*4.0,(0.5-y/th)*1.5,0]);
+    if(!pts.length) return;
+    for(let i=0;i<N_SPEC;i++){
+      const t=pts[i%pts.length];
+      specTarget[i*3]  =t[0]+(Math.random()-0.5)*0.14;
+      specTarget[i*3+1]=t[1]+(Math.random()-0.5)*0.11;
+      specTarget[i*3+2]=(Math.random()-0.5)*0.44;
+    }
+  })();
+
+  /* ── Unified geometry (vertex colors) ── */
+  const geom    = new THREE.BufferGeometry();
+  const posAttr = new THREE.BufferAttribute(positions, 3);
+  posAttr.setUsage(THREE.DynamicDrawUsage);
+  geom.setAttribute('position', posAttr);
+  geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  scene.add(new THREE.Points(geom, new THREE.PointsMaterial({
+    size: mob ? 0.050 : 0.040, vertexColors: true,
+    sizeAttenuation: true, transparent: true, opacity: 0.92, depthWrite: false,
+  })));
+
+  /* ── Line segments — precomputed once via spatial buckets ── */
+  const BKT=0.5, bk=(x,y,z)=>`${Math.round(x/BKT)},${Math.round(y/BKT)},${Math.round(z/BKT)}`;
+  const bkts=new Map();
+  for(let i=0;i<N_REG;i++){const k=bk(basePos[i*3],basePos[i*3+1],basePos[i*3+2]); if(!bkts.has(k))bkts.set(k,[]); bkts.get(k).push(i);}
+  const lIdx=[], MD2=0.16*0.16;
+  for(let i=0;i<N_REG;i++){
+    const bx=Math.round(basePos[i*3]/BKT),by=Math.round(basePos[i*3+1]/BKT),bz=Math.round(basePos[i*3+2]/BKT);
+    for(let dx=-1;dx<=1;dx++) for(let dy=-1;dy<=1;dy++) for(let dz=-1;dz<=1;dz++){
+      const bkt=bkts.get(`${bx+dx},${by+dy},${bz+dz}`); if(!bkt) continue;
+      for(const j of bkt){ if(j<=i) continue;
+        const a=basePos[i*3]-basePos[j*3],b=basePos[i*3+1]-basePos[j*3+1],c=basePos[i*3+2]-basePos[j*3+2];
+        if(a*a+b*b+c*c<MD2) lIdx.push(i,j);
+      }
+    }
+  }
+  const nL=lIdx.length/2, lv=new Float32Array(nL*6);
+  for(let p=0;p<nL;p++){
+    const i=lIdx[p*2],j=lIdx[p*2+1];
+    lv[p*6]=basePos[i*3];lv[p*6+1]=basePos[i*3+1];lv[p*6+2]=basePos[i*3+2];
+    lv[p*6+3]=basePos[j*3];lv[p*6+4]=basePos[j*3+1];lv[p*6+5]=basePos[j*3+2];
+  }
+  const lGeom=new THREE.BufferGeometry();
+  lGeom.setAttribute('position', new THREE.BufferAttribute(lv,3));
+  scene.add(new THREE.LineSegments(lGeom, new THREE.LineBasicMaterial({color:0x00c8ee,transparent:true,opacity:0.07})));
+
+  /* ── UnrealBloom post-processing ── */
+  const composer=new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene,camera));
+  composer.addPass(new UnrealBloomPass(new THREE.Vector2(W,H), mob?0.9:1.6, 0.4, 0.08));
+
+  /* ── DAFA state machine ── */
+  const T_CYC=14.4, T_SPH=6.0, T_IN=2.2, T_HLD=4.0, T_RET=2.2;
+  const eio=t=>t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  function getLerpT(e){
+    const p=e%T_CYC;
+    if(p<T_SPH)                    return 0;
+    if(p<T_SPH+T_IN)               return eio((p-T_SPH)/T_IN);
+    if(p<T_SPH+T_IN+T_HLD)        return 1;
+    if(p<T_SPH+T_IN+T_HLD+T_RET)  return 1-eio((p-T_SPH-T_IN-T_HLD)/T_RET);
+    return 0;
+  }
+
+  /* ── Floating words (click to toggle) ── */
+  const WORDS=['DIAGNOSTIC','AUTOMATIQUE','FIABILITÉ','ACHATS','DONNÉES','ANALYSE','DÉTECTION','OPTIMISATION','QUALITÉ','FLUX','ERREURS','RAPPORT'];
+  const wPos3D=WORDS.map((_,i)=>{
+    const phi=Math.acos(1-2*(i+0.5)/WORDS.length), theta=Math.PI*(1+Math.sqrt(5))*i;
+    return new THREE.Vector3(Math.sin(phi)*Math.cos(theta)*3.6, Math.cos(phi)*3.6, Math.sin(phi)*Math.sin(theta)*3.6);
+  });
+  const wDivs=WORDS.map(w=>{
+    const d=document.createElement('div');
+    d.textContent=w;
+    d.style.cssText='position:absolute;color:#00f2ff;font:700 11px "Courier New",monospace;pointer-events:none;opacity:0;transition:opacity 0.4s;text-shadow:0 0 10px #00f2ff99;white-space:nowrap;transform:translate(-50%,-50%);';
+    section.appendChild(d); return d;
+  });
+  let wOn=false, ptrMoved=false;
+  canvas.addEventListener('pointerdown',()=>{ptrMoved=false;});
+  canvas.addEventListener('pointermove',()=>{ptrMoved=true;});
+  canvas.addEventListener('pointerup',()=>{
+    if(!ptrMoved){
+      wOn=!wOn;
+      const hint=document.getElementById('dafa-hint');
+      if(hint) hint.style.opacity=wOn?'0':'1';
+      wDivs.forEach(d=>d.style.opacity=wOn?'1':'0');
+    }
   });
 
-  /* Mots orbitaux */
-  const WORD_LIST = [
-    {t:'DIAGNOSTIC',   a: 0.40, b: 0.20},
-    {t:'AUTOMATIQUE',  a:-0.45, b: 1.10},
-    {t:'FIABILITÉ',    a: 0.25, b:-0.80},
-    {t:'ACHATS',       a: 0.60, b: 2.50},
-    {t:'ANALYSE',      a: 0.10, b: 0.55},
-    {t:'DONNÉES',      a: 0.15, b: 0.85},
-    {t:'QUALITÉ',      a:-0.55, b: 2.80},
-    {t:'ERREURS',      a:-0.25, b:-1.20},
-    {t:'RAPPORT',      a: 0.65, b: 1.80},
-    {t:'FLUX',         a:-0.65, b: 0.52},
-    {t:'OPTIMISATION', a: 0.30, b:-1.52},
-    {t:'COMPATIBILITÉ',a:-0.40, b: 3.50},
-  ].map(w => ({
-    text: w.t,
-    nx: Math.cos(w.a) * Math.cos(w.b),
-    ny: Math.sin(w.a),
-    nz: Math.cos(w.a) * Math.sin(w.b),
-  }));
+  /* ── Mouse repulsion ── */
+  const m2D=new THREE.Vector2(-99,-99), _ray=new THREE.Raycaster();
+  const _pl=new THREE.Plane(new THREE.Vector3(0,0,1),0), _mw=new THREE.Vector3();
+  canvas.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect(); m2D.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);});
+  canvas.addEventListener('mouseleave',()=>m2D.set(-99,-99));
 
-  const W_IN   = 0.50;
-  const W_SHOW = 2.40;
-  const W_OUT  = 0.45;
-  const W_GAP  = 0.25;
-  const W_PER  = W_IN + W_SHOW + W_OUT + W_GAP;
-  const W_START = 2.0;
+  /* ── Animation loop ── */
+  const clock=new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    const t=clock.getElapsedTime();
+    controls.update();
 
-  /* Timing DAFA */
-  const DAFA_N     = mob ? 280 : 560;
-  const DAFA_START = 3.0;
-  const DAFA_CYCLE = 11.0;
-  const DAFA_FORM  = 2.0;
-  const DAFA_HOLD  = 3.0;
-  const DAFA_RET   = 2.0;
+    _ray.setFromCamera(m2D,camera);
+    _ray.ray.intersectPlane(_pl,_mw);
 
-  let dafaReady = false;
+    const lT=getLerpT(t), nT=t*0.13, nAtt=Math.max(0,1-lT*5);
 
-  /* Échantillonnage du texte DAFA — plusieurs tentatives pour fiabilité */
-  function sampleDafaText() {
-    if (dafaReady) return;
-    const tW  = Math.min(W * 0.68, 560);
-    const tH  = Math.round(tW * 0.30);
-    const off = document.createElement('canvas');
-    off.width = tW; off.height = tH;
-    const oc  = off.getContext('2d');
-    const fs  = Math.round(tH * 0.78);
-    oc.fillStyle = '#fff';
-    oc.font = `bold ${fs}px Arial, Helvetica, sans-serif`;
-    oc.textAlign = 'center'; oc.textBaseline = 'middle';
-    oc.fillText('DAFA', tW / 2, tH / 2);
-    const imgData = oc.getImageData(0, 0, tW, tH).data;
-    const gap = mob ? 5 : 4;
-    const targets = [];
-    for (let y = 0; y < tH; y += gap)
-      for (let x = 0; x < tW; x += gap)
-        if (imgData[(y * tW + x) * 4 + 3] > 80)
-          targets.push({ x: CX + x - tW / 2, y: CY + y - tH / 2 });
-    if (targets.length < 40) return;
-    for (let i = targets.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [targets[i], targets[j]] = [targets[j], targets[i]];
+    for(let i=0;i<N_REG;i++){
+      const bx=basePos[i*3],by=basePos[i*3+1],bz=basePos[i*3+2];
+      const n=noise3(bx*0.5+nT,by*0.5+nT,bz*0.5)*0.09;
+      let x=bx*(1+n),y=by*(1+n),z=bz*(1+n);
+      const dx=x-_mw.x,dy=y-_mw.y,dz=z-_mw.z, d2=dx*dx+dy*dy+dz*dz;
+      if(d2<0.7225&&d2>0.001){const d=Math.sqrt(d2),f=0.13*(1-d/0.85)/d; x+=dx*f;y+=dy*f;z+=dz*f;}
+      positions[i*3]=x; positions[i*3+1]=y; positions[i*3+2]=z;
     }
-    const count = Math.min(DAFA_N, targets.length);
-    for (let i = 0; i < count; i++) {
-      pts[i].dafa   = true;
-      pts[i].dafaTx = targets[i].x;
-      pts[i].dafaTy = targets[i].y;
+    for(let i=0;i<N_SPEC;i++){
+      const ii=N_REG+i;
+      const bx=basePos[ii*3],by=basePos[ii*3+1],bz=basePos[ii*3+2];
+      const n=noise3(bx*0.5+nT,by*0.5,bz*0.5)*0.09*nAtt;
+      const sx=bx*(1+n),sy=by*(1+n),sz=bz*(1+n);
+      positions[ii*3]  =sx+(specTarget[i*3]  -sx)*lT;
+      positions[ii*3+1]=sy+(specTarget[i*3+1]-sy)*lT;
+      positions[ii*3+2]=sz+(specTarget[i*3+2]-sz)*lT;
     }
-    dafaReady = true;
-  }
+    posAttr.needsUpdate=true;
 
-  /* Arial = police système, pas besoin d'attente — appel immédiat + filets de sécurité */
-  sampleDafaText();
-  document.fonts.ready.then(sampleDafaText);
-  setTimeout(sampleDafaText, 800);
-
-  /* Flux de particules depuis le haut */
-  const SN = mob ? 45 : 90;
-  const mkStream = () => ({
-    sx: CX + (Math.random() - 0.5) * 28,
-    sy: CY - H * 0.54,
-    ex: CX + (Math.random() - 0.5) * R * 0.4,
-    ey: CY + (Math.random() - 0.5) * R * 0.3,
-    t:  Math.random(),
-    sp: 0.005 + Math.random() * 0.006,
-    sz: Math.random() * 1.0 + 0.4,
-  });
-  const stream = Array.from({length: SN}, mkStream);
-
-  /* Rotation interactive */
-  let rotX = 0.25, rotY = 0, velX = 0, velY = 0.003, drag = false, lx = 0, ly = 0;
-  const onDown = e => { drag=true; canvas.style.cursor='grabbing'; lx=e.clientX??e.touches[0].clientX; ly=e.clientY??e.touches[0].clientY; velX=velY=0; };
-  const onUp   = () => { drag=false; canvas.style.cursor='grab'; };
-  const onMove = e => {
-    if (!drag) return;
-    const mx=e.clientX??e.touches[0].clientX, my=e.clientY??e.touches[0].clientY;
-    velY=(mx-lx)*0.005; velX=(my-ly)*0.005; rotY+=velY; rotX+=velX; lx=mx; ly=my;
-  };
-  canvas.addEventListener('mousedown',  onDown);
-  canvas.addEventListener('touchstart', onDown, {passive:true});
-  window.addEventListener('mouseup',    onUp);
-  window.addEventListener('touchend',   onUp);
-  window.addEventListener('mousemove',  onMove);
-  window.addEventListener('touchmove',  onMove, {passive:true});
-
-  /* Helpers 3D */
-  function rot3(px, py, pz) {
-    const cx=Math.cos(rotX),sx=Math.sin(rotX),cy=Math.cos(rotY),sy=Math.sin(rotY);
-    const y1=py*cx-pz*sx, z1=py*sx+pz*cx;
-    return {x:px*cy+z1*sy, y:y1, z:-px*sy+z1*cy};
-  }
-  const proj = (x,y,z) => { const sc=FOV/(FOV+z); return {sx:CX+x*sc,sy:CY+y*sc,sc}; };
-
-  /* Phase DAFA — modulo pur */
-  function dafaPhase(elapsed) {
-    if (!dafaReady || elapsed < DAFA_START) return null;
-    const t = (elapsed - DAFA_START) % DAFA_CYCLE;
-    if (t < DAFA_FORM)                         return {mode:'forming',   p: t / DAFA_FORM};
-    if (t < DAFA_FORM + DAFA_HOLD)             return {mode:'hold',      p:(t-DAFA_FORM)/DAFA_HOLD};
-    if (t < DAFA_FORM + DAFA_HOLD + DAFA_RET) return {mode:'returning', p:(t-DAFA_FORM-DAFA_HOLD)/DAFA_RET};
-    return null;
-  }
-
-  /* Easing cubique */
-  const easeOut3 = p => 1 - Math.pow(1 - Math.min(p, 1), 3);
-  const easeIn2  = p => p * p;
-
-  /* Boucle principale */
-  let t0 = null;
-  function frame(ts) {
-    if (!t0) t0 = ts;
-    const elapsed = (ts - t0) / 1000;
-
-    if (!drag) { rotY += 0.003; rotX += velX; rotY += velY; velX *= 0.94; velY *= 0.94; }
-    ctx.clearRect(0, 0, W, H);
-
-    /* Flux */
-    stream.forEach(s => {
-      s.t += s.sp;
-      if (s.t >= 1) Object.assign(s, mkStream(), {t: 0});
-      const e   = 1 - Math.pow(1 - s.t, 2);
-      const alp = s.t < 0.12 ? s.t/0.12 : s.t > 0.82 ? (1-s.t)/0.18 : 1;
-      ctx.globalAlpha = alp * 0.65;
-      ctx.fillStyle = '#5ac8fa';
-      ctx.beginPath();
-      ctx.arc(s.sx+(s.ex-s.sx)*e, s.sy+(s.ey-s.sy)*e, s.sz, 0, Math.PI*2);
-      ctx.fill();
-    });
-
-    /* Sphère + particules DAFA */
-    ctx.globalAlpha = 1;
-    const dafa = dafaPhase(elapsed);
-
-    pts.forEach(p => {
-      const alpha = Math.min((elapsed - p.fade) / 0.8, 1);
-      if (alpha <= 0) return;
-      const r3 = rot3(p.nx * R, p.ny * R, p.nz * R);
-      const pr = proj(r3.x, r3.y, r3.z);
-
-      if (p.dafa && dafa) {
-        const ease = easeOut3(dafa.p);
-        let drawX, drawY;
-
-        if (dafa.mode === 'forming') {
-          /* Les particules partent du centre de la sphère et s'étalent vers les lettres */
-          drawX = CX + (p.dafaTx - CX) * ease;
-          drawY = CY + (p.dafaTy - CY) * ease;
-          const glow = dafa.p < 0.4 ? 12 : 5;
-          ctx.globalAlpha = alpha;
-          ctx.fillStyle = '#34c759';
-          ctx.shadowColor = '#34c759';
-          ctx.shadowBlur = glow;
-          ctx.beginPath(); ctx.arc(drawX, drawY, p.sz * 2.5, 0, Math.PI * 2); ctx.fill();
-          ctx.shadowBlur = 0;
-          return;
-
-        } else if (dafa.mode === 'hold') {
-          const shimmer = 0.82 + Math.sin(elapsed * 4 + p.ph) * 0.18;
-          ctx.globalAlpha = alpha * shimmer;
-          ctx.fillStyle = '#34c759';
-          ctx.shadowColor = '#34c759';
-          ctx.shadowBlur = 9;
-          ctx.beginPath(); ctx.arc(p.dafaTx, p.dafaTy, p.sz * 2.5, 0, Math.PI * 2); ctx.fill();
-          ctx.shadowBlur = 0;
-          return;
-
-        } else {
-          drawX = p.dafaTx + (pr.sx - p.dafaTx) * ease;
-          drawY = p.dafaTy + (pr.sy - p.dafaTy) * ease;
-          ctx.globalAlpha = alpha * (1 - easeIn2(dafa.p) * 0.5);
-          ctx.fillStyle = '#34c759';
-          ctx.shadowColor = '#34c759';
-          ctx.shadowBlur = 4;
-          ctx.beginPath(); ctx.arc(drawX, drawY, p.sz * 2.5, 0, Math.PI * 2); ctx.fill();
-          ctx.shadowBlur = 0;
-          return;
-        }
-      }
-
-      /* Sphère normale */
-      const depth = (r3.z + R + FOV) / (2 * R + FOV);
-      ctx.globalAlpha = alpha * (0.2 + 0.8 * depth);
-      ctx.fillStyle = C[p.ci];
-      ctx.beginPath(); ctx.arc(pr.sx, pr.sy, p.sz * pr.sc, 0, Math.PI * 2); ctx.fill();
-    });
-
-    /* Mots — émergent du centre de la sphère vers leur orbite */
-    if (elapsed >= W_START) {
-      const idx = Math.floor((elapsed - W_START) / W_PER) % WORD_LIST.length;
-      const age = (elapsed - W_START) % W_PER;
-      const w   = WORD_LIST[idx];
-      const r3  = rot3(w.nx * R * 1.20, w.ny * R * 1.20, w.nz * R * 1.20);
-      const pr  = proj(r3.x, r3.y, r3.z);
-      const depth = (r3.z + R + FOV) / (2 * R + FOV);
-
-      let wAlpha = 0, progress = 0;
-      if (age < W_IN) {
-        progress = age / W_IN;
-        wAlpha   = progress;
-      } else if (age < W_IN + W_SHOW) {
-        progress = 1;
-        wAlpha   = 1;
-      } else if (age < W_IN + W_SHOW + W_OUT) {
-        const t  = (age - W_IN - W_SHOW) / W_OUT;
-        progress = 1 - t;
-        wAlpha   = 1 - t;
-      }
-
-      if (wAlpha > 0.01 && depth > 0.15) {
-        /* Trajectory : centre sphère → orbite (entrée) / orbite → centre (sortie) */
-        const ease  = easeOut3(progress);
-        const drawX = CX + (pr.sx - CX) * ease;
-        const drawY = CY + (pr.sy - CY) * ease;
-
-        ctx.save();
-        ctx.textAlign    = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.font = `700 ${mob ? 12 : 15}px "Courier New",monospace`;
-        ctx.shadowColor = '#34c759';
-        ctx.shadowBlur  = progress < 0.35 ? 22 : 8;
-        ctx.globalAlpha = wAlpha * Math.max(depth, 0.4);
-        ctx.fillStyle   = '#34c759';
-        ctx.fillText(w.text, drawX, drawY);
-        ctx.restore();
-      }
+    if(wOn){
+      const rect=canvas.getBoundingClientRect();
+      wDivs.forEach((_,i)=>{
+        const v=wPos3D[i].clone().project(camera);
+        if(v.z>1){wDivs[i].style.opacity='0';return;}
+        wDivs[i].style.left=((v.x*0.5+0.5)*rect.width)+'px';
+        wDivs[i].style.top =((-v.y*0.5+0.5)*rect.height)+'px';
+      });
     }
-
-    ctx.globalAlpha = 1;
-    ctx.shadowBlur  = 0;
-    requestAnimationFrame(frame);
+    composer.render();
   }
-
-  requestAnimationFrame(frame);
+  animate();
 })();
 </script>
 
