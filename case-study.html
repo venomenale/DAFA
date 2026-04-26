@@ -780,7 +780,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="js/animations.js" defer></script>
 
-<!-- DAFA 3D Sphere Animation -->
+<!-- DAFA 3D Sphere Animation v3 -->
 <script>
 (function () {
   'use strict';
@@ -837,8 +837,8 @@
     };
   });
 
-  /* ── Mots DAFA ── */
-  const WORDS = [
+  /* ── Mots DAFA — apparition séquentielle ── */
+  const WORD_DEFS = [
     {t:'DIAGNOSTIC',   a: 0.40, b: 0.20},
     {t:'AUTOMATIQUE',  a:-0.50, b: 1.10},
     {t:'FIABILITÉ',    a: 0.20, b:-0.80},
@@ -851,12 +851,59 @@
     {t:'FLUX',         a:-0.78, b: 0.52},
     {t:'OPTIMISATION', a: 0.32, b:-1.52},
     {t:'COMPATIBILITÉ',a:-0.42, b: 3.50},
-  ].map(w => ({
-    text: w.t,
-    nx: Math.cos(w.a) * Math.cos(w.b),
-    ny: Math.sin(w.a),
-    nz: Math.cos(w.a) * Math.sin(w.b),
+  ];
+  const WORDS = WORD_DEFS.map((w, i) => ({
+    text:     w.t,
+    nx:       Math.cos(w.a) * Math.cos(w.b),
+    ny:       Math.sin(w.a),
+    nz:       Math.cos(w.a) * Math.sin(w.b),
+    revealAt: 2.2 + i * 0.55, /* apparition décalée */
   }));
+
+  /* ── Sampling texte DAFA pour les particules (après fonts ready) ── */
+  let dafaTargets  = [];
+  let dafaReady    = false;
+  /* Mode particules DAFA : 'sphere' | 'forming' | 'hold' | 'returning' */
+  let dafaMode     = 'sphere';
+  let dafaTimer    = 0;
+  const DAFA_EVERY = 14; /* secondes entre chaque apparition */
+  const DAFA_FORM  = 1.8;
+  const DAFA_HOLD  = 2.5;
+  const DAFA_RET   = 1.8;
+  const DAFA_N     = mob ? 200 : 360; /* nb de particules pour DAFA */
+
+  document.fonts.ready.then(() => {
+    const tW  = Math.min(W * 0.72, 520);
+    const tH  = Math.round(tW * 0.26);
+    const off = document.createElement('canvas');
+    off.width = tW; off.height = tH;
+    const oc  = off.getContext('2d');
+    oc.fillStyle = '#fff';
+    oc.font = `800 ${Math.round(tH * 0.78)}px Inter,-apple-system,sans-serif`;
+    oc.textAlign = 'center'; oc.textBaseline = 'middle';
+    oc.fillText('DAFA', tW / 2, tH / 2);
+    const px = oc.getImageData(0, 0, tW, tH).data;
+    const gap = mob ? 5 : 4;
+    for (let y = 0; y < tH; y += gap)
+      for (let x = 0; x < tW; x += gap)
+        if (px[(y * tW + x) * 4 + 3] > 128)
+          dafaTargets.push({ x: CX + x - tW / 2, y: CY + y - tH / 2 });
+    /* Shuffle */
+    for (let i = dafaTargets.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [dafaTargets[i], dafaTargets[j]] = [dafaTargets[j], dafaTargets[i]];
+    }
+    /* Marquer les N premières particules comme "DAFA particles" */
+    const count = Math.min(DAFA_N, dafaTargets.length);
+    for (let i = 0; i < count; i++) {
+      pts[i].dafa   = true;
+      pts[i].dafaTx = dafaTargets[i].x;
+      pts[i].dafaTy = dafaTargets[i].y;
+      pts[i].capX   = 0;
+      pts[i].capY   = 0;
+    }
+    dafaReady = true;
+  });
 
   /* ── Queue de particules (flux entrant depuis le haut) ── */
   const SN = mob ? 45 : 90;
@@ -913,20 +960,6 @@
     return {sx: CX + x * sc, sy: CY + y * sc, sc};
   }
 
-  /* ── Mot flash (particules vertes qui écrivent un mot) ── */
-  let flashIdx   = -1;   /* index du mot actif dans WORDS */
-  let flashStart = -99;  /* elapsed quand le flash a commencé */
-  const FLASH_EVERY = 6; /* secondes entre chaque flash */
-  const FLASH_DUR   = 2.8;
-
-  /* Particules du flash : 60 points qui orbitent autour du mot projeté */
-  const FLASH_P = Array.from({length: 60}, (_, i) => ({
-    angle: (i / 60) * Math.PI * 2,
-    dist:  R * (0.08 + Math.random() * 0.12),
-    speed: (Math.random() - 0.5) * 0.04,
-    sz:    Math.random() * 1.5 + 0.6,
-  }));
-
   /* ── Boucle principale ── */
   let t0 = null;
 
@@ -942,7 +975,30 @@
 
     ctx.clearRect(0, 0, W, H);
 
-    /* ── Queue (flux entrant) ── */
+    /* ── Déclenchement DAFA toutes les DAFA_EVERY s ── */
+    if (dafaReady && dafaMode === 'sphere' && elapsed > 8) {
+      const cyc  = Math.floor((elapsed - 8) / DAFA_EVERY);
+      const prev = Math.floor((elapsed - 8 - 0.016) / DAFA_EVERY);
+      if (cyc > prev) {
+        /* Capturer la position projetée courante de chaque particule DAFA */
+        pts.forEach(p => {
+          if (!p.dafa) return;
+          const r3 = rot3(p.nx * R, p.ny * R, p.nz * R);
+          const pr = proj(r3.x, r3.y, r3.z);
+          p.capX = pr.sx; p.capY = pr.sy;
+        });
+        dafaMode = 'forming'; dafaTimer = elapsed;
+      }
+    }
+    if (dafaMode === 'forming'  && elapsed - dafaTimer > DAFA_FORM) { dafaMode = 'hold';      dafaTimer = elapsed; }
+    if (dafaMode === 'hold'     && elapsed - dafaTimer > DAFA_HOLD) {
+      /* Capturer position texte comme point de départ du retour */
+      pts.forEach(p => { if (p.dafa) { p.capX = p.dafaTx; p.capY = p.dafaTy; } });
+      dafaMode = 'returning'; dafaTimer = elapsed;
+    }
+    if (dafaMode === 'returning' && elapsed - dafaTimer > DAFA_RET)  { dafaMode = 'sphere'; }
+
+    /* ── Queue (flux entrant depuis le haut) ── */
     stream.forEach(s => {
       s.t += s.sp;
       if (s.t >= 1) Object.assign(s, mkStream(), {t: 0});
@@ -957,11 +1013,38 @@
       ctx.fill();
     });
 
-    /* ── Sphère ── */
+    /* ── Sphère + particules DAFA ── */
     ctx.globalAlpha = 1;
     pts.forEach(p => {
       const alpha = Math.min((elapsed - p.fade) / 0.7, 1);
       if (alpha <= 0) return;
+
+      /* Particules réservées pour l'animation DAFA */
+      if (p.dafa && dafaMode !== 'sphere') {
+        const dt   = Math.min((elapsed - dafaTimer) / (dafaMode === 'forming' ? DAFA_FORM : DAFA_RET), 1);
+        const ease = 1 - Math.pow(1 - dt, 3);
+        let px, py;
+        if (dafaMode === 'forming') {
+          px = p.capX + (p.dafaTx - p.capX) * ease;
+          py = p.capY + (p.dafaTy - p.capY) * ease;
+        } else if (dafaMode === 'hold') {
+          px = p.dafaTx; py = p.dafaTy;
+        } else { /* returning */
+          const r3 = rot3(p.nx * R, p.ny * R, p.nz * R);
+          const pr = proj(r3.x, r3.y, r3.z);
+          px = p.capX + (pr.sx - p.capX) * ease;
+          py = p.capY + (pr.sy - p.capY) * ease;
+        }
+        const shimmer = dafaMode === 'hold' ? 0.85 + Math.sin(elapsed * 4 + p.fade) * 0.15 : 1;
+        ctx.globalAlpha = alpha * shimmer;
+        ctx.fillStyle = '#34c759';
+        ctx.beginPath();
+        ctx.arc(px, py, p.sz * 1.6, 0, Math.PI * 2);
+        ctx.fill();
+        return;
+      }
+
+      /* Particule sphère normale */
       const r3 = rot3(p.nx * R, p.ny * R, p.nz * R);
       const pr = proj(r3.x, r3.y, r3.z);
       const depth = (r3.z + R + FOV) / (2 * R + FOV);
@@ -972,60 +1055,45 @@
       ctx.fill();
     });
 
-    /* ── Déclenchement du flash toutes les FLASH_EVERY s ── */
-    if (elapsed > 2.5 && Math.floor((elapsed - 2.5) / FLASH_EVERY) > Math.floor((elapsed - 2.5 - 0.016) / FLASH_EVERY)) {
-      flashIdx   = Math.floor(Math.random() * WORDS.length);
-      flashStart = elapsed;
-    }
+    /* ── Mots : apparition séquentielle un par un en vert → cyan ── */
+    ctx.textAlign = 'center';
+    WORDS.forEach(w => {
+      if (elapsed < w.revealAt) return; /* pas encore apparu */
 
-    /* ── Mots (apparaissent après 2 s) ── */
-    const wAlpha = Math.min((elapsed - 2.0) / 1.2, 1);
-    if (wAlpha > 0) {
-      ctx.textAlign = 'center';
-      WORDS.forEach((w, i) => {
-        const r3 = rot3(w.nx * R * 1.18, w.ny * R * 1.18, w.nz * R * 1.18);
-        if (r3.z < -R * 0.05) return;
-        const pr    = proj(r3.x, r3.y, r3.z);
-        const depth = (r3.z + R + FOV) / (2 * R + FOV);
+      const r3 = rot3(w.nx * R * 1.18, w.ny * R * 1.18, w.nz * R * 1.18);
+      if (r3.z < -R * 0.05) return; /* face arrière masquée */
+      const pr    = proj(r3.x, r3.y, r3.z);
+      const depth = (r3.z + R + FOV) / (2 * R + FOV);
+      const age   = elapsed - w.revealAt;
 
-        const isFlash = i === flashIdx;
-        const fProg   = isFlash ? Math.min((elapsed - flashStart) / FLASH_DUR, 1) : 0;
-        /* fade-in 0→0.3, full 0.3→0.7, fade-out 0.7→1 */
-        const fAlpha  = isFlash
-          ? (fProg < 0.3 ? fProg / 0.3 : fProg > 0.7 ? (1 - fProg) / 0.3 : 1)
-          : 0;
-
-        if (isFlash && fAlpha > 0) {
-          /* Mot en vert avec glow — taille plus grande */
-          ctx.save();
-          ctx.font = `700 ${mob ? 13 : 15}px "Courier New",monospace`;
-          ctx.shadowColor = '#34c759';
-          ctx.shadowBlur  = 14;
-          ctx.globalAlpha = fAlpha * depth;
-          ctx.fillStyle   = '#34c759';
-          ctx.fillText(w.text, pr.sx, pr.sy);
-          ctx.restore();
-
-          /* Particules qui orbitent autour du mot */
-          FLASH_P.forEach(fp => {
-            fp.angle += fp.speed;
-            const px = pr.sx + Math.cos(fp.angle) * fp.dist * fAlpha;
-            const py = pr.sy + Math.sin(fp.angle) * fp.dist * fAlpha * 0.5;
-            ctx.globalAlpha = fAlpha * depth * 0.75;
-            ctx.fillStyle = '#34c759';
-            ctx.beginPath();
-            ctx.arc(px, py, fp.sz, 0, Math.PI * 2);
-            ctx.fill();
-          });
-        } else {
-          /* Mot normal cyan */
-          ctx.font = `600 ${mob ? 9 : 11}px "Courier New",monospace`;
-          ctx.globalAlpha = wAlpha * depth * 0.85;
-          ctx.fillStyle = '#5ac8fa';
-          ctx.fillText(w.text, pr.sx, pr.sy);
-        }
-      });
-    }
+      if (age < 0.35) {
+        /* Flash d'apparition : vert vif, pop rapide */
+        const t = age / 0.35;
+        ctx.save();
+        ctx.font = `700 ${mob ? 12 : 14}px "Courier New",monospace`;
+        ctx.shadowColor = '#34c759';
+        ctx.shadowBlur  = 12;
+        ctx.globalAlpha = t * depth;
+        ctx.fillStyle   = '#34c759';
+        ctx.fillText(w.text, pr.sx, pr.sy);
+        ctx.restore();
+      } else if (age < 0.75) {
+        /* Transition vert → cyan */
+        const t = (age - 0.35) / 0.40; /* 0→1 */
+        const g = Math.round(0xcb + (0xac - 0xcb) * t).toString(16).padStart(2,'0'); /* ca→8a (R) */
+        const b = Math.round(0x59 + (0xfa - 0x59) * t).toString(16).padStart(2,'0'); /* 59→fa (B) */
+        ctx.font = `600 ${mob ? 10 : 12}px "Courier New",monospace`;
+        ctx.globalAlpha = depth * 0.9;
+        ctx.fillStyle = `#${Math.round(52 + (90 - 52) * t).toString(16).padStart(2,'0')}${g}${b}`;
+        ctx.fillText(w.text, pr.sx, pr.sy);
+      } else {
+        /* Cyan établi */
+        ctx.font = `600 ${mob ? 9 : 11}px "Courier New",monospace`;
+        ctx.globalAlpha = depth * 0.85;
+        ctx.fillStyle = '#5ac8fa';
+        ctx.fillText(w.text, pr.sx, pr.sy);
+      }
+    });
 
     ctx.globalAlpha = 1;
     requestAnimationFrame(frame);
