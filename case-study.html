@@ -780,7 +780,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="js/animations.js" defer></script>
 
-<!-- DAFA 3D Sphere Animation v5 -->
+<!-- DAFA 3D Sphere Animation v6 -->
 <script>
 (function () {
   'use strict';
@@ -883,7 +883,7 @@
     const oc  = off.getContext('2d');
     const fs  = Math.round(tH * 0.78);
     oc.fillStyle = '#fff';
-    oc.font = `900 ${fs}px Inter,-apple-system,Arial,sans-serif`;
+    oc.font = `bold ${fs}px Arial, Helvetica, sans-serif`;
     oc.textAlign = 'center'; oc.textBaseline = 'middle';
     oc.fillText('DAFA', tW / 2, tH / 2);
     const imgData = oc.getImageData(0, 0, tW, tH).data;
@@ -907,11 +907,10 @@
     dafaReady = true;
   }
 
-  /* Tentatives multiples : police rapide ou lente */
+  /* Arial = police système, pas besoin d'attente — appel immédiat + filets de sécurité */
+  sampleDafaText();
   document.fonts.ready.then(sampleDafaText);
-  setTimeout(sampleDafaText, 400);
-  setTimeout(sampleDafaText, 1200);
-  setTimeout(sampleDafaText, 2500);
+  setTimeout(sampleDafaText, 800);
 
   /* Flux de particules depuis le haut */
   const SN = mob ? 45 : 90;
@@ -1001,8 +1000,9 @@
         let drawX, drawY;
 
         if (dafa.mode === 'forming') {
-          drawX = pr.sx + (p.dafaTx - pr.sx) * ease;
-          drawY = pr.sy + (p.dafaTy - pr.sy) * ease;
+          /* Les particules partent du centre de la sphère et s'étalent vers les lettres */
+          drawX = CX + (p.dafaTx - CX) * ease;
+          drawY = CY + (p.dafaTy - CY) * ease;
           const glow = dafa.p < 0.4 ? 12 : 5;
           ctx.globalAlpha = alpha;
           ctx.fillStyle = '#34c759';
