@@ -65,9 +65,8 @@
 <main class="flex-grow-1">
 
     <!-- ANIMATION LOGO DAFA — Particles -->
-    <section id="dafa-particle-section" class="pt-5 mt-5 bg-dark text-center" style="min-height:260px;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden;">
-        <canvas id="dafa-canvas" aria-label="Animation logo DAFA" role="img" style="display:block;max-width:100%;"></canvas>
-        <p class="small text-white-50 text-uppercase tracking-widest mt-3 animate-fade-in anim-delay-6" style="letter-spacing:0.18em;">De la frustration à l'interface.</p>
+    <section id="dafa-particle-section" class="pt-5 mt-5 bg-dark" style="overflow:hidden;line-height:0;">
+        <canvas id="dafa-canvas" aria-label="Sphère de données DAFA — interactive" role="img" style="display:block;width:100%;touch-action:none;"></canvas>
     </section>
 
     <!-- HERO -->
@@ -781,7 +780,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="js/animations.js" defer></script>
 
-<!-- DAFA Particle Animation -->
+<!-- DAFA 3D Sphere Animation -->
 <script>
 (function () {
   'use strict';
@@ -790,141 +789,206 @@
   const canvas  = document.getElementById('dafa-canvas');
   if (!canvas || !section) return;
 
-  /* Reduced motion : affiche le texte statique */
+  /* Reduced motion fallback */
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     canvas.style.display = 'none';
-    const s = document.createElement('span');
-    s.textContent = 'DAFA';
-    s.style.cssText = 'font-family:Inter,-apple-system,sans-serif;font-weight:800;font-size:clamp(4rem,18vw,11rem);color:#fff;letter-spacing:-0.03em;';
-    section.insertBefore(s, canvas);
+    const el = document.createElement('span');
+    el.style.cssText = 'font-family:Inter,-apple-system,sans-serif;font-weight:800;font-size:clamp(4rem,18vw,10rem);color:#5ac8fa;letter-spacing:-0.03em;';
+    el.textContent = 'DAFA';
+    section.insertBefore(el, canvas);
     return;
   }
 
-  const ctx = canvas.getContext('2d');
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const ctx  = canvas.getContext('2d');
+  const DPR  = Math.min(window.devicePixelRatio || 1, 2);
+  const mob  = window.innerWidth < 600;
 
-  /* Couleurs de marque */
-  const COLORS = ['#5ac8fa','#0071e3','#34c759','#a0d4ff','#ffffff'];
+  /* ── Dimensions ── */
+  const W  = window.innerWidth;
+  const H  = Math.min(mob ? Math.round(W * 1.05) : Math.round(W * 0.62), mob ? 560 : 520);
+  const CX = W / 2, CY = H / 2;
+  const R  = Math.min(W, H) * (mob ? 0.32 : 0.28);
+  const FOV = R * 3.5;
 
-  /* Densité adaptée au mobile */
-  const isMobile = window.innerWidth < 600;
-  const GAP = isMobile ? 6 : 4;
+  canvas.width  = W * DPR;
+  canvas.height = H * DPR;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.scale(DPR, DPR);
+  section.style.minHeight = H + 'px';
+  canvas.style.cursor = 'grab';
 
-  function buildParticles() {
-    const W = Math.min(window.innerWidth, 960);
-    const H = isMobile ? 160 : 220;
+  /* ── Couleurs ── */
+  const C = ['#5ac8fa','#3ba8e0','#ffffff','#7dd8fc','#0071e3'];
 
-    canvas.width  = W * DPR;
-    canvas.height = H * DPR;
-    canvas.style.width  = W + 'px';
-    canvas.style.height = H + 'px';
-    ctx.scale(DPR, DPR);
+  /* ── Sphère — distribution Fibonacci ── */
+  const N   = mob ? 1600 : 3200;
+  const PHI = Math.PI * (3 - Math.sqrt(5));
+  const pts = Array.from({length: N}, (_, i) => {
+    const y = 1 - (i / (N - 1)) * 2;
+    const r = Math.sqrt(1 - y * y);
+    return {
+      nx: Math.cos(PHI * i) * r,
+      ny: y,
+      nz: Math.sin(PHI * i) * r,
+      sz: Math.random() * 1.2 + 0.5,
+      ci: i % C.length,
+      fade: Math.random() * 2.2, /* délai d'apparition (s) */
+    };
+  });
 
-    /* Canvas caché pour échantillonner les pixels du texte */
-    const off = document.createElement('canvas');
-    off.width  = W;
-    off.height = H;
-    const offCtx = off.getContext('2d');
-    const fontSize = Math.min(W * 0.22, isMobile ? 90 : 150);
-    offCtx.fillStyle = '#fff';
-    offCtx.font = `800 ${fontSize}px Inter,-apple-system,sans-serif`;
-    offCtx.textAlign    = 'center';
-    offCtx.textBaseline = 'middle';
-    offCtx.fillText('DAFA', W / 2, H / 2);
+  /* ── Mots DAFA ── */
+  const WORDS = [
+    {t:'DIAGNOSTIC',   a: 0.40, b: 0.20},
+    {t:'AUTOMATIQUE',  a:-0.50, b: 1.10},
+    {t:'FIABILITÉ',    a: 0.20, b:-0.80},
+    {t:'ACHATS',       a: 0.70, b: 2.50},
+    {t:'ANALYSE',      a: 0.05, b: 0.55},
+    {t:'DONNÉES',      a: 0.12, b: 0.85},
+    {t:'QUALITÉ',      a:-0.60, b: 2.80},
+    {t:'ERREURS',      a:-0.22, b:-1.20},
+    {t:'RAPPORT',      a: 0.78, b: 1.80},
+    {t:'FLUX',         a:-0.78, b: 0.52},
+    {t:'OPTIMISATION', a: 0.32, b:-1.52},
+    {t:'COMPATIBILITÉ',a:-0.42, b: 3.50},
+  ].map(w => ({
+    text: w.t,
+    nx: Math.cos(w.a) * Math.cos(w.b),
+    ny: Math.sin(w.a),
+    nz: Math.cos(w.a) * Math.sin(w.b),
+  }));
 
-    const data   = offCtx.getImageData(0, 0, W, H).data;
-    const points = [];
-    for (let y = 0; y < H; y += GAP) {
-      for (let x = 0; x < W; x += GAP) {
-        if (data[(y * W + x) * 4 + 3] > 128) points.push({ x, y });
-      }
-    }
+  /* ── Queue de particules (flux entrant depuis le haut) ── */
+  const SN = mob ? 45 : 90;
+  function mkStream() {
+    return {
+      sx: CX + (Math.random() - 0.5) * 28,
+      sy: CY - H * 0.54,
+      ex: CX + (Math.random() - 0.5) * R * 0.4,
+      ey: CY + (Math.random() - 0.5) * R * 0.3,
+      t:  Math.random(),
+      sp: 0.005 + Math.random() * 0.006,
+      sz: Math.random() * 1.0 + 0.4,
+    };
+  }
+  const stream = Array.from({length: SN}, mkStream);
 
-    /* Mélange de Fisher-Yates pour dispersion aléatoire */
-    for (let i = points.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [points[i], points[j]] = [points[j], points[i]];
-    }
+  /* ── Rotation ── */
+  let rotX = 0.25, rotY = 0;
+  let velX = 0,    velY = 0.003;
+  let drag = false, lx = 0, ly = 0;
 
-    return points.map((p, i) => {
-      const angle = Math.random() * Math.PI * 2;
-      const dist  = W * 0.4 + Math.random() * W * 0.6;
-      return {
-        tx:    p.x,
-        ty:    p.y,
-        x:     W / 2 + Math.cos(angle) * dist,
-        y:     H / 2 + Math.sin(angle) * dist,
-        color: COLORS[i % COLORS.length],
-        size:  Math.random() * 1.4 + 1.0,
-        delay: Math.random() * 0.45,
-      };
-    });
+  const onDown = e => {
+    drag = true; canvas.style.cursor = 'grabbing';
+    lx = e.clientX ?? e.touches[0].clientX;
+    ly = e.clientY ?? e.touches[0].clientY;
+    velX = velY = 0;
+  };
+  const onUp = () => { drag = false; canvas.style.cursor = 'grab'; };
+  const onMove = e => {
+    if (!drag) return;
+    const mx = e.clientX ?? e.touches[0].clientX;
+    const my = e.clientY ?? e.touches[0].clientY;
+    velY = (mx - lx) * 0.005; velX = (my - ly) * 0.005;
+    rotY += velY; rotX += velX;
+    lx = mx; ly = my;
+  };
+  canvas.addEventListener('mousedown',  onDown);
+  canvas.addEventListener('touchstart', onDown, {passive:true});
+  window.addEventListener('mouseup',    onUp);
+  window.addEventListener('touchend',   onUp);
+  window.addEventListener('mousemove',  onMove);
+  window.addEventListener('touchmove',  onMove, {passive:true});
+
+  /* ── 3D helpers ── */
+  function rot3(px, py, pz) {
+    const cx = Math.cos(rotX), sx = Math.sin(rotX);
+    const cy = Math.cos(rotY), sy = Math.sin(rotY);
+    const y1 = py * cx - pz * sx, z1 = py * sx + pz * cx;
+    const x2 = px * cy + z1 * sy, z2 = -px * sy + z1 * cy;
+    return {x: x2, y: y1, z: z2};
+  }
+  function proj(x, y, z) {
+    const sc = FOV / (FOV + z);
+    return {sx: CX + x * sc, sy: CY + y * sc, sc};
   }
 
-  /* Attend le chargement de la font Inter */
-  document.fonts.ready.then(function () {
-    const particles = buildParticles();
-    const W = parseInt(canvas.style.width);
-    const H = parseInt(canvas.style.height);
-    const CONVERGE_MS = 2200;
-    let startTime = null;
-    let drifting   = false;
-    let driftStart = null;
+  /* ── Boucle principale ── */
+  let t0 = null;
 
-    function render(ts) {
-      if (!startTime) startTime = ts;
+  function frame(ts) {
+    if (!t0) t0 = ts;
+    const elapsed = (ts - t0) / 1000;
 
-      /* --- Phase 1 : convergence --- */
-      if (!drifting) {
-        const prog = Math.min((ts - startTime) / CONVERGE_MS, 1);
-        ctx.clearRect(0, 0, W, H);
-
-        particles.forEach(p => {
-          const t  = Math.max(0, (prog - p.delay) / (1 - p.delay));
-          const e  = 1 - Math.pow(1 - Math.min(t, 1), 3); /* ease-out cubic */
-          const cx = p.x + (p.tx - p.x) * e;
-          const cy = p.y + (p.ty - p.y) * e;
-
-          ctx.save();
-          ctx.shadowColor = p.color;
-          ctx.shadowBlur  = 6;
-          ctx.fillStyle   = p.color;
-          ctx.beginPath();
-          ctx.arc(cx, cy, p.size, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.restore();
-        });
-
-        if (prog < 1) { requestAnimationFrame(render); return; }
-        drifting = true;
-      }
-
-      /* --- Phase 2 : dérive légère (shimmer) --- */
-      if (!driftStart) driftStart = ts;
-      const t = (ts - driftStart) / 1000;
-
-      ctx.clearRect(0, 0, W, H);
-      particles.forEach((p, i) => {
-        const ox = Math.sin(t * 1.4 + i * 0.09) * 0.9;
-        const oy = Math.cos(t * 1.1 + i * 0.13) * 0.9;
-        const glow = 3 + Math.sin(t * 2.2 + i * 0.2) * 2;
-
-        ctx.save();
-        ctx.shadowColor  = p.color;
-        ctx.shadowBlur   = glow;
-        ctx.fillStyle    = p.color;
-        ctx.globalAlpha  = 0.80 + Math.sin(t * 2.8 + i * 0.25) * 0.20;
-        ctx.beginPath();
-        ctx.arc(p.tx + ox, p.ty + oy, p.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
-
-      requestAnimationFrame(render);
+    /* Rotation auto + inertie */
+    if (!drag) {
+      rotY += 0.003; rotX += velX; rotY += velY;
+      velX *= 0.94; velY *= 0.94;
     }
 
-    requestAnimationFrame(render);
-  });
+    ctx.clearRect(0, 0, W, H);
+
+    /* HUD — coins style Iron Man */
+    const bsz = mob ? 16 : 22;
+    ctx.strokeStyle = 'rgba(90,200,250,0.35)';
+    ctx.lineWidth = 1.5;
+    [[12,12,1,1],[W-12,12,-1,1],[12,H-12,1,-1],[W-12,H-12,-1,-1]].forEach(([x,y,dx,dy]) => {
+      ctx.beginPath();
+      ctx.moveTo(x + dx * bsz, y); ctx.lineTo(x, y); ctx.lineTo(x, y + dy * bsz);
+      ctx.stroke();
+    });
+
+    /* ── Queue (flux entrant) ── */
+    stream.forEach(s => {
+      s.t += s.sp;
+      if (s.t >= 1) Object.assign(s, mkStream(), {t: 0});
+      const e   = 1 - Math.pow(1 - s.t, 2);
+      const sx  = s.sx + (s.ex - s.sx) * e;
+      const sy  = s.sy + (s.ey - s.sy) * e;
+      const alp = s.t < 0.12 ? s.t / 0.12 : s.t > 0.82 ? (1 - s.t) / 0.18 : 1;
+      ctx.globalAlpha = alp * 0.65;
+      ctx.fillStyle = '#5ac8fa';
+      ctx.beginPath();
+      ctx.arc(sx, sy, s.sz, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    /* ── Sphère ── */
+    ctx.globalAlpha = 1;
+    pts.forEach(p => {
+      const alpha = Math.min((elapsed - p.fade) / 0.7, 1);
+      if (alpha <= 0) return;
+      const r3 = rot3(p.nx * R, p.ny * R, p.nz * R);
+      const pr = proj(r3.x, r3.y, r3.z);
+      const depth = (r3.z + R + FOV) / (2 * R + FOV);
+      ctx.globalAlpha = alpha * (0.2 + 0.8 * depth);
+      ctx.fillStyle = C[p.ci];
+      ctx.beginPath();
+      ctx.arc(pr.sx, pr.sy, p.sz * pr.sc, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    /* ── Mots (apparaissent après 2 s) ── */
+    const wAlpha = Math.min((elapsed - 2.0) / 1.2, 1);
+    if (wAlpha > 0) {
+      ctx.font = `600 ${mob ? 9 : 11}px "Courier New",monospace`;
+      ctx.textAlign = 'center';
+      WORDS.forEach(w => {
+        const r3 = rot3(w.nx * R * 1.18, w.ny * R * 1.18, w.nz * R * 1.18);
+        if (r3.z < -R * 0.05) return; /* masquer face arrière */
+        const pr = proj(r3.x, r3.y, r3.z);
+        const depth = (r3.z + R + FOV) / (2 * R + FOV);
+        ctx.globalAlpha = wAlpha * depth * 0.85;
+        ctx.fillStyle = '#5ac8fa';
+        ctx.fillText(w.text, pr.sx, pr.sy);
+      });
+    }
+
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
 })();
 </script>
 
