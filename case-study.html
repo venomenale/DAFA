@@ -65,7 +65,7 @@
 <main class="flex-grow-1">
 
     <!-- ANIMATION LOGO DAFA — Particles -->
-    <section id="dafa-particle-section" class="pt-5 mt-5 bg-dark" style="overflow:hidden;line-height:0;">
+    <section id="dafa-particle-section" class="pt-5 mt-5" style="background:linear-gradient(to bottom,#111 0%,#111 55%,#ffffff 100%);overflow:hidden;line-height:0;">
         <canvas id="dafa-canvas" aria-label="Sphère de données DAFA — interactive" role="img" style="display:block;width:100%;touch-action:none;"></canvas>
     </section>
 
@@ -913,6 +913,20 @@
     return {sx: CX + x * sc, sy: CY + y * sc, sc};
   }
 
+  /* ── Mot flash (particules vertes qui écrivent un mot) ── */
+  let flashIdx   = -1;   /* index du mot actif dans WORDS */
+  let flashStart = -99;  /* elapsed quand le flash a commencé */
+  const FLASH_EVERY = 6; /* secondes entre chaque flash */
+  const FLASH_DUR   = 2.8;
+
+  /* Particules du flash : 60 points qui orbitent autour du mot projeté */
+  const FLASH_P = Array.from({length: 60}, (_, i) => ({
+    angle: (i / 60) * Math.PI * 2,
+    dist:  R * (0.08 + Math.random() * 0.12),
+    speed: (Math.random() - 0.5) * 0.04,
+    sz:    Math.random() * 1.5 + 0.6,
+  }));
+
   /* ── Boucle principale ── */
   let t0 = null;
 
@@ -927,16 +941,6 @@
     }
 
     ctx.clearRect(0, 0, W, H);
-
-    /* HUD — coins style Iron Man */
-    const bsz = mob ? 16 : 22;
-    ctx.strokeStyle = 'rgba(90,200,250,0.35)';
-    ctx.lineWidth = 1.5;
-    [[12,12,1,1],[W-12,12,-1,1],[12,H-12,1,-1],[W-12,H-12,-1,-1]].forEach(([x,y,dx,dy]) => {
-      ctx.beginPath();
-      ctx.moveTo(x + dx * bsz, y); ctx.lineTo(x, y); ctx.lineTo(x, y + dy * bsz);
-      ctx.stroke();
-    });
 
     /* ── Queue (flux entrant) ── */
     stream.forEach(s => {
@@ -968,19 +972,58 @@
       ctx.fill();
     });
 
+    /* ── Déclenchement du flash toutes les FLASH_EVERY s ── */
+    if (elapsed > 2.5 && Math.floor((elapsed - 2.5) / FLASH_EVERY) > Math.floor((elapsed - 2.5 - 0.016) / FLASH_EVERY)) {
+      flashIdx   = Math.floor(Math.random() * WORDS.length);
+      flashStart = elapsed;
+    }
+
     /* ── Mots (apparaissent après 2 s) ── */
     const wAlpha = Math.min((elapsed - 2.0) / 1.2, 1);
     if (wAlpha > 0) {
-      ctx.font = `600 ${mob ? 9 : 11}px "Courier New",monospace`;
       ctx.textAlign = 'center';
-      WORDS.forEach(w => {
+      WORDS.forEach((w, i) => {
         const r3 = rot3(w.nx * R * 1.18, w.ny * R * 1.18, w.nz * R * 1.18);
-        if (r3.z < -R * 0.05) return; /* masquer face arrière */
-        const pr = proj(r3.x, r3.y, r3.z);
+        if (r3.z < -R * 0.05) return;
+        const pr    = proj(r3.x, r3.y, r3.z);
         const depth = (r3.z + R + FOV) / (2 * R + FOV);
-        ctx.globalAlpha = wAlpha * depth * 0.85;
-        ctx.fillStyle = '#5ac8fa';
-        ctx.fillText(w.text, pr.sx, pr.sy);
+
+        const isFlash = i === flashIdx;
+        const fProg   = isFlash ? Math.min((elapsed - flashStart) / FLASH_DUR, 1) : 0;
+        /* fade-in 0→0.3, full 0.3→0.7, fade-out 0.7→1 */
+        const fAlpha  = isFlash
+          ? (fProg < 0.3 ? fProg / 0.3 : fProg > 0.7 ? (1 - fProg) / 0.3 : 1)
+          : 0;
+
+        if (isFlash && fAlpha > 0) {
+          /* Mot en vert avec glow — taille plus grande */
+          ctx.save();
+          ctx.font = `700 ${mob ? 13 : 15}px "Courier New",monospace`;
+          ctx.shadowColor = '#34c759';
+          ctx.shadowBlur  = 14;
+          ctx.globalAlpha = fAlpha * depth;
+          ctx.fillStyle   = '#34c759';
+          ctx.fillText(w.text, pr.sx, pr.sy);
+          ctx.restore();
+
+          /* Particules qui orbitent autour du mot */
+          FLASH_P.forEach(fp => {
+            fp.angle += fp.speed;
+            const px = pr.sx + Math.cos(fp.angle) * fp.dist * fAlpha;
+            const py = pr.sy + Math.sin(fp.angle) * fp.dist * fAlpha * 0.5;
+            ctx.globalAlpha = fAlpha * depth * 0.75;
+            ctx.fillStyle = '#34c759';
+            ctx.beginPath();
+            ctx.arc(px, py, fp.sz, 0, Math.PI * 2);
+            ctx.fill();
+          });
+        } else {
+          /* Mot normal cyan */
+          ctx.font = `600 ${mob ? 9 : 11}px "Courier New",monospace`;
+          ctx.globalAlpha = wAlpha * depth * 0.85;
+          ctx.fillStyle = '#5ac8fa';
+          ctx.fillText(w.text, pr.sx, pr.sy);
+        }
       });
     }
 
