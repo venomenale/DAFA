@@ -342,6 +342,14 @@ fieldset legend {
    ============================================================ */
 
 @media (max-width: 991.98px) {
+    /* Burger menu: items align right, same side as the toggle button */
+    .navbar-collapse .navbar-nav {
+        text-align: right;
+    }
+    .navbar-collapse .nav-link {
+        text-align: right;
+    }
+
     .hero-section {
         min-height: auto;
     }

@@ -69,7 +69,11 @@
     .badge.bg-white{background-color:#252529!important;color:#e4e4e9!important;}
     blockquote.border-start{color:#e4e4e9;}
     /* Headings permanently hidden — particles ARE the text */
-    .ptcl-heading{} /* headings always visible — particles are decorative left-margin indicator */
+    .ptcl-heading{}
+    /* Stat cards — manifeste style */
+    .stat-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:1rem .75rem;text-align:center;transition:border-color .25s;}
+    .stat-card:hover{border-color:rgba(0,242,255,.35);}
+    .stat-num{font-weight:800;background:linear-gradient(135deg,#00f2ff,#7b61ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;font-size:clamp(1.5rem,3vw,2.2rem);}
     </style>
 </head>
 
@@ -120,26 +124,26 @@
             </p>
             <div class="row g-3 mt-3">
                 <div class="col-6 col-md-3">
-                    <div class="p-3 bg-light-apple border rounded-4 text-center">
-                        <div class="fs-3 fw-bold text-primary" data-counter="8" data-suffix=" mois">8 mois</div>
-                        <div class="small text-muted text-uppercase">Durée projet</div>
+                    <div class="stat-card">
+                        <div class="stat-num mb-1">8</div>
+                        <div class="small text-muted text-uppercase">Mois projet</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="p-3 bg-light-apple border rounded-4 text-center">
-                        <div class="fs-3 fw-bold text-primary" data-counter="50" data-suffix="+">50+</div>
+                    <div class="stat-card">
+                        <div class="stat-num mb-1">50+</div>
                         <div class="small text-muted text-uppercase">Écrans Figma</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="p-3 bg-light-apple border rounded-4 text-center">
-                        <div class="fs-3 fw-bold text-primary" data-counter="99" data-suffix="/100">99/100</div>
-                        <div class="small text-muted text-uppercase">PageSpeed desktop</div>
+                    <div class="stat-card">
+                        <div class="stat-num mb-1">99</div>
+                        <div class="small text-muted text-uppercase">PageSpeed</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="p-3 bg-light-apple border rounded-4 text-center">
-                        <div class="fs-3 fw-bold text-primary">Solo</div>
+                    <div class="stat-card">
+                        <div class="stat-num mb-1">Solo</div>
                         <div class="small text-muted text-uppercase">Rôle</div>
                     </div>
                 </div>
