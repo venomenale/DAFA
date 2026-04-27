@@ -97,8 +97,8 @@
 <main class="flex-grow-1">
 
     <!-- ANIMATION LOGO DAFA — Particles -->
-    <section id="dafa-particle-section" class="pt-5 mt-5" style="background:#000;overflow:hidden;line-height:0;position:relative;">
-        <canvas id="dafa-canvas" aria-label="Sphère holographique DAFA — interactive" role="img" style="display:block;width:100%;touch-action:none;background:radial-gradient(ellipse 70% 55% at 50% 42%,#071c2c 0%,#000 72%);"></canvas>
+    <section id="dafa-particle-section" class="pt-5 mt-5" style="background:#0a0a0a;overflow:hidden;line-height:0;position:relative;">
+        <canvas id="dafa-canvas" aria-label="Sphère holographique DAFA — interactive" role="img" style="display:block;width:100%;touch-action:none;background:radial-gradient(ellipse 70% 55% at 50% 42%,#071c2c 0%,#0a0a0a 72%);"></canvas>
         <p id="dafa-hint" style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font:500 9px 'Courier New',monospace;color:rgba(0,242,255,.28);letter-spacing:.14em;pointer-events:none;margin:0;white-space:nowrap;">DRAG · SCROLL · CLICK</p>
         <!-- Fondu vers le blanc de la page -->
         <div style="position:absolute;bottom:0;left:0;right:0;height:28%;background:linear-gradient(to bottom,transparent,#0a0a0a);pointer-events:none;z-index:3;"></div>
@@ -1289,6 +1289,82 @@ import { UnrealBloomPass }from 'three/addons/postprocessing/UnrealBloomPass.js';
     composer.render();
   }
   animate();
+})();
+</script>
+
+<!-- Section dot navigation — lights up active section in cyan, matches particle theme -->
+<script>
+(function(){
+  const sections=Array.from(document.querySelectorAll('main > section:not(#dafa-particle-section)'));
+  if(sections.length<2) return;
+
+  const shortLabel=s=>{
+    const h=s.querySelector('h1,h2');
+    if(!h) return '';
+    const t=h.textContent.trim();
+    return t.length>22?t.slice(0,20)+'…':t;
+  };
+
+  /* Build nav */
+  const nav=document.createElement('nav');
+  nav.setAttribute('aria-label','Navigation sections');
+  nav.style.cssText='position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:12px;opacity:0;transition:opacity .4s ease;';
+
+  const DOT_DEF='8px';const DOT_ACT='11px';
+  const dots=sections.map(sec=>{
+    const btn=document.createElement('button');
+    btn.setAttribute('aria-label',shortLabel(sec));
+    btn.style.cssText=`width:${DOT_DEF};height:${DOT_DEF};border-radius:50%;border:none;padding:0;background:rgba(255,255,255,.20);cursor:pointer;transition:all .35s cubic-bezier(.16,1,.3,1);position:relative;flex-shrink:0;`;
+
+    /* Tooltip — desktop only */
+    const tip=document.createElement('span');
+    tip.textContent=shortLabel(sec);
+    tip.setAttribute('aria-hidden','true');
+    tip.style.cssText='position:absolute;right:18px;top:50%;transform:translateY(-50%);white-space:nowrap;font:500 11px/1 -apple-system,BlinkMacSystemFont,sans-serif;color:#e4e4e9;background:rgba(10,10,10,.88);padding:4px 9px;border-radius:7px;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(8px);';
+    btn.appendChild(tip);
+
+    btn.addEventListener('mouseenter',()=>tip.style.opacity='1');
+    btn.addEventListener('mouseleave',()=>tip.style.opacity='0');
+    btn.addEventListener('click',()=>sec.scrollIntoView({behavior:'smooth',block:'start'}));
+    nav.appendChild(btn);
+    return {btn,tip};
+  });
+
+  document.body.appendChild(nav);
+
+  /* Activate dot */
+  let activeIdx=-1;
+  const activate=i=>{
+    if(i===activeIdx) return;
+    if(activeIdx>=0){
+      dots[activeIdx].btn.style.cssText=dots[activeIdx].btn.style.cssText
+        .replace(/width:[^;]+/,`width:${DOT_DEF}`).replace(/height:[^;]+/,`height:${DOT_DEF}`)
+        .replace(/background:[^;]+/,'background:rgba(255,255,255,.20)')
+        .replace(/box-shadow:[^;]+;?/,'');
+    }
+    activeIdx=i;
+    const b=dots[i].btn;
+    b.style.width=DOT_ACT; b.style.height=DOT_ACT;
+    b.style.background='rgba(0,242,255,.88)';
+    b.style.boxShadow='0 0 10px rgba(0,242,255,.55)';
+  };
+
+  const io=new IntersectionObserver(entries=>{
+    let best=-1,bestRatio=0;
+    entries.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>bestRatio){bestRatio=e.intersectionRatio;best=sections.indexOf(e.target);}});
+    if(best>=0) activate(best);
+  },{threshold:[0.15,0.4,0.6],rootMargin:'-5% 0px -30% 0px'});
+
+  sections.forEach(s=>io.observe(s));
+
+  /* Show only after scrolling past sphere */
+  const sphere=document.getElementById('dafa-particle-section');
+  const showAt=sphere?sphere.offsetTop+sphere.offsetHeight*.6:300;
+  window.addEventListener('scroll',()=>{
+    const show=window.scrollY>showAt;
+    nav.style.opacity=show?'1':'0';
+    nav.style.pointerEvents=show?'auto':'none';
+  },{passive:true});
 })();
 </script>
 
