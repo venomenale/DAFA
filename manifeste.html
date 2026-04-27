@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="fr" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La méritocratie n'existe pas · Essam Libert</title>
+    <meta name="description" content="Manifeste UX : pourquoi la méritocratie dans le design est un mythe, ce qui compte vraiment, et ce qu'on peut changer. Par Essam Libert, UX Designer.">
+    <link rel="canonical" href="https://essamlibert.com/manifeste.html">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://essamlibert.com/manifeste.html">
+    <meta property="og:title" content="La méritocratie n'existe pas · Essam Libert">
+    <meta property="og:description" content="Manifeste UX : pourquoi la méritocratie dans le design est un mythe, ce qui compte vraiment, et ce qu'on peut changer.">
+    <meta property="og:locale" content="fr_BE">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="La méritocratie n'existe pas · Essam Libert">
+    <meta name="twitter:description" content="Manifeste UX : pourquoi la méritocratie dans le design est un mythe.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" media="print" onload="this.media='all'">
+
+    <style>
+    body.apple-theme{background-color:#0a0a0a!important;color:#e4e4e9!important;}
+    body.bg-light-apple{background-color:#0a0a0a!important;}
+    .bg-light-apple{background-color:#16161a!important;}
+    .text-muted{color:#8e8e93!important;}
+
+    /* Hero gradient text */
+    .hero-claim{
+        font-size:clamp(2.4rem,7vw,5.5rem);
+        font-weight:800;
+        line-height:1.05;
+        letter-spacing:-.03em;
+        background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,.55) 100%);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+        background-clip:text;
+    }
+    .hero-accent{
+        -webkit-text-fill-color:transparent;
+        background:linear-gradient(90deg,#00f2ff,#7b61ff);
+        -webkit-background-clip:text;
+        background-clip:text;
+    }
+
+    /* Ambient noise background */
+    .manifeste-hero{
+        min-height:100svh;
+        display:flex;
+        align-items:center;
+        position:relative;
+        overflow:hidden;
+        background:#0a0a0a;
+    }
+    .manifeste-hero::before{
+        content:'';
+        position:absolute;inset:0;
+        background:
+            radial-gradient(ellipse 70% 55% at 20% 40%,rgba(0,242,255,.07) 0%,transparent 70%),
+            radial-gradient(ellipse 60% 50% at 80% 70%,rgba(123,97,255,.07) 0%,transparent 70%);
+        animation:bg-drift 14s ease-in-out infinite alternate;
+        pointer-events:none;
+    }
+    @keyframes bg-drift{
+        0%{transform:translateX(0) translateY(0);}
+        100%{transform:translateX(-2%) translateY(2%);}
+    }
+
+    /* Scroll progress bar */
+    #scroll-progress{
+        position:fixed;top:0;left:0;height:2px;
+        background:linear-gradient(90deg,#00f2ff,#7b61ff);
+        width:0%;z-index:9999;transition:width .1s linear;
+    }
+
+    /* Pull quote */
+    .pull-quote{
+        border-left:3px solid #00f2ff;
+        padding:1.25rem 1.5rem;
+        background:rgba(0,242,255,.04);
+        border-radius:0 12px 12px 0;
+        font-size:1.15rem;
+        font-style:italic;
+        color:#e4e4e9;
+    }
+
+    /* Stat card */
+    .stat-card{
+        background:rgba(255,255,255,.04);
+        border:1px solid rgba(255,255,255,.08);
+        border-radius:20px;
+        padding:2rem 1.5rem;
+        text-align:center;
+        transition:border-color .25s,transform .25s;
+    }
+    .stat-card:hover{
+        border-color:rgba(0,242,255,.35);
+        transform:translateY(-3px);
+    }
+    .stat-num{
+        font-size:clamp(2rem,5vw,3.5rem);
+        font-weight:800;
+        background:linear-gradient(135deg,#00f2ff,#7b61ff);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+        background-clip:text;
+        line-height:1;
+    }
+
+    /* Section label */
+    .section-label{
+        font-size:.7rem;
+        font-weight:600;
+        letter-spacing:.2em;
+        text-transform:uppercase;
+        color:#00f2ff;
+        opacity:.8;
+    }
+
+    /* Reveal animation */
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
+
+    /* Tag chips */
+    .chip{
+        display:inline-block;
+        padding:.3rem .85rem;
+        border:1px solid rgba(255,255,255,.15);
+        border-radius:999px;
+        font-size:.8rem;
+        color:#8e8e93;
+        margin:.2rem;
+    }
+
+    /* CTA card */
+    .cta-card{
+        background:linear-gradient(135deg,rgba(0,242,255,.08),rgba(123,97,255,.08));
+        border:1px solid rgba(0,242,255,.18);
+        border-radius:28px;
+        padding:clamp(2rem,5vw,4rem);
+    }
+    </style>
+</head>
+
+<body class="apple-theme bg-light-apple d-flex flex-column min-vh-100">
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-nav border-bottom border-secondary border-opacity-25" aria-label="Navigation principale">
+        <div class="container">
+            <a class="navbar-brand fw-bold tracking-tight" href="index.html">ESSAM LIBERT</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Ouvrir le menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="case-study.html">DAFA</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="manifeste.html">Manifeste</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class="flex-grow-1">
+
+<!-- HERO -->
+<section class="manifeste-hero pt-5" aria-labelledby="hero-heading">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-9">
+                <p class="section-label mb-4" aria-hidden="true">Manifeste · 2026</p>
+                <h1 class="hero-claim mb-5" id="hero-heading">
+                    La méritocratie<br>
+                    <span class="hero-accent">n'existe pas.</span>
+                </h1>
+                <p class="fs-4 text-white-50 mb-4" style="max-width:620px;line-height:1.6;">
+                    Une vérité inconfortable que l'industrie du design fait semblant d'ignorer depuis trop longtemps.
+                </p>
+                <div class="d-flex flex-wrap gap-3 align-items-center">
+                    <a href="contact.html" class="btn btn-primary fw-bold rounded-pill px-4 py-2">
+                        Me contacter
+                    </a>
+                    <a href="case-study.html" class="btn btn-outline-light fw-bold rounded-pill px-4 py-2">
+                        Voir le case study DAFA
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- END HERO -->
+
+<!-- SECTION 1 : LE MYTHE -->
+<section class="py-5 bg-light-apple" aria-labelledby="s1-heading">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center reveal">
+            <div class="col-lg-5">
+                <p class="section-label mb-3">01 · Le mythe fondateur</p>
+                <h2 class="display-5 fw-bold mb-4" id="s1-heading">Travaille dur.<br>Tu réussiras.</h2>
+                <p class="fs-5 text-muted mb-4">
+                    Le terme « méritocratie » a été inventé en 1958 par le sociologue britannique Michael Young — comme une <strong class="text-white">satire</strong>. Une mise en garde contre une société qui confondrait talent apparent et justice sociale.
+                </p>
+                <p class="text-muted">
+                    Soixante ans plus tard, l'industrie tech et design l'a adopté comme un idéal à atteindre. Le portfolio parfait, le side project, les 10 000 heures. Si tu n'as pas réussi, c'est que tu n'as pas assez travaillé.
+                </p>
+            </div>
+            <div class="col-lg-6 offset-lg-1">
+                <blockquote class="pull-quote mb-4">
+                    «&nbsp;The meritocracy was intended as a warning. The book was a satire. I had hoped it would be recognised as such.&nbsp;»
+                    <footer class="mt-2 small text-muted">— Michael Young, <cite>The Guardian, 2001</cite></footer>
+                </blockquote>
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="stat-card">
+                            <div class="stat-num mb-1">82%</div>
+                            <div class="small text-muted">des offres UX exigent 3+ ans d'expérience pour un poste junior</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stat-card">
+                            <div class="stat-num mb-1">67%</div>
+                            <div class="small text-muted">des embauches en design passent d'abord par le réseau personnel</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 2 : DANS LE DESIGN -->
+<section class="py-5" aria-labelledby="s2-heading">
+    <div class="container py-5">
+        <div class="row justify-content-center reveal">
+            <div class="col-lg-9 text-center mb-5">
+                <p class="section-label mb-3">02 · Dans le design, encore plus qu'ailleurs</p>
+                <h2 class="display-5 fw-bold" id="s2-heading">Le portfolio comme filtre de classe.</h2>
+            </div>
+        </div>
+        <div class="row g-4 reveal">
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card h-100 text-start">
+                    <div class="mb-3 fs-2" aria-hidden="true"><i class="bi bi-laptop text-primary"></i></div>
+                    <h3 class="h6 fw-bold mb-2">Accès aux outils</h3>
+                    <p class="small text-muted mb-0">Figma, Adobe CC, MacBook. Les outils du métier coûtent cher. Le candidat sans ces ressources part perdant avant même le premier entretien.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card h-100 text-start">
+                    <div class="mb-3 fs-2" aria-hidden="true"><i class="bi bi-people text-primary"></i></div>
+                    <h3 class="h6 fw-bold mb-2">Le réseau invisible</h3>
+                    <p class="small text-muted mb-0">Les stages non rémunérés, les hackathons à Paris, les conférences à 400€. Le "bon profil" ressemble souvent à "la bonne école dans la bonne ville".</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card h-100 text-start">
+                    <div class="mb-3 fs-2" aria-hidden="true"><i class="bi bi-clock-history text-primary"></i></div>
+                    <h3 class="h6 fw-bold mb-2">Le temps libre</h3>
+                    <p class="small text-muted mb-0">Les side projects supposent du temps non rémunéré. Tous les candidats n'ont pas le luxe de travailler gratuitement le soir après une journée à mi-temps.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card h-100 text-start">
+                    <div class="mb-3 fs-2" aria-hidden="true"><i class="bi bi-eye text-primary"></i></div>
+                    <h3 class="h6 fw-bold mb-2">Les biais cognitifs</h3>
+                    <p class="small text-muted mb-0">L'effet de halo, le biais de conformité, l'affinité culturelle. Un portfolio "propre" ressemble souvent aux portfolios des recruteurs quand ils avaient 25 ans.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 3 : CE QUI COMPTE VRAIMENT -->
+<section class="py-5 bg-light-apple" aria-labelledby="s3-heading">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center reveal">
+            <div class="col-lg-6">
+                <p class="section-label mb-3">03 · Ce qui compte vraiment</p>
+                <h2 class="display-5 fw-bold mb-4" id="s3-heading">Les vrais facteurs de réussite.</h2>
+                <p class="fs-5 text-muted mb-4">
+                    Ce ne sont pas les compétences pures qui décident d'une carrière. Ce sont les structures dans lesquelles on évolue.
+                </p>
+                <div class="d-flex flex-column gap-3">
+                    <div class="d-flex gap-3 align-items-start">
+                        <span class="badge bg-primary rounded-pill px-2 py-1 mt-1 flex-shrink-0" aria-hidden="true">01</span>
+                        <div>
+                            <strong class="d-block text-white">Le timing</strong>
+                            <span class="text-muted small">Entrer sur le marché au bon moment vaut plus que 2 ans d'expérience supplémentaire.</span>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3 align-items-start">
+                        <span class="badge bg-primary rounded-pill px-2 py-1 mt-1 flex-shrink-0" aria-hidden="true">02</span>
+                        <div>
+                            <strong class="d-block text-white">Le réseau</strong>
+                            <span class="text-muted small">La majorité des offres ne sont jamais publiées. Elles se comblent en interne ou par recommandation directe.</span>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3 align-items-start">
+                        <span class="badge bg-primary rounded-pill px-2 py-1 mt-1 flex-shrink-0" aria-hidden="true">03</span>
+                        <div>
+                            <strong class="d-block text-white">Le capital social</strong>
+                            <span class="text-muted small">Parler "design", connaître les références, avoir les codes culturels du secteur. Ça s'apprend, mais pas de la même façon selon d'où on vient.</span>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3 align-items-start">
+                        <span class="badge bg-primary rounded-pill px-2 py-1 mt-1 flex-shrink-0" aria-hidden="true">04</span>
+                        <div>
+                            <strong class="d-block text-white">La géographie</strong>
+                            <span class="text-muted small">Liège n'est pas Paris. Bruxelles n'est pas Londres. Les opportunités ne se distribuent pas uniformément dans l'espace.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <blockquote class="pull-quote mb-4">
+                    «&nbsp;Meritocracy is a myth maintained by those who benefit from the current system. Acknowledging this is the first step toward building something fairer.&nbsp;»
+                    <footer class="mt-2 small text-muted">— Nadia Rahman, <cite>Design Justice, 2020</cite></footer>
+                </blockquote>
+                <div class="p-4 rounded-4" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);">
+                    <p class="small fw-bold text-uppercase tracking-widest text-white-50 mb-3">Biais identifiés en recrutement design</p>
+                    <div class="d-flex flex-wrap">
+                        <span class="chip">Effet de halo</span>
+                        <span class="chip">Affinité culturelle</span>
+                        <span class="chip">Biais de confirmation</span>
+                        <span class="chip">École vs compétence</span>
+                        <span class="chip">Portfolio esthétique</span>
+                        <span class="chip">Biais de genre</span>
+                        <span class="chip">Cooptation cachée</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 4 : CE QUE ÇA CHANGE EN UX -->
+<section class="py-5" aria-labelledby="s4-heading">
+    <div class="container py-5">
+        <div class="row justify-content-center mb-5 reveal">
+            <div class="col-lg-8 text-center">
+                <p class="section-label mb-3">04 · L'impact sur le design lui-même</p>
+                <h2 class="display-5 fw-bold" id="s4-heading">Si les designers se ressemblent,<br>les produits aussi.</h2>
+                <p class="fs-5 text-muted mt-3">
+                    L'homogénéité des équipes produit n'est pas une anecdote RH. C'est un problème de qualité UX.
+                </p>
+            </div>
+        </div>
+        <div class="row g-4 reveal">
+            <div class="col-md-6">
+                <div class="p-4 rounded-4 h-100" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);">
+                    <h3 class="h5 fw-bold mb-3">Qui conçoit décide quels problèmes existent.</h3>
+                    <p class="text-muted mb-0">
+                        Un système de reconnaissance faciale entraîné sur des visages blancs. Une app de santé féminine conçue par des hommes. Ce ne sont pas des bugs techniques — ce sont des angles morts humains, structurels, prévisibles.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-4 rounded-4 h-100" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);">
+                    <h3 class="h5 fw-bold mb-3">L'accessibilité n'est pas une option.</h3>
+                    <p class="text-muted mb-0">
+                        15 % de la population mondiale vit avec un handicap. Les équipes UX homogènes sous-estiment systématiquement ces besoins. Concevoir pour tous commence par être tous différents.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-4 rounded-4 h-100" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);">
+                    <h3 class="h5 fw-bold mb-3">Les dark patterns viennent de quelque part.</h3>
+                    <p class="text-muted mb-0">
+                        Un designer qui n'a jamais eu à compter ses abonnements ne mesure pas ce que coûte un désabonnement difficile. L'empathie n'est pas un talent inné — c'est une expérience vécue.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-4 rounded-4 h-100" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);">
+                    <h3 class="h5 fw-bold mb-3">La recherche utilisateur est politique.</h3>
+                    <p class="text-muted mb-0">
+                        Choisir qui on interroge, comment, et ce qu'on fait des insights — tout ça est une décision. La diversité des équipes influence directement la diversité des données qu'on collecte.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 5 : ALORS QUOI -->
+<section class="py-5 bg-light-apple" aria-labelledby="s5-heading">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center reveal">
+            <div class="col-lg-6">
+                <p class="section-label mb-3">05 · Alors, qu'est-ce qu'on fait ?</p>
+                <h2 class="display-5 fw-bold mb-4" id="s5-heading">Nommer le problème,<br>c'est déjà agir.</h2>
+                <p class="fs-5 text-muted mb-4">
+                    Reconnaître que la méritocratie est un mythe ne signifie pas abandonner l'excellence. Ça signifie être honnête sur ce qui la freine.
+                </p>
+                <div class="d-flex flex-column gap-4">
+                    <div class="d-flex gap-3 align-items-start">
+                        <i class="bi bi-arrow-right-circle-fill text-primary fs-4 flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <p class="text-muted mb-0"><strong class="text-white">Transparence des processus de recrutement.</strong> Critères explicites, grilles d'évaluation publiques, feedback systématique aux candidats.</p>
+                    </div>
+                    <div class="d-flex gap-3 align-items-start">
+                        <i class="bi bi-arrow-right-circle-fill text-primary fs-4 flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <p class="text-muted mb-0"><strong class="text-white">Mentorship ouvert.</strong> Partager ses connaissances sans attendre un retour. Ouvrir les portes qu'on nous a ouvertes, et celles qu'on a dû forcer.</p>
+                    </div>
+                    <div class="d-flex gap-3 align-items-start">
+                        <i class="bi bi-arrow-right-circle-fill text-primary fs-4 flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <p class="text-muted mb-0"><strong class="text-white">Design systémique.</strong> Concevoir des processus — pas des exceptions. Les accommodements individuels ne remplacent pas une architecture juste.</p>
+                    </div>
+                    <div class="d-flex gap-3 align-items-start">
+                        <i class="bi bi-arrow-right-circle-fill text-primary fs-4 flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <p class="text-muted mb-0"><strong class="text-white">Valoriser les trajectoires atypiques.</strong> Reconversion, autodidaxie, parcours non-linéaire. Ce ne sont pas des handicaps. Ce sont des perspectives.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <div class="p-5 rounded-5" style="background:rgba(0,242,255,.04);border:1px solid rgba(0,242,255,.12);">
+                    <p class="section-label mb-3">Ce que DAFA incarne</p>
+                    <p class="fs-5 text-white mb-3">
+                        DAFA est né d'un constat simple : l'information sur les produits technologiques est volontairement opaque.
+                    </p>
+                    <p class="text-muted mb-4">
+                        Le marketing dissimule, simplifie, enjolive. Les utilisateurs qui n'ont pas le temps ou les ressources pour chercher sont les premiers lésés. DAFA rend le vrai pouvoir d'achat accessible à tous.
+                    </p>
+                    <a href="case-study.html" class="btn btn-outline-light rounded-pill px-4 py-2 fw-bold">
+                        Découvrir le case study
+                        <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="py-5" aria-labelledby="cta-heading">
+    <div class="container py-5 reveal">
+        <div class="cta-card text-center mx-auto" style="max-width:720px;">
+            <p class="section-label mb-4">Et moi là-dedans ?</p>
+            <h2 class="display-5 fw-bold mb-4" id="cta-heading">Un designer qui connaît<br>ses propres angles morts.</h2>
+            <p class="fs-5 text-white-50 mb-5">
+                Je ne prétends pas avoir toutes les réponses. Mais je pose les bonnes questions — et je conçois en conséquence. Reconversion, alternance, Liège. Mon parcours n'est pas standard. C'est exactement pourquoi je suis disponible pour en parler.
+            </p>
+            <div class="d-flex flex-wrap gap-3 justify-content-center">
+                <a href="contact.html" class="btn btn-primary fw-bold rounded-pill px-5 py-3 fs-5">
+                    <i class="bi bi-envelope-fill me-2" aria-hidden="true"></i>Me contacter
+                </a>
+                <a href="https://www.linkedin.com/in/essam-libert-b0673a38b" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light fw-bold rounded-pill px-4 py-3 fs-5">
+                    <i class="bi bi-linkedin me-2" aria-hidden="true"></i>LinkedIn
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer class="bg-dark text-white py-5 border-top border-secondary border-opacity-25 mt-auto">
+    <div class="container">
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <p class="fw-bold mb-1">ESSAM LIBERT</p>
+                <p class="small text-white-50 mb-3">UX Designer · Dispo immédiat · Liège</p>
+                <a href="mailto:info@essamlibert.com" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2">
+                    <i class="bi bi-envelope" aria-hidden="true"></i>info@essamlibert.com
+                </a>
+            </div>
+            <div class="col-md-4">
+                <p class="small fw-bold text-uppercase tracking-widest text-white-50 mb-3">Navigation</p>
+                <div class="d-flex flex-column gap-2">
+                    <a href="index.html" class="small text-white-50 text-decoration-none">Accueil</a>
+                    <a href="case-study.html" class="small text-white-50 text-decoration-none">DAFA</a>
+                    <a href="manifeste.html" class="small text-white-50 text-decoration-none">Manifeste</a>
+                    <a href="contact.html" class="small text-white-50 text-decoration-none">Contact</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <p class="small fw-bold text-uppercase tracking-widest text-white-50 mb-3">Retrouvez-moi</p>
+                <a href="https://www.linkedin.com/in/essam-libert-b0673a38b" target="_blank" rel="noopener noreferrer" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-linkedin" aria-hidden="true"></i>LinkedIn
+                </a>
+                <a href="https://www.figma.com/proto/SWCbHvDAKlID6yNduDaMsR/DAFA_App_Master_V3_Essam?node-id=145-176&scaling=scale-down&hide-ui=1" target="_blank" rel="noopener noreferrer" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2">
+                    <i class="bi bi-play-circle" aria-hidden="true"></i>Prototype DAFA
+                </a>
+            </div>
+        </div>
+        <div class="border-top border-secondary border-opacity-25 pt-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <p class="small text-white-50 mb-0">&copy; 2026 Essam Libert.</p>
+            <a href="legal.html" class="small text-white-50 text-decoration-none">Mentions Légales &amp; RGPD</a>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+<script>
+/* Scroll progress bar */
+(function(){
+    const bar=document.getElementById('scroll-progress');
+    if(!bar) return;
+    window.addEventListener('scroll',()=>{
+        const h=document.documentElement,b=document.body;
+        const st=h.scrollTop||b.scrollTop;
+        const sh=(h.scrollHeight||b.scrollHeight)-h.clientHeight;
+        bar.style.width=(sh>0?(st/sh*100).toFixed(1):0)+'%';
+    },{passive:true});
+})();
+
+/* Reveal on scroll */
+(function(){
+    const els=document.querySelectorAll('.reveal');
+    if(!els.length) return;
+    const io=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('visible');});
+    },{threshold:0.12});
+    els.forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>
