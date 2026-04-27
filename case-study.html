@@ -62,8 +62,8 @@
     .shadow-2xl{box-shadow:0 40px 100px rgba(0,0,0,.72)!important;}
     .badge.bg-white{background-color:#252529!important;color:#e4e4e9!important;}
     blockquote.border-start{color:#e4e4e9;}
-    /* Headings hidden — particles write the text */
-    .ptcl-heading{opacity:0!important;transition:none!important;}
+    /* Headings start hidden, revealed by JS as particles converge */
+    .ptcl-heading{opacity:0;transition:opacity 0.55s ease;}
     </style>
 </head>
 
@@ -927,8 +927,11 @@
     }
   }
 
-  /* Hide headings via JS — no-JS visitors keep text, reduced-motion skips this */
-  document.querySelectorAll('h2[class*="display-"]').forEach(el=>el.classList.add('ptcl-heading'));
+  /* Headings start hidden; particles reveal them — no-JS keeps text visible */
+  document.querySelectorAll('h2[class*="display-"]').forEach(el=>{
+    el.classList.add('ptcl-heading');
+    el.style.opacity='0';
+  });
 
   /* Sample glyphs after fonts are confirmed loaded */
   document.fonts.ready.then(()=>{
@@ -966,7 +969,11 @@
 
     /* Switch → liberation burst */
     if(nIdx!==lastHIdx){
-      if(lastHIdx>=0) for(let i=0;i<N;i++){vx[i]+=(Math.random()-.5)*7;vy[i]+=(Math.random()-.5)*7;}
+      if(lastHIdx>=0){
+        for(let i=0;i<N;i++){vx[i]+=(Math.random()-.5)*7;vy[i]+=(Math.random()-.5)*7;}
+        /* Hide previous heading text as particles scatter */
+        if(hData[lastHIdx]) hData[lastHIdx].el.style.opacity='0';
+      }
       lastHIdx=nIdx; assignP(nIdx);
     }
 
@@ -975,6 +982,12 @@
     if(nIdx>=0){
       const r=hData[nIdx].el.getBoundingClientRect();
       att=Math.max(0,1-Math.abs(r.top+r.height*.5-H*.42)/(H*.33));
+    }
+
+    /* Reveal heading text once particles are ~50% converged */
+    if(nIdx>=0){
+      const textAlpha=Math.max(0,(att-.45)/.55);
+      hData[nIdx].el.style.opacity=textAlpha.toFixed(2);
     }
 
     /* ── Targets (screen-space, recomputed each frame so text follows scroll) ── */
@@ -1005,22 +1018,21 @@
       vy[i]=(vy[i]+Math.sin(ang)*FS*fl+dy*att*.080+(hy[i]-py[i])*sg+by)*dp;
       px[i]+=vx[i]; py[i]+=vy[i];
 
-      /* ── Draw: crisp dot when settled, comet glow when flying ── */
+      /* ── Draw ── */
       const dist=Math.hypot(dx,dy);
       const spd=Math.hypot(vx[i],vy[i]);
-      /* settled=1 when on-target+locked, 0 when free */
-      const settled=att*Math.max(0,1-dist/22);
+      const settled=att*Math.max(0,1-dist/22); // 1 = on-target+locked
       const sz=mob?1.5:1.8;
 
-      /* Outer glow: large when flying, nearly gone when settled */
-      const gr=sz*(2.6-settled*2.2);
+      /* Comet glow when flying, subtle halo when settled over visible text */
+      const gr=sz*(2.5-settled*1.8);
       ctx.beginPath(); ctx.arc(px[i],py[i],gr,0,Math.PI*2);
-      ctx.fillStyle=`rgba(0,242,255,${((0.06+spd*.008)*(1-settled*.9)).toFixed(2)})`; ctx.fill();
+      ctx.fillStyle=`rgba(0,242,255,${((0.07+spd*.009)*(1-settled*.7)).toFixed(2)})`; ctx.fill();
 
-      /* Core dot: small trail when flying, bright solid when settled */
-      const cr=sz*(.75+settled*.70);
+      /* Core: visible trail when flying, gentle glow when settled (text is readable below) */
+      const cr=sz*(.8+settled*.5);
       ctx.beginPath(); ctx.arc(px[i],py[i],cr,0,Math.PI*2);
-      ctx.fillStyle=`rgba(0,242,255,${(Math.min(.96,.22+spd*.08+settled*.72)).toFixed(2)})`; ctx.fill();
+      ctx.fillStyle=`rgba(0,242,255,${(Math.min(.75,.18+spd*.07+settled*.48)).toFixed(2)})`; ctx.fill();
     }
   }
   requestAnimationFrame(frame);
