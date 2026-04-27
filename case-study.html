@@ -944,7 +944,8 @@
     });
   });
 
-  let t=0,last=performance.now();
+  let t=0, last=performance.now();
+  let revealTimer=0, dissolveAlpha=1.0; // 1=particles visible, 0=dissolved→HTML shown
 
   function frame(now){
     requestAnimationFrame(frame);
@@ -954,15 +955,10 @@
     const sy=window.scrollY;
     const sphH=sphere?sphere.offsetHeight:H*.6;
 
-    /* Three.js sphere fades out as 2D takes over */
     if(threeCV) threeCV.style.opacity=Math.max(0,1-(sy-sphH*.12)/(sphH*.52));
-
-    /* 2D canvas fades in */
     const fade=Math.max(0,Math.min(1,(sy-sphH*.18)/(sphH*.52)));
-    cv.style.opacity=fade;
-    if(fade<.01){ctx.clearRect(0,0,W,H);return;}
 
-    /* ── Active heading: heading centre closest to H×0.42 (bidirectional) ── */
+    /* ── Active heading ── */
     let nIdx=-1,bD=Infinity;
     for(let i=0;i<hData.length;i++){
       const r=hData[i].el.getBoundingClientRect();
@@ -971,21 +967,35 @@
       if(d<bD){bD=d;nIdx=i;}
     }
 
-    /* Switch → liberation burst */
+    /* Switch → burst + full reset of dissolve state */
     if(nIdx!==lastHIdx){
       if(lastHIdx>=0){
         for(let i=0;i<N;i++){vx[i]+=(Math.random()-.5)*7;vy[i]+=(Math.random()-.5)*7;}
-        if(hData[lastHIdx]) hData[lastHIdx].el.style.opacity='0'; // hide prev heading as particles scatter
+        if(hData[lastHIdx]) hData[lastHIdx].el.style.opacity='0';
       }
       lastHIdx=nIdx; assignP(nIdx);
+      dissolveAlpha=1.0; revealTimer=0;
     }
 
-    /* Attraction 0→1 as heading centre approaches H×0.42 */
+    /* Attraction 0→1 */
     let att=0;
     if(nIdx>=0){
       const r=hData[nIdx].el.getBoundingClientRect();
       att=Math.max(0,1-Math.abs(r.top+r.height*.5-H*.42)/(H*.33));
     }
+
+    /* Dissolve FSM:
+       - count frames where particles are fully settled (att > 0.88)
+       - after 55 frames (~0.9s): dissolveAlpha fades 1→0 over ~40 frames
+       - heading opacity = (1−dissolveAlpha): hidden during particle phase, visible after
+       - if att drops: restore dissolveAlpha so particles reappear next scroll-back */
+    if(att>0.88 && nIdx>=0) revealTimer++;
+    else if(att<0.4){ revealTimer=Math.max(0,revealTimer-2); dissolveAlpha=Math.min(1,dissolveAlpha+0.05); }
+    if(revealTimer>55) dissolveAlpha=Math.max(0,dissolveAlpha-0.025);
+    if(nIdx>=0) hData[nIdx].el.style.opacity=(1-dissolveAlpha).toFixed(2);
+
+    cv.style.opacity=(fade*dissolveAlpha).toFixed(2);
+    if(fade<.01||dissolveAlpha<=0){ctx.clearRect(0,0,W,H);return;}
 
     /* ── Targets: particles go TO the heading's natural page position ── */
     if(nIdx<0){
@@ -993,11 +1003,6 @@
     } else {
       const r=hData[nIdx].el.getBoundingClientRect();
       for(let i=0;i<N;i++){tx[i]=r.left+pPX[i];ty[i]=r.top+pPY[i];}
-    }
-
-    /* Reveal HTML heading once particles are mostly settled (att ≥ 0.65) */
-    if(nIdx>=0){
-      hData[nIdx].el.style.opacity=Math.max(0,(att-.65)/.35).toFixed(2);
     }
 
     /* ── Integrate ── */
