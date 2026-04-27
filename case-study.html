@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-bs-theme="dark">
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3MCZVBHXH2"></script>
     <script>
@@ -48,6 +48,21 @@
       }
     }
     </script>
+
+    <style>
+    /* Dark theme overrides — case-study.html */
+    body.apple-theme{background-color:#0a0a0a!important;color:#e4e4e9!important;}
+    body.bg-light-apple{background-color:#0a0a0a!important;}
+    .bg-light-apple{background-color:#16161a!important;}
+    .bg-white{background-color:#111115!important;}
+    .text-dark{color:#e4e4e9!important;}
+    .text-muted{color:#8e8e93!important;}
+    .border{border-color:rgba(255,255,255,.09)!important;}
+    .shadow-sm{box-shadow:0 1px 8px rgba(0,0,0,.55)!important;}
+    .shadow-2xl{box-shadow:0 40px 100px rgba(0,0,0,.72)!important;}
+    .badge.bg-white{background-color:#252529!important;color:#e4e4e9!important;}
+    blockquote.border-start{color:#e4e4e9;}
+    </style>
 </head>
 
 
@@ -78,7 +93,7 @@
         <canvas id="dafa-canvas" aria-label="Sphère holographique DAFA — interactive" role="img" style="display:block;width:100%;touch-action:none;"></canvas>
         <p id="dafa-hint" style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font:500 9px 'Courier New',monospace;color:rgba(0,242,255,.28);letter-spacing:.14em;pointer-events:none;margin:0;white-space:nowrap;">DRAG · SCROLL · CLICK</p>
         <!-- Fondu vers le blanc de la page -->
-        <div style="position:absolute;bottom:0;left:0;right:0;height:28%;background:linear-gradient(to bottom,transparent,#f5f5f7);pointer-events:none;z-index:3;"></div>
+        <div style="position:absolute;bottom:0;left:0;right:0;height:28%;background:linear-gradient(to bottom,transparent,#0a0a0a);pointer-events:none;z-index:3;"></div>
     </section>
 
     <!-- HERO -->
@@ -792,73 +807,152 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="js/animations.js" defer></script>
 
-<!-- Matrix title reveal on scroll -->
+<!-- Scroll particle system — heading formation -->
 <script>
-(function () {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  /* Pool de caractères style matrice */
-  const POOL = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ01#$%@!?ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const mob = window.innerWidth < 768;
+  const N   = mob ? 110 : 210;
 
-  function scramble(el) {
-    if (el.dataset.mx) return;
-    el.dataset.mx = '1';
+  /* Fixed canvas overlay — pointer-events:none so page stays interactive */
+  const cv  = document.createElement('canvas');
+  cv.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:48;';
+  document.body.appendChild(cv);
+  const ctx = cv.getContext('2d');
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  let W = 0, H = 0;
 
-    const original = el.childNodes.length === 1 && el.firstChild.nodeType === 3
-      ? el.textContent  /* texte pur */
-      : null;
-    if (!original) return;  /* skip si déjà du HTML imbriqué */
+  /* Particle state */
+  const px = new Float32Array(N), py = new Float32Array(N);
+  const vx = new Float32Array(N), vy = new Float32Array(N);
+  const tx = new Float32Array(N), ty = new Float32Array(N);
 
-    const chars = [...original];  /* gestion unicode / accents */
-
-    /* Remplace le contenu par des spans individuels */
-    el.textContent = '';
-    const spans = chars.map(ch => {
-      const s = document.createElement('span');
-      s.style.cssText = ch.trim()
-        ? 'opacity:0;display:inline-block;transform:translateY(-6px);will-change:transform,opacity;'
-        : '';
-      s.textContent = ch;
-      el.appendChild(s);
-      return s;
-    });
-
-    /* Anime chaque caractère avec un délai croissant */
-    spans.forEach((s, i) => {
-      if (!chars[i].trim()) return;
-
-      const baseDelay = i * 42;
-      const jitter    = Math.random() * 18;
-
-      setTimeout(() => {
-        s.style.color   = '#00f2ff';
-        s.style.opacity = '1';
-        s.style.transform = 'translateY(-6px)';
-
-        let tick = 0;
-        const total = 5 + Math.floor(Math.random() * 4);
-        const t = setInterval(() => {
-          s.textContent = POOL[Math.floor(Math.random() * POOL.length)];
-          tick++;
-          if (tick >= total) {
-            clearInterval(t);
-            s.textContent = chars[i];
-            /* Glisse à sa position finale + retour couleur */
-            s.style.transition = 'color 0.35s ease, transform 0.25s ease';
-            s.style.color     = '';
-            s.style.transform = 'translateY(0)';
-          }
-        }, 38);
-      }, baseDelay + jitter);
-    });
+  /* Cloud home positions — loose ellipse near viewport top-centre */
+  const hx = new Float32Array(N), hy = new Float32Array(N);
+  function buildCloud(){
+    for(let i=0;i<N;i++){
+      const a=(i/N)*Math.PI*2+Math.random()*0.6, r=12+Math.random()*55;
+      hx[i]=W*0.5+Math.cos(a)*r*2.4;
+      hy[i]=68+Math.sin(a)*r*0.65;
+    }
   }
 
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) scramble(e.target); });
-  }, { threshold: 0.35 });
+  /* Heading data */
+  const headingData = [];
+  const pRI = new Int32Array(N), pRX = new Float32Array(N), pRY = new Float32Array(N);
+  let lastHIdx = -1;
 
-  /* Uniquement les grands titres (display-*) */
-  document.querySelectorAll('h2[class*="display-"]').forEach(h => obs.observe(h));
+  function sampleH(el){
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sy = window.scrollY;
+    const rects = Array.from(range.getClientRects())
+      .filter(r => r.width > 8 && r.height > 8)
+      .map(r => ({ left:r.left, top:r.top+sy, w:r.width, h:r.height }));
+    return { el, absRects:rects };
+  }
+
+  function assignParticles(hIdx){
+    if(hIdx < 0) return;
+    const { absRects } = headingData[hIdx];
+    const total = absRects.reduce((s,r)=>s+r.w*r.h, 0);
+    for(let i=0;i<N;i++){
+      let area=Math.random()*total, ri=absRects.length-1;
+      for(let k=0;k<absRects.length;k++){ area-=absRects[k].w*absRects[k].h; if(area<=0){ri=k;break;} }
+      pRI[i]=ri; pRX[i]=Math.random(); pRY[i]=Math.random();
+    }
+  }
+
+  function resize(){
+    W=window.innerWidth; H=window.innerHeight;
+    cv.width=Math.round(W*DPR); cv.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    buildCloud();
+  }
+  resize();
+  window.addEventListener('resize', resize, {passive:true});
+
+  /* Initialise particles at cloud positions */
+  for(let i=0;i<N;i++){
+    px[i]=hx[i]+(Math.random()-.5)*20; py[i]=hy[i]+(Math.random()-.5)*14;
+    tx[i]=hx[i]; ty[i]=hy[i];
+  }
+
+  /* Sample headings after fonts load — does NOT touch heading DOM */
+  document.fonts.ready.then(()=>{
+    document.querySelectorAll('h2[class*="display-"]').forEach(el=>{
+      const d=sampleH(el);
+      if(d.absRects.length) headingData.push(d);
+    });
+  });
+
+  const sphereSec = document.getElementById('dafa-particle-section');
+  const SPRING=0.052, DAMP=0.80;
+
+  function frame(){
+    requestAnimationFrame(frame);
+    if(!W) return;
+
+    /* Fade in once sphere section is scrolled past */
+    const sy = window.scrollY;
+    let fade = 0;
+    if(sphereSec){
+      const bot = sphereSec.offsetTop + sphereSec.offsetHeight;
+      const s0  = bot - sphereSec.offsetHeight * 0.38;
+      fade = Math.max(0, Math.min(1, (sy - s0) / Math.max(1, bot - s0)));
+    }
+    cv.style.opacity = fade;
+    if(fade < 0.01){ ctx.clearRect(0,0,W,H); return; }
+
+    /* Find closest heading to the H×0.38 target line (bidirectional) */
+    const targetY = sy + H * 0.38;
+    let newHIdx = -1, bestD = Infinity;
+    for(let i=0;i<headingData.length;i++){
+      const { absRects } = headingData[i];
+      if(!absRects.length) continue;
+      const hTop = absRects[0].top;
+      if(hTop > sy + H * 0.88 || hTop < sy - H * 0.45) continue;
+      const d = Math.abs(hTop - targetY);
+      if(d < bestD){ bestD=d; newHIdx=i; }
+    }
+
+    /* Re-assign particles when heading changes */
+    if(newHIdx !== lastHIdx){ lastHIdx=newHIdx; assignParticles(newHIdx); }
+
+    /* Compute current screen-space targets */
+    if(newHIdx < 0){
+      for(let i=0;i<N;i++){ tx[i]=hx[i]; ty[i]=hy[i]; }
+    } else {
+      const { absRects } = headingData[newHIdx];
+      for(let i=0;i<N;i++){
+        const r=absRects[pRI[i]];
+        tx[i]=r.left+pRX[i]*r.w;
+        ty[i]=(r.top-sy)+pRY[i]*r.h;
+      }
+    }
+
+    /* Spring-integrate & draw */
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<N;i++){
+      vx[i]=(vx[i]+(tx[i]-px[i])*SPRING)*DAMP;
+      vy[i]=(vy[i]+(ty[i]-py[i])*SPRING)*DAMP;
+      px[i]+=vx[i]; py[i]+=vy[i];
+
+      const dist=Math.hypot(tx[i]-px[i],ty[i]-py[i]);
+      const a=Math.max(0.18,1-dist/180);
+      const sz=mob?1.6:2.0;
+
+      /* Soft outer glow */
+      ctx.beginPath(); ctx.arc(px[i],py[i],sz*2.8,0,Math.PI*2);
+      ctx.fillStyle=`rgba(0,242,255,${(a*0.08).toFixed(3)})`; ctx.fill();
+
+      /* Core dot */
+      ctx.beginPath(); ctx.arc(px[i],py[i],sz,0,Math.PI*2);
+      ctx.fillStyle=`rgba(0,242,255,${(a*0.88).toFixed(3)})`; ctx.fill();
+    }
+  }
+  frame();
 })();
 </script>
 
