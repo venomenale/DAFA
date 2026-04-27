@@ -69,7 +69,7 @@
     .badge.bg-white{background-color:#252529!important;color:#e4e4e9!important;}
     blockquote.border-start{color:#e4e4e9;}
     /* Headings permanently hidden — particles ARE the text */
-    .ptcl-heading{opacity:0!important;visibility:hidden;}
+    .ptcl-heading{opacity:0;transition:opacity .5s ease;}
     </style>
 </head>
 
@@ -975,6 +975,7 @@
     if(nIdx!==lastHIdx){
       if(lastHIdx>=0){
         for(let i=0;i<N;i++){vx[i]+=(Math.random()-.5)*7;vy[i]+=(Math.random()-.5)*7;}
+        if(hData[lastHIdx]) hData[lastHIdx].el.style.opacity='0'; // hide prev heading as particles scatter
       }
       lastHIdx=nIdx; assignP(nIdx);
     }
@@ -986,15 +987,17 @@
       att=Math.max(0,1-Math.abs(r.top+r.height*.5-H*.42)/(H*.33));
     }
 
-    /* ── Targets: X follows element left edge; Y is FIXED at H×0.42 while att>0 ──
-       Accessibility: particle text stays stationary on screen while the section is
-       visible — only scatters when the heading scrolls completely off-screen.       */
+    /* ── Targets: particles go TO the heading's natural page position ── */
     if(nIdx<0){
       for(let i=0;i<N;i++){tx[i]=hx[i];ty[i]=hy[i];}
     } else {
       const r=hData[nIdx].el.getBoundingClientRect();
-      const anchorY=H*.42-hData[nIdx].textH*.5; // fixed viewport Y regardless of scroll
-      for(let i=0;i<N;i++){tx[i]=r.left+pPX[i];ty[i]=anchorY+pPY[i];}
+      for(let i=0;i<N;i++){tx[i]=r.left+pPX[i];ty[i]=r.top+pPY[i];}
+    }
+
+    /* Reveal HTML heading once particles are mostly settled (att ≥ 0.65) */
+    if(nIdx>=0){
+      hData[nIdx].el.style.opacity=Math.max(0,(att-.65)/.35).toFixed(2);
     }
 
     /* ── Integrate ── */
