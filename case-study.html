@@ -30,7 +30,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
@@ -815,7 +815,7 @@
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const mob = window.innerWidth < 768;
-  const N   = mob ? 220 : 420;
+  const N   = mob ? 260 : 500;
 
   /* ── 2D Perlin noise ── */
   const _P=new Uint8Array(512);
@@ -836,74 +836,68 @@
   const px=new Float32Array(N),py=new Float32Array(N);
   const vx=new Float32Array(N),vy=new Float32Array(N);
   const tx=new Float32Array(N),ty=new Float32Array(N);
-  const sd=new Float32Array(N); // per-particle Perlin seed
+  const sd=new Float32Array(N); // per-particle noise seed
 
-  /* Per-particle heading-space offsets (set at assignment, stable during animation) */
+  /* Per-particle heading-local offsets, stable across frames */
   const pPX=new Float32Array(N),pPY=new Float32Array(N);
 
   /* ── Swarm home — wide ellipse, upper viewport ── */
   const hx=new Float32Array(N),hy=new Float32Array(N);
   function buildSwarm(){
     for(let i=0;i<N;i++){
-      const a=(i/N)*Math.PI*2+sd[i]*1.2, r=30+sd[i]*120;
-      hx[i]=W*.5+Math.cos(a)*r*2.8;
-      hy[i]=H*.18+Math.sin(a)*r*.55;
+      const a=(i/N)*Math.PI*2+sd[i]*1.2, r=30+sd[i]*110;
+      hx[i]=W*.5+Math.cos(a)*r*2.7; hy[i]=H*.16+Math.sin(a)*r*.52;
     }
   }
 
-  /* ── Heading data: { el, pts:[{x,y}] } (pixel-sampled glyph positions) ── */
+  /* ── Heading data: {el, pts:[{x,y}]} at native CSS pixel resolution ── */
   const hData=[];
   let lastHIdx=-1;
 
-  /* Sample glyph pixels via offscreen canvas + word-wrap */
   function sampleGlyphs(el){
-    const cs   = getComputedStyle(el);
-    const fsz  = Math.round(parseFloat(cs.fontSize));
-    const fw   = el.offsetWidth || W*.9;
-    const lh   = Math.round(fsz * 1.15);
-    const scl  = mob ? 0.38 : 0.52;          // downscale for performance
-    const cw   = Math.max(4, Math.round(fw*scl));
-    const ch   = Math.max(4, fsz*7);
+    const cs  = getComputedStyle(el);
+    const fsz = Math.round(parseFloat(cs.fontSize));
+    const fw  = Math.min(el.offsetWidth||Math.round(W*.88), mob?460:820);
+    const lh  = Math.round(fsz*1.12);
 
+    /* Full-resolution canvas — no downscale, accurate glyph shapes */
     const oc=document.createElement('canvas');
-    oc.width=cw; oc.height=ch;
+    oc.width=fw; oc.height=Math.min(fsz*11,520);
     const c2=oc.getContext('2d');
     c2.fillStyle='#fff';
-    c2.font=`700 ${Math.round(fsz*scl)}px Inter,-apple-system,sans-serif`;
+    c2.font=`700 ${fsz}px Inter,-apple-system,sans-serif`;
+    if('letterSpacing' in c2) c2.letterSpacing=cs.letterSpacing; // match .tracking-tight
     c2.textBaseline='top';
 
-    /* Word-wrap to match heading width */
+    /* Word-wrap matching heading width */
     const words=el.textContent.trim().split(/\s+/);
-    let line='', lineY=0;
+    let line='',lineY=0;
     for(const w of words){
       const test=line?line+' '+w:w;
-      if(line && c2.measureText(test).width>cw-1){
-        c2.fillText(line,0,lineY); lineY+=Math.round(lh*scl); line=w;
-      } else line=test;
+      if(line && c2.measureText(test).width>fw-1){c2.fillText(line,0,lineY);lineY+=lh;line=w;}
+      else line=test;
     }
-    if(line) c2.fillText(line,0,lineY);
+    if(line){c2.fillText(line,0,lineY);lineY+=lh;}
 
-    /* Sample lit pixels */
-    const id=c2.getImageData(0,0,cw,ch);
-    const pts=[]; const step=mob?3:2;
-    for(let y=0;y<ch;y+=step) for(let x=0;x<cw;x+=step)
-      if(id.data[(y*cw+x)*4+3]>45) pts.push({x:x/scl, y:y/scl});
+    /* Sample lit pixels — step=4 mobile, 3 desktop */
+    const scanH=Math.min(lineY,oc.height);
+    const id=c2.getImageData(0,0,fw,scanH);
+    const pts=[]; const step=mob?4:3;
+    for(let y=0;y<scanH;y+=step) for(let x=0;x<fw;x+=step)
+      if(id.data[(y*fw+x)*4+3]>40) pts.push({x,y});
 
-    return {el, pts};
+    return{el,pts};
   }
 
-  /* Assign particles to glyph pixel positions (stable jitter per assignment) */
+  /* Distribute N particles evenly across all glyph pixels */
   function assignP(hIdx){
     if(hIdx<0) return;
-    const {pts}=hData[hIdx];
-    if(!pts.length) return;
-    const n=pts.length;
-    /* Distribute evenly across all sampled pixels */
-    const stride=Math.max(1,Math.round(n/N));
+    const{pts}=hData[hIdx]; if(!pts.length) return;
+    const n=pts.length, stride=Math.max(1,Math.round(n/N));
     for(let i=0;i<N;i++){
       const p=pts[(i*stride)%n];
-      pPX[i]=p.x+(Math.random()-.5)*2.8;
-      pPY[i]=p.y+(Math.random()-.5)*2.8;
+      pPX[i]=p.x+(Math.random()-.5)*2.4;
+      pPY[i]=p.y+(Math.random()-.5)*2.4;
     }
   }
 
@@ -918,7 +912,7 @@
   resize();
   window.addEventListener('resize',resize,{passive:true});
 
-  /* ── Init: place particles in sphere formation (visual echo of Three.js sphere) ── */
+  /* ── Init: Fibonacci sphere formation matching Three.js sphere position ── */
   const sphere=document.getElementById('dafa-particle-section');
   const threeCV=document.getElementById('dafa-canvas');
   {
@@ -927,20 +921,19 @@
     const srad=Math.min(W,sH)*.19;
     const PHI=Math.PI*(3-Math.sqrt(5));
     for(let i=0;i<N;i++){
-      const yf=1-(i/(N-1))*2, r=Math.sqrt(Math.max(0,1-yf*yf)), th=PHI*i;
+      const yf=1-(i/(N-1))*2,r=Math.sqrt(Math.max(0,1-yf*yf)),th=PHI*i;
       px[i]=cx+Math.cos(th)*r*srad; py[i]=cy+yf*srad;
       vx[i]=0; vy[i]=0; tx[i]=hx[i]; ty[i]=hy[i];
     }
   }
 
-  /* ── Hide headings (JS-driven, so no-JS visitors still see text) ── */
+  /* Hide headings via JS — no-JS visitors keep text, reduced-motion skips this */
   document.querySelectorAll('h2[class*="display-"]').forEach(el=>el.classList.add('ptcl-heading'));
 
-  /* ── Sample heading glyphs after fonts load ── */
+  /* Sample glyphs after fonts are confirmed loaded */
   document.fonts.ready.then(()=>{
     document.querySelectorAll('h2[class*="display-"]').forEach(el=>{
-      const d=sampleGlyphs(el);
-      if(d.pts.length) hData.push(d);
+      const d=sampleGlyphs(el); if(d.pts.length) hData.push(d);
     });
   });
 
@@ -953,88 +946,81 @@
 
     const sy=window.scrollY;
     const sphH=sphere?sphere.offsetHeight:H*.6;
-    const sphBot=sphere?sphere.offsetTop+sphH:sphH;
 
-    /* Three.js sphere: fade out as 2D particles take over */
-    if(threeCV){
-      const tFade=Math.max(0,1-(sy-sphH*.15)/(sphH*.55));
-      threeCV.style.opacity=tFade;
-    }
+    /* Three.js sphere fades out as 2D takes over */
+    if(threeCV) threeCV.style.opacity=Math.max(0,1-(sy-sphH*.12)/(sphH*.52));
 
-    /* 2D canvas: fade in as sphere fades out */
-    const fade=Math.max(0,Math.min(1,(sy-sphH*.20)/(sphH*.55)));
+    /* 2D canvas fades in */
+    const fade=Math.max(0,Math.min(1,(sy-sphH*.18)/(sphH*.52)));
     cv.style.opacity=fade;
     if(fade<.01){ctx.clearRect(0,0,W,H);return;}
 
-    /* ── Active heading: closest to H×0.35, bidirectional ── */
+    /* ── Active heading: heading centre closest to H×0.42 (bidirectional) ── */
     let nIdx=-1,bD=Infinity;
     for(let i=0;i<hData.length;i++){
-      const rect=hData[i].el.getBoundingClientRect();
-      if(rect.top>H*.95||rect.bottom<-H*.5) continue;
-      const d=Math.abs(rect.top-H*.35);
+      const r=hData[i].el.getBoundingClientRect();
+      if(r.top>H*.96||r.bottom<-H*.6) continue;
+      const d=Math.abs(r.top+r.height*.5-H*.42);
       if(d<bD){bD=d;nIdx=i;}
     }
 
-    /* Heading switch → liberation burst */
+    /* Switch → liberation burst */
     if(nIdx!==lastHIdx){
       if(lastHIdx>=0) for(let i=0;i<N;i++){vx[i]+=(Math.random()-.5)*7;vy[i]+=(Math.random()-.5)*7;}
       lastHIdx=nIdx; assignP(nIdx);
     }
 
-    /* Attraction strength: 0 (free) → 1 (locked on heading) */
+    /* Attraction 0→1 as heading centre approaches H×0.42 */
     let att=0;
     if(nIdx>=0){
-      const rect=hData[nIdx].el.getBoundingClientRect();
-      att=Math.max(0,1-Math.abs(rect.top-H*.35)/(H*.32));
+      const r=hData[nIdx].el.getBoundingClientRect();
+      att=Math.max(0,1-Math.abs(r.top+r.height*.5-H*.42)/(H*.33));
     }
 
-    /* ── Particle targets ── */
+    /* ── Targets (screen-space, recomputed each frame so text follows scroll) ── */
     if(nIdx<0){
-      /* Swarm — spread across upper viewport */
       for(let i=0;i<N;i++){tx[i]=hx[i];ty[i]=hy[i];}
     } else {
-      /* Glyph positions: heading-local px + current screen top */
-      const rect=hData[nIdx].el.getBoundingClientRect();
-      for(let i=0;i<N;i++){
-        tx[i]=rect.left+pPX[i];
-        ty[i]=rect.top+pPY[i];
-      }
+      const r=hData[nIdx].el.getBoundingClientRect();
+      for(let i=0;i<N;i++){tx[i]=r.left+pPX[i];ty[i]=r.top+pPY[i];}
     }
 
-    /* ── Integrate & draw ── */
+    /* ── Integrate ── */
     ctx.clearRect(0,0,W,H);
-    const FS=mob?.48:.65;
+    const FS=mob?.46:.62;
     for(let i=0;i<N;i++){
-      /* Flow field: Perlin-driven organic drift */
-      const ang=noise2(px[i]*.0038+t*.09+sd[i], py[i]*.0038+t*.06)*Math.PI*3.5;
-      const fvx=Math.cos(ang)*FS, fvy=Math.sin(ang)*FS;
+      /* Perlin flow field */
+      const ang=noise2(px[i]*.004+t*.09+sd[i],py[i]*.004+t*.065)*Math.PI*3.5;
 
-      const dx=tx[i]-px[i], dy=ty[i]-py[i];
+      const dx=tx[i]-px[i],dy=ty[i]-py[i];
 
-      /* Soft boundary */
-      const MG=40;
+      /* Soft viewport boundary */
+      const MG=38;
       const bx=(px[i]<MG?(MG-px[i])*.005:0)+(px[i]>W-MG?((W-MG)-px[i])*.005:0);
       const by=(py[i]<MG?(MG-py[i])*.005:0)+(py[i]>H-MG?((H-MG)-py[i])*.005:0);
 
-      /* Swarm gravity (only in free mode) */
       const sg=.004*(1-att);
-
-      /* Blend physics: flow + attraction + swarm-home + boundary */
-      const fl=1-att*.90, dp=.91-att*.11;
-      vx[i]=(vx[i]+fvx*fl+dx*att*.062+(hx[i]-px[i])*sg+bx)*dp;
-      vy[i]=(vy[i]+fvy*fl+dy*att*.062+(hy[i]-py[i])*sg+by)*dp;
+      const fl=1-att*.90, dp=.90-att*.13; // .90 free → .77 locked
+      vx[i]=(vx[i]+Math.cos(ang)*FS*fl+dx*att*.080+(hx[i]-px[i])*sg+bx)*dp;
+      vy[i]=(vy[i]+Math.sin(ang)*FS*fl+dy*att*.080+(hy[i]-py[i])*sg+by)*dp;
       px[i]+=vx[i]; py[i]+=vy[i];
 
-      /* Brightness: settled = crisp, in-flight = bright trail */
+      /* ── Draw: crisp dot when settled, comet glow when flying ── */
       const dist=Math.hypot(dx,dy);
       const spd=Math.hypot(vx[i],vy[i]);
-      const a=Math.max(.12,1-dist/240)*(.45+Math.min(.55,spd*.15));
-      const sz=mob?1.4:(1.4+Math.min(1.1,spd*.24));
+      /* settled=1 when on-target+locked, 0 when free */
+      const settled=att*Math.max(0,1-dist/22);
+      const sz=mob?1.5:1.8;
 
-      ctx.beginPath(); ctx.arc(px[i],py[i],sz*2.8,0,Math.PI*2);
-      ctx.fillStyle=`rgba(0,242,255,${(a*.065).toFixed(2)})`; ctx.fill();
-      ctx.beginPath(); ctx.arc(px[i],py[i],sz,0,Math.PI*2);
-      ctx.fillStyle=`rgba(0,242,255,${(a*.88).toFixed(2)})`; ctx.fill();
+      /* Outer glow: large when flying, nearly gone when settled */
+      const gr=sz*(2.6-settled*2.2);
+      ctx.beginPath(); ctx.arc(px[i],py[i],gr,0,Math.PI*2);
+      ctx.fillStyle=`rgba(0,242,255,${((0.06+spd*.008)*(1-settled*.9)).toFixed(2)})`; ctx.fill();
+
+      /* Core dot: small trail when flying, bright solid when settled */
+      const cr=sz*(.75+settled*.70);
+      ctx.beginPath(); ctx.arc(px[i],py[i],cr,0,Math.PI*2);
+      ctx.fillStyle=`rgba(0,242,255,${(Math.min(.96,.22+spd*.08+settled*.72)).toFixed(2)})`; ctx.fill();
     }
   }
   requestAnimationFrame(frame);
