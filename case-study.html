@@ -815,7 +815,7 @@
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const mob = window.innerWidth < 768;
-  const N   = mob ? 380 : 650;
+  const N   = mob ? 600 : 900;
 
   /* ── 2D Perlin noise ── */
   const _P=new Uint8Array(512);
@@ -881,7 +881,7 @@
     /* Sample lit pixels — step=4 mobile, 3 desktop */
     const scanH=Math.min(lineY,oc.height);
     const id=c2.getImageData(0,0,fw,scanH);
-    const pts=[]; const step=mob?4:3;
+    const pts=[]; const step=mob?3:2;
     for(let y=0;y<scanH;y+=step) for(let x=0;x<fw;x+=step)
       if(id.data[(y*fw+x)*4+3]>40) pts.push({x,y});
 
@@ -1003,10 +1003,12 @@
       const by=(py[i]<MG?(MG-py[i])*.005:0)+(py[i]>H-MG?((H-MG)-py[i])*.005:0);
 
       const sg=.004*(1-att);
-      const fl=1-att*.90, dp=.90-att*.13; // .90 free → .77 locked
-      vx[i]=(vx[i]+Math.cos(ang)*FS*fl+dx*att*.080+(hx[i]-px[i])*sg+bx)*dp;
-      vy[i]=(vy[i]+Math.sin(ang)*FS*fl+dy*att*.080+(hy[i]-py[i])*sg+by)*dp;
+      const fl=Math.max(0,1-att), dp=.90-att*.22; // flow off at att=1; .90→.68 (overdamped)
+      vx[i]=(vx[i]+Math.cos(ang)*FS*fl+dx*att*.12+(hx[i]-px[i])*sg+bx)*dp;
+      vy[i]=(vy[i]+Math.sin(ang)*FS*fl+dy*att*.12+(hy[i]-py[i])*sg+by)*dp;
       px[i]+=vx[i]; py[i]+=vy[i];
+      /* Snap micro-oscillations — locks particle solid on letter pixel */
+      if(att>0.7 && Math.hypot(tx[i]-px[i],ty[i]-py[i])<1.8){px[i]=tx[i];py[i]=ty[i];vx[i]=0;vy[i]=0;}
 
       /* ── Draw ── */
       const dist=Math.hypot(dx,dy);
@@ -1014,15 +1016,18 @@
       const settled=att*Math.max(0,1-dist/22); // 1 = on-target+locked
       const sz=mob?2.0:2.5;
 
-      /* Comet glow when flying, subtle halo when settled over visible text */
-      const gr=sz*(2.5-settled*1.8);
-      ctx.beginPath(); ctx.arc(px[i],py[i],gr,0,Math.PI*2);
-      ctx.fillStyle=`rgba(0,242,255,${((0.07+spd*.009)*(1-settled*.7)).toFixed(2)})`; ctx.fill();
+      /* Glow comet trail only while in flight */
+      if(settled<0.65){
+        const gr=sz*(2.5-settled*2.0);
+        ctx.beginPath(); ctx.arc(px[i],py[i],gr,0,Math.PI*2);
+        ctx.fillStyle=`rgba(0,242,255,${((0.07+spd*.009)*(1-settled)).toFixed(2)})`; ctx.fill();
+      }
 
-      /* Core: visible trail when flying, gentle glow when settled (text is readable below) */
-      const cr=sz*(.8+settled*.5);
+      /* Core: solid bright dot when settled = the letter pixel; comet core when flying */
+      const cr=settled>0.65 ? sz*1.35 : sz*(.8+settled*.5);
+      const ca=settled>0.65 ? 0.90 : Math.min(.88,.18+spd*.07+settled*.60);
       ctx.beginPath(); ctx.arc(px[i],py[i],cr,0,Math.PI*2);
-      ctx.fillStyle=`rgba(0,242,255,${(Math.min(.92,.18+spd*.07+settled*.65)).toFixed(2)})`; ctx.fill();
+      ctx.fillStyle=`rgba(0,242,255,${ca.toFixed(2)})`; ctx.fill();
     }
   }
   requestAnimationFrame(frame);
