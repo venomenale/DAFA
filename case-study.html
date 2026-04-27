@@ -821,7 +821,7 @@
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const mob = window.innerWidth < 768;
-  const N   = mob ? 1100 : 1500;
+  const N   = mob ? 700 : 1200;
 
   /* ── 2D Perlin noise ── */
   const _P=new Uint8Array(512);
@@ -1076,8 +1076,8 @@ import { UnrealBloomPass }from 'three/addons/postprocessing/UnrealBloomPass.js';
   /* ── Renderer ── */
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: !mob, alpha: false });
   renderer.setSize(W, H);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearColor(0x000000, 1);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, mob ? 1.5 : 2));
+  renderer.setClearColor(0x0a0a0a, 1);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.2;
 
@@ -1111,8 +1111,8 @@ import { UnrealBloomPass }from 'three/addons/postprocessing/UnrealBloomPass.js';
 
   /* ── Constants ── */
   const R      = 2.2;
-  const N_REG  = mob ? 3000 : 6000;
-  const N_SPEC = mob ? 450  : 1400;
+  const N_REG  = mob ? 1800 : 6000;
+  const N_SPEC = mob ? 280  : 1400;
   const N_TOT  = N_REG + N_SPEC;
   const PHI_G  = Math.PI * (3 - Math.sqrt(5));
   const T_OFF  = Math.PI * 1.618;
@@ -1199,10 +1199,11 @@ import { UnrealBloomPass }from 'three/addons/postprocessing/UnrealBloomPass.js';
   lGeom.setAttribute('position', new THREE.BufferAttribute(lv,3));
   scene.add(new THREE.LineSegments(lGeom, new THREE.LineBasicMaterial({color:0x00c8ee,transparent:true,opacity:0.07})));
 
-  /* ── UnrealBloom post-processing ── */
+  /* ── Post-processing: bloom on desktop, direct render on mobile (perf) ── */
   const composer=new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene,camera));
-  composer.addPass(new UnrealBloomPass(new THREE.Vector2(W,H), mob?0.9:1.6, 0.4, 0.08));
+  if(!mob) composer.addPass(new UnrealBloomPass(new THREE.Vector2(W,H),1.6,0.4,0.08));
+  else     composer.addPass(new UnrealBloomPass(new THREE.Vector2(W*0.5,H*0.5),0.7,0.3,0.12));
 
   /* ── DAFA state machine ── */
   const T_CYC=14.4, T_SPH=6.0, T_IN=2.2, T_HLD=4.0, T_RET=2.2;
