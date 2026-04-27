@@ -48,6 +48,12 @@
       }
     }
     </script>
+    <!-- Preload Three.js modules so sphere renders immediately on page load -->
+    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js">
+    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js">
+    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/EffectComposer.js">
+    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/RenderPass.js">
+    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/UnrealBloomPass.js">
 
     <style>
     /* Dark theme overrides — case-study.html */
@@ -92,7 +98,7 @@
 
     <!-- ANIMATION LOGO DAFA — Particles -->
     <section id="dafa-particle-section" class="pt-5 mt-5" style="background:#000;overflow:hidden;line-height:0;position:relative;">
-        <canvas id="dafa-canvas" aria-label="Sphère holographique DAFA — interactive" role="img" style="display:block;width:100%;touch-action:none;"></canvas>
+        <canvas id="dafa-canvas" aria-label="Sphère holographique DAFA — interactive" role="img" style="display:block;width:100%;touch-action:none;background:radial-gradient(ellipse 70% 55% at 50% 42%,#071c2c 0%,#000 72%);"></canvas>
         <p id="dafa-hint" style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font:500 9px 'Courier New',monospace;color:rgba(0,242,255,.28);letter-spacing:.14em;pointer-events:none;margin:0;white-space:nowrap;">DRAG · SCROLL · CLICK</p>
         <!-- Fondu vers le blanc de la page -->
         <div style="position:absolute;bottom:0;left:0;right:0;height:28%;background:linear-gradient(to bottom,transparent,#0a0a0a);pointer-events:none;z-index:3;"></div>
@@ -815,7 +821,7 @@
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const mob = window.innerWidth < 768;
-  const N   = mob ? 700 : 1000;
+  const N   = mob ? 1100 : 1500;
 
   /* ── 2D Perlin noise ── */
   const _P=new Uint8Array(512);
@@ -881,7 +887,7 @@
     /* Sample lit pixels — step=4 mobile, 3 desktop */
     const scanH=Math.min(lineY,oc.height);
     const id=c2.getImageData(0,0,fw,scanH);
-    const pts=[]; const step=mob?4:3; // step=4 mobile → radius=2 → perfect 4px tiling
+    const pts=[]; const step=3; // 3px grid → radius=1.5 → perfect 3px tiling, fine dots
     for(let y=0;y<scanH;y+=step) for(let x=0;x<fw;x+=step)
       if(id.data[(y*fw+x)*4+3]>40) pts.push({x,y});
 
@@ -1026,8 +1032,8 @@
         ctx.beginPath(); ctx.arc(px[i],py[i],cr,0,Math.PI*2);
         ctx.fillStyle=`rgba(0,242,255,${Math.min(.80,.14+spd*.06).toFixed(2)})`; ctx.fill();
       } else {
-        /* Settled: step-matched dot — radius = step/2 → perfect tiling, zero overlap */
-        const cr=mob?2.0:1.5;
+        /* Settled: radius = step/2 = 1.5 → 3px diameter on 3px grid, perfect tiling */
+        const cr=1.5;
         ctx.beginPath(); ctx.arc(px[i],py[i],cr,0,Math.PI*2);
         ctx.fillStyle=`rgba(0,242,255,0.95)`; ctx.fill();
       }
