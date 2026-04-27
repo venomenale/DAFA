@@ -62,8 +62,8 @@
     .shadow-2xl{box-shadow:0 40px 100px rgba(0,0,0,.72)!important;}
     .badge.bg-white{background-color:#252529!important;color:#e4e4e9!important;}
     blockquote.border-start{color:#e4e4e9;}
-    /* Headings start hidden, revealed by JS as particles converge */
-    .ptcl-heading{opacity:0;transition:opacity 0.55s ease;}
+    /* Headings permanently hidden — particles ARE the text */
+    .ptcl-heading{opacity:0!important;visibility:hidden;}
     </style>
 </head>
 
@@ -809,13 +809,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="js/animations.js" defer></script>
 
-<!-- Scroll particle system v3 — sphere morphing + glyph text formation -->
+<!-- Scroll particle system v4 — swarm IS the title -->
 <script>
 (function(){
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const mob = window.innerWidth < 768;
-  const N   = mob ? 260 : 500;
+  const N   = mob ? 380 : 650;
 
   /* ── 2D Perlin noise ── */
   const _P=new Uint8Array(512);
@@ -865,8 +865,7 @@
     oc.width=fw; oc.height=Math.min(fsz*11,520);
     const c2=oc.getContext('2d');
     c2.fillStyle='#fff';
-    c2.font=`700 ${fsz}px Inter,-apple-system,sans-serif`;
-    if('letterSpacing' in c2) c2.letterSpacing=cs.letterSpacing; // match .tracking-tight
+    c2.font=`700 ${fsz}px Arial,Helvetica,sans-serif`;
     c2.textBaseline='top';
 
     /* Word-wrap matching heading width */
@@ -927,10 +926,9 @@
     }
   }
 
-  /* Headings start hidden; particles reveal them — no-JS keeps text visible */
+  /* Headings permanently hidden — CSS .ptcl-heading handles it */
   document.querySelectorAll('h2[class*="display-"]').forEach(el=>{
     el.classList.add('ptcl-heading');
-    el.style.opacity='0';
   });
 
   /* Sample glyphs after fonts are confirmed loaded */
@@ -971,8 +969,6 @@
     if(nIdx!==lastHIdx){
       if(lastHIdx>=0){
         for(let i=0;i<N;i++){vx[i]+=(Math.random()-.5)*7;vy[i]+=(Math.random()-.5)*7;}
-        /* Hide previous heading text as particles scatter */
-        if(hData[lastHIdx]) hData[lastHIdx].el.style.opacity='0';
       }
       lastHIdx=nIdx; assignP(nIdx);
     }
@@ -982,12 +978,6 @@
     if(nIdx>=0){
       const r=hData[nIdx].el.getBoundingClientRect();
       att=Math.max(0,1-Math.abs(r.top+r.height*.5-H*.42)/(H*.33));
-    }
-
-    /* Reveal heading text once particles are ~50% converged */
-    if(nIdx>=0){
-      const textAlpha=Math.max(0,(att-.45)/.55);
-      hData[nIdx].el.style.opacity=textAlpha.toFixed(2);
     }
 
     /* ── Targets (screen-space, recomputed each frame so text follows scroll) ── */
@@ -1022,7 +1012,7 @@
       const dist=Math.hypot(dx,dy);
       const spd=Math.hypot(vx[i],vy[i]);
       const settled=att*Math.max(0,1-dist/22); // 1 = on-target+locked
-      const sz=mob?1.5:1.8;
+      const sz=mob?2.0:2.5;
 
       /* Comet glow when flying, subtle halo when settled over visible text */
       const gr=sz*(2.5-settled*1.8);
@@ -1032,7 +1022,7 @@
       /* Core: visible trail when flying, gentle glow when settled (text is readable below) */
       const cr=sz*(.8+settled*.5);
       ctx.beginPath(); ctx.arc(px[i],py[i],cr,0,Math.PI*2);
-      ctx.fillStyle=`rgba(0,242,255,${(Math.min(.75,.18+spd*.07+settled*.48)).toFixed(2)})`; ctx.fill();
+      ctx.fillStyle=`rgba(0,242,255,${(Math.min(.92,.18+spd*.07+settled*.65)).toFixed(2)})`; ctx.fill();
     }
   }
   requestAnimationFrame(frame);
