@@ -807,59 +807,64 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="js/animations.js" defer></script>
 
-<!-- Scroll particle system — heading formation -->
+<!-- Scroll particle system v2 — flow field + heading morphing -->
 <script>
 (function(){
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const mob = window.innerWidth < 768;
-  const N   = mob ? 110 : 210;
+  const N   = mob ? 130 : 240;
 
-  /* Fixed canvas overlay — pointer-events:none so page stays interactive */
-  const cv  = document.createElement('canvas');
-  cv.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:48;';
+  /* ── Compact 2D Perlin noise ── */
+  const _P=new Uint8Array(512);
+  {const a=Array.from({length:256},(_,i)=>i);for(let i=255;i>0;i--){const j=0|Math.random()*(i+1);[a[i],a[j]]=[a[j],a[i]];}for(let i=0;i<512;i++)_P[i]=a[i&255];}
+  const _fd=t=>t*t*t*(t*(t*6-15)+10),_lp=(a,b,t)=>a+t*(b-a);
+  const _g2=(h,x,y)=>{const u=h<8?x:y,v=h<4?y:x;return((h&1)?-u:u)+((h&2)?-v:v);};
+  function noise2(x,y){const X=Math.floor(x)&255,Y=Math.floor(y)&255;x-=Math.floor(x);y-=Math.floor(y);const u=_fd(x),v=_fd(y),A=_P[X]+Y,B=_P[X+1]+Y;return _lp(v,_lp(u,_g2(_P[A],x,y),_g2(_P[B],x-1,y)),_lp(u,_g2(_P[A+1],x,y-1),_g2(_P[B+1],x-1,y-1)));}
+
+  /* ── Canvas overlay ── */
+  const cv=document.createElement('canvas');
+  cv.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:48;';
   document.body.appendChild(cv);
-  const ctx = cv.getContext('2d');
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
-  let W = 0, H = 0;
+  const ctx=cv.getContext('2d');
+  const DPR=Math.min(window.devicePixelRatio||1,2);
+  let W=0,H=0;
 
-  /* Particle state */
-  const px = new Float32Array(N), py = new Float32Array(N);
-  const vx = new Float32Array(N), vy = new Float32Array(N);
-  const tx = new Float32Array(N), ty = new Float32Array(N);
+  /* ── Particle buffers ── */
+  const px=new Float32Array(N),py=new Float32Array(N);
+  const vx=new Float32Array(N),vy=new Float32Array(N);
+  const tx=new Float32Array(N),ty=new Float32Array(N);
+  const sd=new Float32Array(N); // per-particle noise seed
 
-  /* Cloud home positions — loose ellipse near viewport top-centre */
-  const hx = new Float32Array(N), hy = new Float32Array(N);
+  /* ── Cloud home — loose ellipse, top-centre viewport ── */
+  const hx=new Float32Array(N),hy=new Float32Array(N);
   function buildCloud(){
     for(let i=0;i<N;i++){
-      const a=(i/N)*Math.PI*2+Math.random()*0.6, r=12+Math.random()*55;
-      hx[i]=W*0.5+Math.cos(a)*r*2.4;
-      hy[i]=68+Math.sin(a)*r*0.65;
+      const a=(i/N)*Math.PI*2+sd[i], r=15+sd[i]*60;
+      hx[i]=W*.5+Math.cos(a)*r*2.2; hy[i]=65+Math.sin(a)*r*.65;
     }
   }
 
-  /* Heading data */
-  const headingData = [];
-  const pRI = new Int32Array(N), pRX = new Float32Array(N), pRY = new Float32Array(N);
-  let lastHIdx = -1;
+  /* ── Heading data ── */
+  const hData=[];
+  const pRI=new Int32Array(N),pRX=new Float32Array(N),pRY=new Float32Array(N);
+  let lastHIdx=-1;
 
   function sampleH(el){
-    const range = document.createRange();
-    range.selectNodeContents(el);
-    const sy = window.scrollY;
-    const rects = Array.from(range.getClientRects())
-      .filter(r => r.width > 8 && r.height > 8)
-      .map(r => ({ left:r.left, top:r.top+sy, w:r.width, h:r.height }));
-    return { el, absRects:rects };
+    const rng=document.createRange(); rng.selectNodeContents(el);
+    const sy=window.scrollY;
+    const rects=Array.from(rng.getClientRects()).filter(r=>r.width>8&&r.height>8)
+      .map(r=>({left:r.left, top:r.top+sy, w:r.width, h:r.height}));
+    return {el,rects};
   }
 
-  function assignParticles(hIdx){
-    if(hIdx < 0) return;
-    const { absRects } = headingData[hIdx];
-    const total = absRects.reduce((s,r)=>s+r.w*r.h, 0);
+  function assignP(hIdx){
+    if(hIdx<0) return;
+    const {rects}=hData[hIdx];
+    const tot=rects.reduce((s,r)=>s+r.w*r.h,0);
     for(let i=0;i<N;i++){
-      let area=Math.random()*total, ri=absRects.length-1;
-      for(let k=0;k<absRects.length;k++){ area-=absRects[k].w*absRects[k].h; if(area<=0){ri=k;break;} }
+      let a=Math.random()*tot,ri=rects.length-1;
+      for(let k=0;k<rects.length;k++){a-=rects[k].w*rects[k].h;if(a<=0){ri=k;break;}}
       pRI[i]=ri; pRX[i]=Math.random(); pRY[i]=Math.random();
     }
   }
@@ -870,89 +875,109 @@
     ctx.setTransform(DPR,0,0,DPR,0,0);
     buildCloud();
   }
-  resize();
-  window.addEventListener('resize', resize, {passive:true});
 
-  /* Initialise particles at cloud positions */
+  for(let i=0;i<N;i++) sd[i]=Math.random();
+  resize();
+  window.addEventListener('resize',resize,{passive:true});
+
+  /* Scatter initial positions across viewport */
   for(let i=0;i<N;i++){
-    px[i]=hx[i]+(Math.random()-.5)*20; py[i]=hy[i]+(Math.random()-.5)*14;
+    px[i]=W*.5+(Math.random()-.5)*W*.7; py[i]=Math.random()*H;
     tx[i]=hx[i]; ty[i]=hy[i];
   }
 
-  /* Sample headings after fonts load — does NOT touch heading DOM */
+  /* Sample headings via Range API — never touches heading DOM */
   document.fonts.ready.then(()=>{
     document.querySelectorAll('h2[class*="display-"]').forEach(el=>{
-      const d=sampleH(el);
-      if(d.absRects.length) headingData.push(d);
+      const d=sampleH(el); if(d.rects.length) hData.push(d);
     });
   });
 
-  const sphereSec = document.getElementById('dafa-particle-section');
-  const SPRING=0.052, DAMP=0.80;
+  const sphere=document.getElementById('dafa-particle-section');
+  let t=0,last=performance.now();
 
-  function frame(){
+  function frame(now){
     requestAnimationFrame(frame);
     if(!W) return;
+    const dt=Math.min((now-last)/1000,.05); last=now; t+=dt;
 
-    /* Fade in once sphere section is scrolled past */
-    const sy = window.scrollY;
-    let fade = 0;
-    if(sphereSec){
-      const bot = sphereSec.offsetTop + sphereSec.offsetHeight;
-      const s0  = bot - sphereSec.offsetHeight * 0.38;
-      fade = Math.max(0, Math.min(1, (sy - s0) / Math.max(1, bot - s0)));
+    /* Fade in once sphere is scrolled past */
+    const sy=window.scrollY;
+    let fade=0;
+    if(sphere){
+      const bot=sphere.offsetTop+sphere.offsetHeight;
+      fade=Math.max(0,Math.min(1,(sy-(bot-sphere.offsetHeight*.38))/(sphere.offsetHeight*.38+10)));
     }
-    cv.style.opacity = fade;
-    if(fade < 0.01){ ctx.clearRect(0,0,W,H); return; }
+    cv.style.opacity=fade;
+    if(fade<.01){ctx.clearRect(0,0,W,H);return;}
 
-    /* Find closest heading to the H×0.38 target line (bidirectional) */
-    const targetY = sy + H * 0.38;
-    let newHIdx = -1, bestD = Infinity;
-    for(let i=0;i<headingData.length;i++){
-      const { absRects } = headingData[i];
-      if(!absRects.length) continue;
-      const hTop = absRects[0].top;
-      if(hTop > sy + H * 0.88 || hTop < sy - H * 0.45) continue;
-      const d = Math.abs(hTop - targetY);
-      if(d < bestD){ bestD=d; newHIdx=i; }
+    /* Active heading — closest to H×0.38 line (bidirectional) */
+    const tY=sy+H*.38;
+    let nIdx=-1,bD=Infinity;
+    for(let i=0;i<hData.length;i++){
+      const top=hData[i].rects[0]?.top; if(top==null) continue;
+      if(top>sy+H*.9||top<sy-H*.5) continue;
+      const d=Math.abs(top-tY); if(d<bD){bD=d;nIdx=i;}
     }
 
-    /* Re-assign particles when heading changes */
-    if(newHIdx !== lastHIdx){ lastHIdx=newHIdx; assignParticles(newHIdx); }
+    /* Heading switch → liberation burst then re-target */
+    if(nIdx!==lastHIdx){
+      if(lastHIdx>=0) for(let i=0;i<N;i++){vx[i]+=(Math.random()-.5)*5;vy[i]+=(Math.random()-.5)*5;}
+      lastHIdx=nIdx; assignP(nIdx);
+    }
 
-    /* Compute current screen-space targets */
-    if(newHIdx < 0){
-      for(let i=0;i<N;i++){ tx[i]=hx[i]; ty[i]=hy[i]; }
+    /* Attraction strength — ramps smoothly as heading approaches target line */
+    let att=0;
+    if(nIdx>=0){const d=Math.abs(hData[nIdx].rects[0].top-sy-H*.38);att=Math.max(0,1-d/(H*.28));}
+
+    /* Screen-space targets */
+    if(nIdx<0){
+      for(let i=0;i<N;i++){tx[i]=hx[i];ty[i]=hy[i];}
     } else {
-      const { absRects } = headingData[newHIdx];
-      for(let i=0;i<N;i++){
-        const r=absRects[pRI[i]];
-        tx[i]=r.left+pRX[i]*r.w;
-        ty[i]=(r.top-sy)+pRY[i]*r.h;
-      }
+      const {rects}=hData[nIdx];
+      for(let i=0;i<N;i++){const r=rects[pRI[i]];tx[i]=r.left+pRX[i]*r.w;ty[i]=(r.top-sy)+pRY[i]*r.h;}
     }
 
-    /* Spring-integrate & draw */
+    /* Integrate & draw */
     ctx.clearRect(0,0,W,H);
+    const FS=mob?.5:.68;
     for(let i=0;i<N;i++){
-      vx[i]=(vx[i]+(tx[i]-px[i])*SPRING)*DAMP;
-      vy[i]=(vy[i]+(ty[i]-py[i])*SPRING)*DAMP;
+      /* Flow field — Perlin angle drives organic drift */
+      const ang=noise2(px[i]*.004+t*.10+sd[i], py[i]*.004+t*.07)*Math.PI*3.2;
+      const fvx=Math.cos(ang)*FS, fvy=Math.sin(ang)*FS;
+
+      /* Heading attraction */
+      const dx=tx[i]-px[i], dy=ty[i]-py[i];
+
+      /* Soft viewport boundary */
+      const MG=55;
+      const bx=(px[i]<MG?(MG-px[i])*.004:0)+(px[i]>W-MG?((W-MG)-px[i])*.004:0);
+      const by=(py[i]<MG?(MG-py[i])*.004:0)+(py[i]>H-MG?((H-MG)-py[i])*.004:0);
+
+      /* Weak cloud-home gravity in free mode */
+      const cg=.005*(1-att);
+
+      /* Blend: flow dominates when free, attraction dominates when locked */
+      const fl=1-att*.88, dp=.92-att*.10;
+      vx[i]=(vx[i]+fvx*fl+dx*att*.058+(hx[i]-px[i])*cg+bx)*dp;
+      vy[i]=(vy[i]+fvy*fl+dy*att*.058+(hy[i]-py[i])*cg+by)*dp;
       px[i]+=vx[i]; py[i]+=vy[i];
 
-      const dist=Math.hypot(tx[i]-px[i],ty[i]-py[i]);
-      const a=Math.max(0.18,1-dist/180);
-      const sz=mob?1.6:2.0;
+      /* Speed-based brightness & size */
+      const dist=Math.hypot(dx,dy);
+      const spd=Math.hypot(vx[i],vy[i]);
+      const a=Math.max(.14,1-dist/200)*(.50+Math.min(.50,spd*.14));
+      const sz=mob?1.5:(1.5+Math.min(.9,spd*.20));
 
-      /* Soft outer glow */
-      ctx.beginPath(); ctx.arc(px[i],py[i],sz*2.8,0,Math.PI*2);
-      ctx.fillStyle=`rgba(0,242,255,${(a*0.08).toFixed(3)})`; ctx.fill();
-
-      /* Core dot */
+      /* Outer glow */
+      ctx.beginPath(); ctx.arc(px[i],py[i],sz*2.7,0,Math.PI*2);
+      ctx.fillStyle=`rgba(0,242,255,${(a*.07).toFixed(2)})`; ctx.fill();
+      /* Core */
       ctx.beginPath(); ctx.arc(px[i],py[i],sz,0,Math.PI*2);
-      ctx.fillStyle=`rgba(0,242,255,${(a*0.88).toFixed(3)})`; ctx.fill();
+      ctx.fillStyle=`rgba(0,242,255,${(a*.86).toFixed(2)})`; ctx.fill();
     }
   }
-  frame();
+  requestAnimationFrame(frame);
 })();
 </script>
 
