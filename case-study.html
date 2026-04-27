@@ -62,6 +62,8 @@
     .shadow-2xl{box-shadow:0 40px 100px rgba(0,0,0,.72)!important;}
     .badge.bg-white{background-color:#252529!important;color:#e4e4e9!important;}
     blockquote.border-start{color:#e4e4e9;}
+    /* Headings hidden — particles write the text */
+    .ptcl-heading{opacity:0!important;transition:none!important;}
     </style>
 </head>
 
@@ -807,22 +809,22 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="js/animations.js" defer></script>
 
-<!-- Scroll particle system v2 — flow field + heading morphing -->
+<!-- Scroll particle system v3 — sphere morphing + glyph text formation -->
 <script>
 (function(){
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const mob = window.innerWidth < 768;
-  const N   = mob ? 130 : 240;
+  const N   = mob ? 220 : 420;
 
-  /* ── Compact 2D Perlin noise ── */
+  /* ── 2D Perlin noise ── */
   const _P=new Uint8Array(512);
   {const a=Array.from({length:256},(_,i)=>i);for(let i=255;i>0;i--){const j=0|Math.random()*(i+1);[a[i],a[j]]=[a[j],a[i]];}for(let i=0;i<512;i++)_P[i]=a[i&255];}
   const _fd=t=>t*t*t*(t*(t*6-15)+10),_lp=(a,b,t)=>a+t*(b-a);
   const _g2=(h,x,y)=>{const u=h<8?x:y,v=h<4?y:x;return((h&1)?-u:u)+((h&2)?-v:v);};
   function noise2(x,y){const X=Math.floor(x)&255,Y=Math.floor(y)&255;x-=Math.floor(x);y-=Math.floor(y);const u=_fd(x),v=_fd(y),A=_P[X]+Y,B=_P[X+1]+Y;return _lp(v,_lp(u,_g2(_P[A],x,y),_g2(_P[B],x-1,y)),_lp(u,_g2(_P[A+1],x,y-1),_g2(_P[B+1],x-1,y-1)));}
 
-  /* ── Canvas overlay ── */
+  /* ── Fixed canvas overlay ── */
   const cv=document.createElement('canvas');
   cv.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:48;';
   document.body.appendChild(cv);
@@ -830,70 +832,118 @@
   const DPR=Math.min(window.devicePixelRatio||1,2);
   let W=0,H=0;
 
-  /* ── Particle buffers ── */
+  /* ── Particle state ── */
   const px=new Float32Array(N),py=new Float32Array(N);
   const vx=new Float32Array(N),vy=new Float32Array(N);
   const tx=new Float32Array(N),ty=new Float32Array(N);
-  const sd=new Float32Array(N); // per-particle noise seed
+  const sd=new Float32Array(N); // per-particle Perlin seed
 
-  /* ── Cloud home — loose ellipse, top-centre viewport ── */
+  /* Per-particle heading-space offsets (set at assignment, stable during animation) */
+  const pPX=new Float32Array(N),pPY=new Float32Array(N);
+
+  /* ── Swarm home — wide ellipse, upper viewport ── */
   const hx=new Float32Array(N),hy=new Float32Array(N);
-  function buildCloud(){
+  function buildSwarm(){
     for(let i=0;i<N;i++){
-      const a=(i/N)*Math.PI*2+sd[i], r=15+sd[i]*60;
-      hx[i]=W*.5+Math.cos(a)*r*2.2; hy[i]=65+Math.sin(a)*r*.65;
+      const a=(i/N)*Math.PI*2+sd[i]*1.2, r=30+sd[i]*120;
+      hx[i]=W*.5+Math.cos(a)*r*2.8;
+      hy[i]=H*.18+Math.sin(a)*r*.55;
     }
   }
 
-  /* ── Heading data ── */
+  /* ── Heading data: { el, pts:[{x,y}] } (pixel-sampled glyph positions) ── */
   const hData=[];
-  const pRI=new Int32Array(N),pRX=new Float32Array(N),pRY=new Float32Array(N);
   let lastHIdx=-1;
 
-  function sampleH(el){
-    const rng=document.createRange(); rng.selectNodeContents(el);
-    const sy=window.scrollY;
-    const rects=Array.from(rng.getClientRects()).filter(r=>r.width>8&&r.height>8)
-      .map(r=>({left:r.left, top:r.top+sy, w:r.width, h:r.height}));
-    return {el,rects};
+  /* Sample glyph pixels via offscreen canvas + word-wrap */
+  function sampleGlyphs(el){
+    const cs   = getComputedStyle(el);
+    const fsz  = Math.round(parseFloat(cs.fontSize));
+    const fw   = el.offsetWidth || W*.9;
+    const lh   = Math.round(fsz * 1.15);
+    const scl  = mob ? 0.38 : 0.52;          // downscale for performance
+    const cw   = Math.max(4, Math.round(fw*scl));
+    const ch   = Math.max(4, fsz*7);
+
+    const oc=document.createElement('canvas');
+    oc.width=cw; oc.height=ch;
+    const c2=oc.getContext('2d');
+    c2.fillStyle='#fff';
+    c2.font=`700 ${Math.round(fsz*scl)}px Inter,-apple-system,sans-serif`;
+    c2.textBaseline='top';
+
+    /* Word-wrap to match heading width */
+    const words=el.textContent.trim().split(/\s+/);
+    let line='', lineY=0;
+    for(const w of words){
+      const test=line?line+' '+w:w;
+      if(line && c2.measureText(test).width>cw-1){
+        c2.fillText(line,0,lineY); lineY+=Math.round(lh*scl); line=w;
+      } else line=test;
+    }
+    if(line) c2.fillText(line,0,lineY);
+
+    /* Sample lit pixels */
+    const id=c2.getImageData(0,0,cw,ch);
+    const pts=[]; const step=mob?3:2;
+    for(let y=0;y<ch;y+=step) for(let x=0;x<cw;x+=step)
+      if(id.data[(y*cw+x)*4+3]>45) pts.push({x:x/scl, y:y/scl});
+
+    return {el, pts};
   }
 
+  /* Assign particles to glyph pixel positions (stable jitter per assignment) */
   function assignP(hIdx){
     if(hIdx<0) return;
-    const {rects}=hData[hIdx];
-    const tot=rects.reduce((s,r)=>s+r.w*r.h,0);
+    const {pts}=hData[hIdx];
+    if(!pts.length) return;
+    const n=pts.length;
+    /* Distribute evenly across all sampled pixels */
+    const stride=Math.max(1,Math.round(n/N));
     for(let i=0;i<N;i++){
-      let a=Math.random()*tot,ri=rects.length-1;
-      for(let k=0;k<rects.length;k++){a-=rects[k].w*rects[k].h;if(a<=0){ri=k;break;}}
-      pRI[i]=ri; pRX[i]=Math.random(); pRY[i]=Math.random();
+      const p=pts[(i*stride)%n];
+      pPX[i]=p.x+(Math.random()-.5)*2.8;
+      pPY[i]=p.y+(Math.random()-.5)*2.8;
     }
   }
 
+  /* ── Resize ── */
   function resize(){
     W=window.innerWidth; H=window.innerHeight;
     cv.width=Math.round(W*DPR); cv.height=Math.round(H*DPR);
     ctx.setTransform(DPR,0,0,DPR,0,0);
-    buildCloud();
+    buildSwarm();
   }
-
   for(let i=0;i<N;i++) sd[i]=Math.random();
   resize();
   window.addEventListener('resize',resize,{passive:true});
 
-  /* Scatter initial positions across viewport */
-  for(let i=0;i<N;i++){
-    px[i]=W*.5+(Math.random()-.5)*W*.7; py[i]=Math.random()*H;
-    tx[i]=hx[i]; ty[i]=hy[i];
+  /* ── Init: place particles in sphere formation (visual echo of Three.js sphere) ── */
+  const sphere=document.getElementById('dafa-particle-section');
+  const threeCV=document.getElementById('dafa-canvas');
+  {
+    const sT=sphere?sphere.offsetTop:0, sH=sphere?sphere.offsetHeight:H*.6;
+    const cx=W*.5, cy=sT-window.scrollY+sH*.46;
+    const srad=Math.min(W,sH)*.19;
+    const PHI=Math.PI*(3-Math.sqrt(5));
+    for(let i=0;i<N;i++){
+      const yf=1-(i/(N-1))*2, r=Math.sqrt(Math.max(0,1-yf*yf)), th=PHI*i;
+      px[i]=cx+Math.cos(th)*r*srad; py[i]=cy+yf*srad;
+      vx[i]=0; vy[i]=0; tx[i]=hx[i]; ty[i]=hy[i];
+    }
   }
 
-  /* Sample headings via Range API — never touches heading DOM */
+  /* ── Hide headings (JS-driven, so no-JS visitors still see text) ── */
+  document.querySelectorAll('h2[class*="display-"]').forEach(el=>el.classList.add('ptcl-heading'));
+
+  /* ── Sample heading glyphs after fonts load ── */
   document.fonts.ready.then(()=>{
     document.querySelectorAll('h2[class*="display-"]').forEach(el=>{
-      const d=sampleH(el); if(d.rects.length) hData.push(d);
+      const d=sampleGlyphs(el);
+      if(d.pts.length) hData.push(d);
     });
   });
 
-  const sphere=document.getElementById('dafa-particle-section');
   let t=0,last=performance.now();
 
   function frame(now){
@@ -901,80 +951,90 @@
     if(!W) return;
     const dt=Math.min((now-last)/1000,.05); last=now; t+=dt;
 
-    /* Fade in once sphere is scrolled past */
     const sy=window.scrollY;
-    let fade=0;
-    if(sphere){
-      const bot=sphere.offsetTop+sphere.offsetHeight;
-      fade=Math.max(0,Math.min(1,(sy-(bot-sphere.offsetHeight*.38))/(sphere.offsetHeight*.38+10)));
+    const sphH=sphere?sphere.offsetHeight:H*.6;
+    const sphBot=sphere?sphere.offsetTop+sphH:sphH;
+
+    /* Three.js sphere: fade out as 2D particles take over */
+    if(threeCV){
+      const tFade=Math.max(0,1-(sy-sphH*.15)/(sphH*.55));
+      threeCV.style.opacity=tFade;
     }
+
+    /* 2D canvas: fade in as sphere fades out */
+    const fade=Math.max(0,Math.min(1,(sy-sphH*.20)/(sphH*.55)));
     cv.style.opacity=fade;
     if(fade<.01){ctx.clearRect(0,0,W,H);return;}
 
-    /* Active heading — closest to H×0.38 line (bidirectional) */
-    const tY=sy+H*.38;
+    /* ── Active heading: closest to H×0.35, bidirectional ── */
     let nIdx=-1,bD=Infinity;
     for(let i=0;i<hData.length;i++){
-      const top=hData[i].rects[0]?.top; if(top==null) continue;
-      if(top>sy+H*.9||top<sy-H*.5) continue;
-      const d=Math.abs(top-tY); if(d<bD){bD=d;nIdx=i;}
+      const rect=hData[i].el.getBoundingClientRect();
+      if(rect.top>H*.95||rect.bottom<-H*.5) continue;
+      const d=Math.abs(rect.top-H*.35);
+      if(d<bD){bD=d;nIdx=i;}
     }
 
-    /* Heading switch → liberation burst then re-target */
+    /* Heading switch → liberation burst */
     if(nIdx!==lastHIdx){
-      if(lastHIdx>=0) for(let i=0;i<N;i++){vx[i]+=(Math.random()-.5)*5;vy[i]+=(Math.random()-.5)*5;}
+      if(lastHIdx>=0) for(let i=0;i<N;i++){vx[i]+=(Math.random()-.5)*7;vy[i]+=(Math.random()-.5)*7;}
       lastHIdx=nIdx; assignP(nIdx);
     }
 
-    /* Attraction strength — ramps smoothly as heading approaches target line */
+    /* Attraction strength: 0 (free) → 1 (locked on heading) */
     let att=0;
-    if(nIdx>=0){const d=Math.abs(hData[nIdx].rects[0].top-sy-H*.38);att=Math.max(0,1-d/(H*.28));}
-
-    /* Screen-space targets */
-    if(nIdx<0){
-      for(let i=0;i<N;i++){tx[i]=hx[i];ty[i]=hy[i];}
-    } else {
-      const {rects}=hData[nIdx];
-      for(let i=0;i<N;i++){const r=rects[pRI[i]];tx[i]=r.left+pRX[i]*r.w;ty[i]=(r.top-sy)+pRY[i]*r.h;}
+    if(nIdx>=0){
+      const rect=hData[nIdx].el.getBoundingClientRect();
+      att=Math.max(0,1-Math.abs(rect.top-H*.35)/(H*.32));
     }
 
-    /* Integrate & draw */
+    /* ── Particle targets ── */
+    if(nIdx<0){
+      /* Swarm — spread across upper viewport */
+      for(let i=0;i<N;i++){tx[i]=hx[i];ty[i]=hy[i];}
+    } else {
+      /* Glyph positions: heading-local px + current screen top */
+      const rect=hData[nIdx].el.getBoundingClientRect();
+      for(let i=0;i<N;i++){
+        tx[i]=rect.left+pPX[i];
+        ty[i]=rect.top+pPY[i];
+      }
+    }
+
+    /* ── Integrate & draw ── */
     ctx.clearRect(0,0,W,H);
-    const FS=mob?.5:.68;
+    const FS=mob?.48:.65;
     for(let i=0;i<N;i++){
-      /* Flow field — Perlin angle drives organic drift */
-      const ang=noise2(px[i]*.004+t*.10+sd[i], py[i]*.004+t*.07)*Math.PI*3.2;
+      /* Flow field: Perlin-driven organic drift */
+      const ang=noise2(px[i]*.0038+t*.09+sd[i], py[i]*.0038+t*.06)*Math.PI*3.5;
       const fvx=Math.cos(ang)*FS, fvy=Math.sin(ang)*FS;
 
-      /* Heading attraction */
       const dx=tx[i]-px[i], dy=ty[i]-py[i];
 
-      /* Soft viewport boundary */
-      const MG=55;
-      const bx=(px[i]<MG?(MG-px[i])*.004:0)+(px[i]>W-MG?((W-MG)-px[i])*.004:0);
-      const by=(py[i]<MG?(MG-py[i])*.004:0)+(py[i]>H-MG?((H-MG)-py[i])*.004:0);
+      /* Soft boundary */
+      const MG=40;
+      const bx=(px[i]<MG?(MG-px[i])*.005:0)+(px[i]>W-MG?((W-MG)-px[i])*.005:0);
+      const by=(py[i]<MG?(MG-py[i])*.005:0)+(py[i]>H-MG?((H-MG)-py[i])*.005:0);
 
-      /* Weak cloud-home gravity in free mode */
-      const cg=.005*(1-att);
+      /* Swarm gravity (only in free mode) */
+      const sg=.004*(1-att);
 
-      /* Blend: flow dominates when free, attraction dominates when locked */
-      const fl=1-att*.88, dp=.92-att*.10;
-      vx[i]=(vx[i]+fvx*fl+dx*att*.058+(hx[i]-px[i])*cg+bx)*dp;
-      vy[i]=(vy[i]+fvy*fl+dy*att*.058+(hy[i]-py[i])*cg+by)*dp;
+      /* Blend physics: flow + attraction + swarm-home + boundary */
+      const fl=1-att*.90, dp=.91-att*.11;
+      vx[i]=(vx[i]+fvx*fl+dx*att*.062+(hx[i]-px[i])*sg+bx)*dp;
+      vy[i]=(vy[i]+fvy*fl+dy*att*.062+(hy[i]-py[i])*sg+by)*dp;
       px[i]+=vx[i]; py[i]+=vy[i];
 
-      /* Speed-based brightness & size */
+      /* Brightness: settled = crisp, in-flight = bright trail */
       const dist=Math.hypot(dx,dy);
       const spd=Math.hypot(vx[i],vy[i]);
-      const a=Math.max(.14,1-dist/200)*(.50+Math.min(.50,spd*.14));
-      const sz=mob?1.5:(1.5+Math.min(.9,spd*.20));
+      const a=Math.max(.12,1-dist/240)*(.45+Math.min(.55,spd*.15));
+      const sz=mob?1.4:(1.4+Math.min(1.1,spd*.24));
 
-      /* Outer glow */
-      ctx.beginPath(); ctx.arc(px[i],py[i],sz*2.7,0,Math.PI*2);
-      ctx.fillStyle=`rgba(0,242,255,${(a*.07).toFixed(2)})`; ctx.fill();
-      /* Core */
+      ctx.beginPath(); ctx.arc(px[i],py[i],sz*2.8,0,Math.PI*2);
+      ctx.fillStyle=`rgba(0,242,255,${(a*.065).toFixed(2)})`; ctx.fill();
       ctx.beginPath(); ctx.arc(px[i],py[i],sz,0,Math.PI*2);
-      ctx.fillStyle=`rgba(0,242,255,${(a*.86).toFixed(2)})`; ctx.fill();
+      ctx.fillStyle=`rgba(0,242,255,${(a*.88).toFixed(2)})`; ctx.fill();
     }
   }
   requestAnimationFrame(frame);
