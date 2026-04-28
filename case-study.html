@@ -30,10 +30,14 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" media="print" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"></noscript>
 
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
+    <link rel="preload" href="css/bootstrap.min.css" as="style">
+    <link rel="preload" href="css/style.css" as="style">
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
     <link rel="stylesheet" href="css/style.css">
@@ -882,6 +886,7 @@ import { UnrealBloomPass }from 'three/addons/postprocessing/UnrealBloomPass.js';
   const section = document.getElementById('dafa-particle-section');
   if (!canvas || !section) return;
 
+  const veryMob = window.innerWidth < 400;
   const mob = window.innerWidth < 600;
   const W   = window.innerWidth;
   const H   = Math.min(mob ? Math.round(W * 1.05) : Math.round(W * 0.62), mob ? 560 : 520);
@@ -924,8 +929,8 @@ import { UnrealBloomPass }from 'three/addons/postprocessing/UnrealBloomPass.js';
 
   /* ── Constants ── */
   const R      = 2.2;
-  const N_REG  = mob ? 1800 : 6000;
-  const N_SPEC = mob ? 280  : 1400;
+  const N_REG  = veryMob ? 800  : mob ? 1800 : 6000;
+  const N_SPEC = veryMob ? 120  : mob ? 280  : 1400;
   const N_TOT  = N_REG + N_SPEC;
   const PHI_G  = Math.PI * (3 - Math.sqrt(5));
   const T_OFF  = Math.PI * 1.618;
