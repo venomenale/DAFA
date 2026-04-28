@@ -21,6 +21,15 @@
   </url>
 
   <url>
+    <loc>https://essamlibert.com/services.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://essamlibert.com/services.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://essamlibert.com/services.html"/>
+    <lastmod>2026-04-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://essamlibert.com/contact.html</loc>
     <xhtml:link rel="alternate" hreflang="fr-BE" href="https://essamlibert.com/contact.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://essamlibert.com/contact.html"/>
