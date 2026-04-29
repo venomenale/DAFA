@@ -52,13 +52,6 @@
       }
     }
     </script>
-    <!-- Preload Three.js modules so sphere renders immediately on page load -->
-    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js">
-    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js">
-    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/EffectComposer.js">
-    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/RenderPass.js">
-    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/UnrealBloomPass.js">
-
     <style>
     /* Dark theme overrides — case-study.html */
     body.apple-theme{background-color:#0a0a0a!important;color:#e4e4e9!important;}
@@ -873,21 +866,34 @@
 
 <!-- DAFA 3D Sphere Animation v7 — Three.js holographic -->
 <script type="module">
-import * as THREE from 'three';
-import { OrbitControls }  from 'three/addons/controls/OrbitControls.js';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass }     from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass }from 'three/addons/postprocessing/UnrealBloomPass.js';
-
-(function () {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
+(async function () {
   const canvas  = document.getElementById('dafa-canvas');
   const section = document.getElementById('dafa-particle-section');
   if (!canvas || !section) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* Defer Three.js until sphere section approaches viewport */
+  await new Promise(resolve => {
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { obs.disconnect(); resolve(); }
+    }, { rootMargin: '250px' });
+    obs.observe(section);
+  });
+
+  const THREE = await import('three');
+  const { OrbitControls } = await import('three/addons/controls/OrbitControls.js');
 
   const veryMob = window.innerWidth < 400;
   const mob = window.innerWidth < 600;
+  /* Post-processing loaded only on desktop — saves ~200 KB on mobile */
+  let EffectComposer, RenderPass, UnrealBloomPass;
+  if (!mob) {
+    [{ EffectComposer }, { RenderPass }, { UnrealBloomPass }] = await Promise.all([
+      import('three/addons/postprocessing/EffectComposer.js'),
+      import('three/addons/postprocessing/RenderPass.js'),
+      import('three/addons/postprocessing/UnrealBloomPass.js'),
+    ]);
+  }
   const W   = window.innerWidth;
   const H   = Math.min(mob ? Math.round(W * 1.05) : Math.round(W * 0.62), mob ? 560 : 520);
 
@@ -1017,11 +1023,13 @@ import { UnrealBloomPass }from 'three/addons/postprocessing/UnrealBloomPass.js';
   lGeom.setAttribute('position', new THREE.BufferAttribute(lv,3));
   scene.add(new THREE.LineSegments(lGeom, new THREE.LineBasicMaterial({color:0x00c8ee,transparent:true,opacity:0.07})));
 
-  /* ── Post-processing: bloom on desktop, direct render on mobile (perf) ── */
-  const composer=new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene,camera));
-  if(!mob) composer.addPass(new UnrealBloomPass(new THREE.Vector2(W,H),1.6,0.4,0.08));
-  else     composer.addPass(new UnrealBloomPass(new THREE.Vector2(W*0.5,H*0.5),0.7,0.3,0.12));
+  /* ── Post-processing: bloom desktop only, direct render on mobile ── */
+  let composer = null;
+  if (!mob) {
+    composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    composer.addPass(new UnrealBloomPass(new THREE.Vector2(W,H),1.6,0.4,0.08));
+  }
 
   /* ── DAFA state machine ── */
   const T_CYC=14.4, T_SPH=6.0, T_IN=2.2, T_HLD=4.0, T_RET=2.2;
@@ -1105,7 +1113,8 @@ import { UnrealBloomPass }from 'three/addons/postprocessing/UnrealBloomPass.js';
         wDivs[i].style.top =((-v.y*0.5+0.5)*rect.height)+'px';
       });
     }
-    composer.render();
+    if (composer) composer.render();
+    else renderer.render(scene, camera);
   }
   animate();
 })();
