@@ -929,8 +929,8 @@ import { UnrealBloomPass }from 'three/addons/postprocessing/UnrealBloomPass.js';
 
   /* ── Constants ── */
   const R      = 2.2;
-  const N_REG  = veryMob ? 800  : mob ? 1800 : 6000;
-  const N_SPEC = veryMob ? 120  : mob ? 280  : 1400;
+  const N_REG  = veryMob ? 600  : mob ? 1800 : 6000;
+  const N_SPEC = veryMob ? 220  : mob ? 280  : 1400;
   const N_TOT  = N_REG + N_SPEC;
   const PHI_G  = Math.PI * (3 - Math.sqrt(5));
   const T_OFF  = Math.PI * 1.618;
@@ -988,7 +988,7 @@ import { UnrealBloomPass }from 'three/addons/postprocessing/UnrealBloomPass.js';
   geom.setAttribute('position', posAttr);
   geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   scene.add(new THREE.Points(geom, new THREE.PointsMaterial({
-    size: mob ? 0.050 : 0.040, vertexColors: true,
+    size: veryMob ? 0.062 : mob ? 0.050 : 0.040, vertexColors: true,
     sizeAttenuation: true, transparent: true, opacity: 0.92, depthWrite: false,
   })));
 

@@ -47,12 +47,5 @@
     <priority>0.7</priority>
   </url>
 
-  <url>
-    <loc>https://essamlibert.com/legal.html</loc>
-    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://essamlibert.com/legal.html"/>
-    <lastmod>2026-04-14</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
-  </url>
 
 </urlset>
