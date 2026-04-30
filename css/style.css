@@ -404,4 +404,108 @@ fieldset legend {
         opacity: 1 !important;
     }
     #scroll-progress { display: none; }
+    .term-lines { animation: none !important; }
+}
+
+
+/* ============================================================
+   TERMINAL DE DIAGNOSTIC
+   ============================================================ */
+
+.term-window {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 280px;
+    background: #0a0a0a;
+    border: 1px solid rgba(0,255,136,.22);
+    border-radius: 8px;
+    z-index: 900;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,.7);
+    transition: opacity .3s ease, transform .3s ease;
+}
+.term-window.term-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+}
+.term-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    background: rgba(0,255,136,.05);
+    border-bottom: 1px solid rgba(0,255,136,.14);
+}
+.term-title {
+    font-size: 7px;
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: .18em;
+    color: rgba(0,255,136,.55);
+    text-transform: uppercase;
+}
+.term-close {
+    background: none;
+    border: none;
+    color: rgba(0,255,136,.45);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0 2px;
+    transition: color .2s;
+}
+.term-close:hover { color: rgba(0,255,136,.9); }
+.term-body {
+    height: 96px;
+    overflow: hidden;
+    padding: 8px 10px;
+}
+.term-lines {
+    animation: term-scroll 15s steps(10, end) infinite;
+}
+.term-line {
+    font-size: 8px;
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 16px;
+    color: rgba(0,255,136,.7);
+    letter-spacing: .1em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+@keyframes term-scroll {
+    to { transform: translateY(-160px); }
+}
+.term-toggle { display: none; }
+
+@media (max-width: 767px) {
+    .term-window {
+        bottom: 68px;
+        right: 16px;
+        width: 260px;
+    }
+    .term-window:not(.term-open) { display: none; }
+    .term-toggle {
+        display: flex;
+        position: fixed;
+        bottom: 20px;
+        right: 16px;
+        width: 36px;
+        height: 36px;
+        background: #0a0a0a;
+        border: 1px solid rgba(0,255,136,.35);
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        color: rgba(0,255,136,.7);
+        font-size: 14px;
+        z-index: 901;
+        cursor: pointer;
+        transition: border-color .2s, color .2s;
+    }
+    .term-toggle:hover {
+        border-color: rgba(0,255,136,.75);
+        color: rgba(0,255,136,.95);
+    }
 }

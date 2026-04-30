@@ -102,5 +102,38 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+
+<!-- Terminal de diagnostic -->
+<div class="term-window" id="diagTerminal" aria-hidden="true">
+  <div class="term-header">
+    <span class="term-title">ESSAM.LIBERT — STATUS</span>
+    <button class="term-close" id="termClose" aria-label="Fermer le terminal">&times;</button>
+  </div>
+  <div class="term-body">
+    <div class="term-lines">
+      <div class="term-line">[SCAN] essamlibert.com — PageSpeed 99/100</div>
+      <div class="term-line">[CHECK] Accessibility score — 100/100</div>
+      <div class="term-line">[DAFA] Prototype loaded — 50+ screens</div>
+      <div class="term-line">[ANALYZE] UX friction detected — 3 patterns</div>
+      <div class="term-line">[VERIFY] Design System integrity — OK</div>
+      <div class="term-line">[SCAN] Mobile optimization — OK</div>
+      <div class="term-line">[DAFA] Badge system — level 1 to 8 loaded</div>
+      <div class="term-line">[CHECK] Alt text coverage — 100%</div>
+      <div class="term-line">[ANALYZE] Cognitive load — optimized</div>
+      <div class="term-line">[READY] Essam Libert — available for alternance</div>
+      <div class="term-line">[SCAN] essamlibert.com — PageSpeed 99/100</div>
+      <div class="term-line">[CHECK] Accessibility score — 100/100</div>
+      <div class="term-line">[DAFA] Prototype loaded — 50+ screens</div>
+      <div class="term-line">[ANALYZE] UX friction detected — 3 patterns</div>
+      <div class="term-line">[VERIFY] Design System integrity — OK</div>
+      <div class="term-line">[SCAN] Mobile optimization — OK</div>
+    </div>
+  </div>
+</div>
+<button class="term-toggle" id="termToggle" aria-label="Ouvrir le terminal de diagnostic" aria-expanded="false">
+  <i class="bi bi-terminal" aria-hidden="true"></i>
+</button>
+<script>(function(){var w=document.getElementById('diagTerminal'),b=document.getElementById('termClose'),t=document.getElementById('termToggle');if(b)b.addEventListener('click',function(){w.classList.add('term-hidden');if(t)t.setAttribute('aria-expanded','false');});if(t)t.addEventListener('click',function(){var o=w.classList.toggle('term-open');t.setAttribute('aria-expanded',o?'true':'false');});})();</script>
+
 </body>
 </html>
