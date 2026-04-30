@@ -417,11 +417,12 @@ fieldset legend {
     bottom: 24px;
     right: 24px;
     width: 280px;
+    max-height: 138px;
     background: #0a0a0a;
     border: 1px solid rgba(0,255,136,.22);
     border-radius: 8px;
     z-index: 900;
-    overflow: hidden;
+    overflow: hidden !important;
     box-shadow: 0 8px 32px rgba(0,0,0,.7);
     transition: opacity .3s ease, transform .3s ease;
 }
@@ -437,6 +438,7 @@ fieldset legend {
     padding: 6px 10px;
     background: rgba(0,255,136,.05);
     border-bottom: 1px solid rgba(0,255,136,.14);
+    flex-shrink: 0;
 }
 .term-title {
     font-size: 7px;
@@ -454,25 +456,31 @@ fieldset legend {
     line-height: 1;
     padding: 0 2px;
     transition: color .2s;
+    flex-shrink: 0;
 }
 .term-close:hover { color: rgba(0,255,136,.9); }
 .term-body {
-    height: 96px;
-    overflow: hidden;
+    height: 96px !important;
+    max-height: 96px !important;
+    overflow: hidden !important;
     padding: 8px 10px;
+    display: block;
 }
 .term-lines {
     animation: term-scroll 15s steps(10, end) infinite;
+    display: block;
 }
 .term-line {
     font-size: 8px;
     font-family: 'Courier New', Courier, monospace;
     line-height: 16px;
+    height: 16px;
     color: rgba(0,255,136,.7);
     letter-spacing: .1em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: block;
 }
 @keyframes term-scroll {
     to { transform: translateY(-160px); }
