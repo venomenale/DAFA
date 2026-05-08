@@ -40,6 +40,14 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" media="print" onload="this.media='all'">
+    <!-- Cloudflare Turnstile — CAPTCHA invisible -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script>
+    function onTurnstileDone(token) {
+        var btn = document.getElementById('formSubmit');
+        if (btn) { btn.removeAttribute('disabled'); btn.removeAttribute('aria-disabled'); }
+    }
+    </script>
     <style>
     /* Dark theme */
     body.apple-theme{background-color:#0a0a0a!important;color:#e4e4e9!important;}
@@ -260,6 +268,13 @@
                         <h2 class="fw-bold mb-1 h4">Envoyez-moi un message.</h2>
                         <p class="text-muted small mb-4">Tous les champs sont obligatoires. Données traitées via Formspree, conformément au RGPD.</p>
 
+                        <form action="https://formspree.io/f/xeerrkzy" method="POST">
+
+                        <!-- Formspree : champ honeypot (les bots le remplissent, Formspree rejette) -->
+                        <input type="text" name="_gotcha" style="display:none!important" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <!-- Formspree : sujet personnalisé dans l'email reçu -->
+                        <input type="hidden" name="_subject" value="[Portfolio] Nouveau message de contact">
+
                         <fieldset class="border-0 p-0 mb-4">
                             <legend class="fw-semibold mb-3 small text-uppercase tracking-widest text-muted">Motif du contact</legend>
                             <div class="d-flex flex-wrap gap-2">
@@ -282,7 +297,6 @@
                             </div>
                         </fieldset>
 
-                        <form action="https://formspree.io/f/xeerrkzy" method="POST">
                             <div class="form-floating mb-3">
                                 <input type="text" name="name" class="form-control apple-input" id="name"
                                        placeholder="Nom" required
@@ -304,7 +318,18 @@
                                           title="Votre message doit faire au moins 10 caractères."></textarea>
                                 <label for="msg">Votre message</label>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 rounded-pill py-3 fw-bold">
+
+                            <!-- Cloudflare Turnstile — CAPTCHA invisible, zéro friction -->
+                            <!-- ⚠️ Remplacer YOUR_SITE_KEY par ta clé Cloudflare Turnstile -->
+                            <!-- dashboard.cloudflare.com → Turnstile → Add site → copier le Site Key -->
+                            <div class="cf-turnstile mb-3"
+                                 data-sitekey="1x00000000000000000000AA"
+                                 data-theme="dark"
+                                 data-callback="onTurnstileDone"
+                                 data-size="flexible"
+                                 aria-label="Vérification anti-robot"></div>
+
+                            <button type="submit" id="formSubmit" class="btn btn-primary w-100 rounded-pill py-3 fw-bold" disabled aria-disabled="true">
                                 <i class="bi bi-send-fill me-2" aria-hidden="true"></i>Envoyer le message
                             </button>
                         </form>
