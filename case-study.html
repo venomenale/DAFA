@@ -822,45 +822,16 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="js/animations.js" defer></script>
 
-<!-- Section heading indicator — thin left-edge glow pill -->
 <script>
 (function(){
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  /* Pill element */
-  const pill=document.createElement('div');
-  pill.setAttribute('aria-hidden','true');
-  pill.style.cssText='position:fixed;left:0;top:50vh;z-index:48;pointer-events:none;opacity:0;transform:translateY(-50%);transition:top .55s cubic-bezier(.16,1,.3,1),opacity .35s ease;will-change:top,opacity;';
-  pill.innerHTML='<div style="width:3px;height:44px;background:linear-gradient(to bottom,rgba(0,242,255,0),rgba(0,242,255,.9),rgba(0,242,255,0));border-radius:2px;box-shadow:0 0 10px rgba(0,242,255,.55);"></div>';
-  document.body.appendChild(pill);
-
   const sphere=document.getElementById('dafa-particle-section');
   const threeCV=document.getElementById('dafa-canvas');
-  let hideTimer=null;
-
-  /* Fade Three.js sphere canvas on scroll */
+  if(!threeCV) return;
   window.addEventListener('scroll',()=>{
-    if(!threeCV) return;
     const sphH=sphere?sphere.offsetHeight:window.innerHeight*.6;
     const sy=window.scrollY;
     threeCV.style.opacity=Math.max(0,1-(sy-sphH*.12)/(sphH*.52));
   },{passive:true});
-
-  /* Show pill at heading vertical center, then fade out */
-  function flashAt(el){
-    const r=el.getBoundingClientRect();
-    const y=Math.max(60,Math.min(window.innerHeight-60,r.top+r.height*.5));
-    pill.style.top=y+'px';
-    pill.style.opacity='1';
-    clearTimeout(hideTimer);
-    hideTimer=setTimeout(()=>{ pill.style.opacity='0'; },1600);
-  }
-
-  const io=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{ if(e.isIntersecting) flashAt(e.target); });
-  },{threshold:.4,rootMargin:'0px 0px -15% 0px'});
-
-  document.querySelectorAll('h2[class*="display-"]').forEach(h=>io.observe(h));
 })();
 </script>
 
