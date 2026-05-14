@@ -38,7 +38,7 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preload" href="css/bootstrap.min.css" as="style">
     <link rel="preload" href="css/style.css" as="style">
-    <link rel="preload" as="image" href="images/essam.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="images/profil.jpg" fetchpriority="high">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" media="print" onload="this.media='all'">
@@ -58,21 +58,24 @@
     .hero-section{position:relative;overflow:hidden;}
     .hero-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 75% 50%,rgba(0,242,255,.05) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 20% 70%,rgba(123,97,255,.05) 0%,transparent 70%);pointer-events:none;}
 
-    /* Stat cards — manifeste style */
-    .stat-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:1rem .75rem;text-align:center;transition:border-color .25s;}
-    .stat-card:hover{border-color:rgba(0,242,255,.35);}
-    .stat-num{font-weight:800;background:linear-gradient(135deg,#00f2ff,#7b61ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;font-size:1.35rem;}
+    /* Portal section */
+    .portal-section{background:#070709;}
+    .portal-card{display:block;border-radius:24px;padding:3rem 2.5rem;text-decoration:none;color:inherit;min-height:420px;position:relative;overflow:hidden;transition:transform .3s ease,box-shadow .3s ease;}
+    .portal-card:hover{transform:translateY(-6px);box-shadow:0 32px 80px rgba(0,0,0,.7);}
+    .portal-dafa{background:linear-gradient(145deg,#08080d 0%,#10101a 100%);border:1px solid rgba(255,255,255,.07);}
+    .portal-dafa::before{content:'';position:absolute;top:-40%;right:-10%;width:65%;padding-bottom:65%;border-radius:50%;background:radial-gradient(circle,rgba(0,242,255,.07) 0%,transparent 65%);pointer-events:none;}
+    .portal-dafa::after{content:'DAFA';position:absolute;bottom:-.5rem;right:1.5rem;font-size:8rem;font-weight:900;opacity:.03;letter-spacing:-.05em;line-height:1;color:#fff;pointer-events:none;}
+    .portal-univers{background:linear-gradient(145deg,#120a25 0%,#0a1230 100%);border:1px solid rgba(123,97,255,.12);}
+    .portal-univers::before{content:'';position:absolute;bottom:-50%;left:-15%;width:75%;padding-bottom:75%;border-radius:50%;background:radial-gradient(circle,rgba(123,97,255,.1) 0%,transparent 65%);pointer-events:none;}
+    .portal-tag{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;margin-bottom:1.5rem;}
+    .portal-title{font-size:3.5rem;font-weight:800;line-height:1.05;margin-bottom:1rem;}
+    .portal-desc{font-size:1rem;line-height:1.6;margin-bottom:2rem;max-width:340px;}
+    .portal-arrow{display:inline-flex;align-items:center;gap:.5rem;font-weight:600;font-size:.9rem;transition:gap .2s,opacity .2s;}
+    .portal-card:hover .portal-arrow{gap:.85rem;}
 
-    /* Bento glass variant */
-    .bento-box.bg-white{background-color:rgba(255,255,255,.04)!important;border:1px solid rgba(255,255,255,.08)!important;}
-    .bento-box.bg-dark{background-color:rgba(255,255,255,.04)!important;border:1px solid rgba(255,255,255,.08)!important;}
-
-    /* Skill/principle cards */
-    .p-4.bg-white.rounded-5,.p-4.bg-white.rounded-4{background-color:rgba(255,255,255,.04)!important;border:1px solid rgba(255,255,255,.08)!important;}
-
-    /* Badge readability on dark */
-    .badge.bg-primary.bg-opacity-10{background-color:rgba(13,110,253,.18)!important;color:#7eb8ff!important;border-color:rgba(13,110,253,.3)!important;}
-    .badge.bg-warning{background:rgba(255,193,7,.12)!important;color:#ffc107!important;border:1px solid rgba(255,193,7,.3)!important;}
+    /* Et moi là-dedans */
+    .about-cta-section{background:linear-gradient(180deg,#070709 0%,#0a0a0f 100%);position:relative;}
+    .about-cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(123,97,255,.06) 0%,transparent 70%);pointer-events:none;}
     </style>
 </head>
 
@@ -106,201 +109,70 @@
         <div class="container pt-4 pb-4">
             <div class="row align-items-center g-5">
                 <div class="col-lg-7">
-                    <div class="d-flex flex-wrap gap-2 mb-4 animate-fade-in anim-delay-1">
-                        <span class="badge bg-danger rounded-pill px-3 py-2 text-uppercase tracking-widest">
-                            <i class="bi bi-lightning-fill me-1" aria-hidden="true"></i>Alternance UX/UI · Disponible · Liège
-                        </span>
-                        <span class="badge bg-warning text-dark rounded-pill px-3 py-2 text-uppercase tracking-widest">
-                            <i class="bi bi-calendar-check me-1" aria-hidden="true"></i>Échéance · 30 juin 2026
-                        </span>
-                    </div>
-                    <h1 class="display-1 fw-bold tracking-tight mb-4 animate-fade-in anim-delay-2" style="line-height: 1.05;">
+                    <h1 class="display-1 fw-bold tracking-tight mb-4 animate-fade-in anim-delay-2" style="line-height:1.05;">
                         Je détectais les failles<br>aux rayons X.<br><span class="text-gradient">Aujourd'hui, je les corrige en UX.</span>
                     </h1>
                     <p class="fs-4 text-muted mb-5 animate-fade-in anim-delay-3">
                         Ancien agent de sûreté aéroportuaire devenu Product Designer. Je ne laisse aucune place à l'ambiguïté. Ni dans un couloir de contrôle, ni dans une interface.
                     </p>
                     <div class="d-flex flex-wrap gap-3 animate-fade-in anim-delay-4">
-                        <a href="contact.html" class="btn btn-primary btn-apple rounded-pill px-4 py-2 fw-bold shadow">Me contacter</a>
-                        <a href="images/CV_A4_UX_compressed.pdf" download="CV_Essam_Libert_UX_Designer.pdf" class="btn btn-outline-light btn-apple rounded-pill px-4 py-2 fw-bold">
+                        <a href="images/CV_A4_UX_compressed.pdf" download="CV_Essam_Libert_UX_Designer.pdf" class="btn btn-primary btn-apple rounded-pill px-5 py-3 fw-bold shadow fs-5">
                             <i class="bi bi-download me-2" aria-hidden="true"></i>Mon CV
                         </a>
                     </div>
                 </div>
-                <!-- Photo Essam -->
                 <div class="col-lg-5 text-center animate-fade-in anim-delay-3">
-                    <div class="position-relative d-inline-block mb-4 float-anim">
-                        <img src="images/essam.webp" alt="Essam Libert, UX/UI Designer" class="img-fluid rounded-5 shadow-lg" width="320" height="320" style="max-width: 300px; object-fit: cover;" fetchpriority="high">
-                        <span class="badge bg-success position-absolute bottom-0 end-0 rounded-pill px-3 py-2 shadow" style="margin: 0.75rem;">
-                            <i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;" aria-hidden="true"></i>Dispo immédiat
-                        </span>
-                    </div>
-                    <div class="d-flex gap-2 justify-content-center" style="max-width:300px;margin:0 auto;">
-                        <div class="stat-card flex-fill">
-                            <div class="stat-num mb-1">50+</div>
-                            <div class="small text-muted">Écrans Figma</div>
-                        </div>
-                        <div class="stat-card flex-fill">
-                            <div class="stat-num mb-1">99</div>
-                            <div class="small text-muted">PageSpeed</div>
-                        </div>
-                        <div class="stat-card flex-fill">
-                            <div class="stat-num mb-1">8</div>
-                            <div class="small text-muted">Mois projet</div>
-                        </div>
-                    </div>
+                    <img src="images/profil.jpg"
+                         onerror="this.onerror=null;this.src='images/essam.webp'"
+                         alt="Essam Libert, UX/UI Designer"
+                         class="img-fluid rounded-5 shadow-lg"
+                         width="320" height="320"
+                         style="max-width:300px;object-fit:cover;"
+                         fetchpriority="high">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CE QUI ME DIFFÉRENCIE -->
-    <section class="py-5 bg-light-apple">
+    <!-- PORTAL -->
+    <section class="py-5 portal-section">
         <div class="container py-5 reveal">
-            <div class="text-center mb-5">
-                <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest d-inline-block">Profil</span>
-                <h2 class="display-5 fw-bold tracking-tight mb-3">Ce qui me différencie.</h2>
-
-                <p class="fs-5 text-muted max-width-800 mx-auto">Deux expertises que personne d'autre ne combine : lire une scène sous pression opérationnelle, et concevoir des interfaces qui ne laissent aucune place à l'erreur.</p>
-            </div>
             <div class="row g-4">
                 <div class="col-lg-6">
-                    <div class="bento-box bg-dark text-white p-5 h-100 shadow-sm">
-                        <i class="bi bi-shield-shaded display-4 text-primary mb-3 d-block" aria-hidden="true"></i>
-                        <h3 class="h2 fw-bold mb-3">Sécurité & Rigueur Opérationnelle</h3>
-                        <p class="fs-5 opacity-75 mb-0">Ancien agent de sécurité aéroportuaire (contrôle X-Ray), intervenant en milieu critique. Un environnement où l'erreur d'interprétation n'est pas permise. Ce que j'en ai tiré pour le UX : lire une interface comme une scène, repérer les incohérences, les angles morts, les points de friction avant que l'utilisateur ne les rencontre.</p>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="bento-box bg-white p-5 h-100 shadow-sm border">
-                        <i class="bi bi-robot display-4 text-primary mb-3 d-block" aria-hidden="true"></i>
-                        <h3 class="h2 fw-bold mb-3 text-dark">Expertise IA · 200h certifiées Google</h3>
-                        <p class="fs-5 text-muted mb-4">Pas une initiation généraliste : maîtrise des algorithmes de recommandation, des enjeux éthiques de l'IA, et de leur application concrète à la conception d'interfaces intelligentes.</p>
-                        <div class="d-flex flex-wrap gap-2">
-                            <span class="badge bg-primary bg-opacity-10 text-dark border border-primary border-opacity-25 rounded-pill px-3 py-2">Algorithmes de recommandation</span>
-                            <span class="badge bg-primary bg-opacity-10 text-dark border border-primary border-opacity-25 rounded-pill px-3 py-2">IA éthique</span>
-                            <span class="badge bg-primary bg-opacity-10 text-dark border border-primary border-opacity-25 rounded-pill px-3 py-2">Certification Google</span>
+                    <a href="case-study.html" class="portal-card portal-dafa d-flex flex-column h-100" aria-label="Découvrir le projet DAFA">
+                        <div class="portal-tag text-white-50">Étude de cas</div>
+                        <div class="portal-title text-white">DAFA</div>
+                        <p class="portal-desc text-white-50">8 mois de recherche, de conception et de prototypage. Un projet construit de A à Z, sans brief, sans budget.</p>
+                        <div class="mt-auto">
+                            <span class="portal-arrow text-white-50">Découvrir le projet <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i></span>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-lg-6">
-                    <div class="bento-box bg-white p-5 h-100 shadow-sm border">
-                        <i class="bi bi-lightning-charge-fill display-4 text-primary mb-3 d-block" aria-hidden="true"></i>
-                        <h3 class="h2 fw-bold mb-3 text-dark">Je n'attends pas de brief pour construire.</h3>
-                        <p class="fs-5 text-muted mb-0">Je suis capable d'identifier un problème réel, de formuler une hypothèse UX, et de la mener jusqu'au prototype fonctionnel, sans budget, sans équipe, sans commande externe. Initiateur, pas exécutant.</p>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="bento-box bg-dark text-white p-5 h-100 shadow-sm">
-                        <h3 class="display-6 fw-bold mb-4">Maîtrise Technique</h3>
-                        <div class="d-flex flex-column gap-3">
-                            <div class="d-flex align-items-center gap-3">
-                                <i class="bi bi-bezier2 fs-4" aria-hidden="true"></i>
-                                <span class="fs-5 opacity-75">Figma · Prototypage haute-fidélité · Design System</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-3">
-                                <i class="bi bi-palette fs-4" aria-hidden="true"></i>
-                                <span class="fs-5 opacity-75">Adobe Photoshop & Illustrator</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-3">
-                                <i class="bi bi-code-slash fs-4" aria-hidden="true"></i>
-                                <span class="fs-5 opacity-75">HTML / CSS / Bootstrap · Intégration front</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-3">
-                                <i class="bi bi-graph-up fs-4" aria-hidden="true"></i>
-                                <span class="fs-5 opacity-75">Google Analytics · Tracking · Performance</span>
-                            </div>
+                    <a href="manifeste.html" class="portal-card portal-univers d-flex flex-column h-100" aria-label="Découvrir mon univers et ma vision">
+                        <div class="portal-tag" style="color:rgba(180,160,255,.55);">Vision & Manifeste</div>
+                        <div class="portal-title" style="background:linear-gradient(135deg,#c4aaff,#7b61ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Mon Univers</div>
+                        <p class="portal-desc" style="color:rgba(180,160,255,.6);">Pourquoi je fais ce métier, comment je pense, ce que je refuse de faire en design. Ma boussole.</p>
+                        <div class="mt-auto">
+                            <span class="portal-arrow" style="color:rgba(160,130,255,.65);">Explorer ma vision <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i></span>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CE QUE J'APPORTE -->
-    <section class="py-5 bg-white">
-        <div class="container py-5 reveal">
-            <span class="badge bg-primary rounded-pill px-3 py-2 mb-4 text-uppercase tracking-widest d-inline-block">Ce que j'apporte</span>
-            <div class="row align-items-center g-5">
-                <div class="col-lg-5">
-                    <h2 class="display-5 fw-bold mb-4">Des compétences directement transférables en entreprise.</h2>
-                    <p class="fs-5 text-muted mb-0">Concevoir une architecture d'information complexe, maintenir une cohérence sur des dizaines d'écrans, réduire la charge cognitive : ce sont des compétences que j'ai appliquées sous contrainte réelle. Pas en théorie.</p>
-                </div>
-                <div class="col-lg-7">
-                    <div class="d-flex flex-column gap-3">
-                        <div class="d-flex align-items-start gap-3 p-4 bg-light-apple rounded-4">
-                            <i class="bi bi-diagram-3-fill text-primary fs-4 mt-1 flex-shrink-0" aria-hidden="true"></i>
-                            <div>
-                                <strong class="d-block mb-1">Architecture de l'information</strong>
-                                <span class="text-muted">Organiser des flux complexes pour les rendre intuitifs, que ce soit un setup tech ou un module de facturation.</span>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-start gap-3 p-4 bg-light-apple rounded-4">
-                            <i class="bi bi-layers-fill text-primary fs-4 mt-1 flex-shrink-0" aria-hidden="true"></i>
-                            <div>
-                                <strong class="d-block mb-1">Design System à l'échelle</strong>
-                                <span class="text-muted">Construire des composants réutilisables qui tiennent sur 50 écrans. La même rigueur s'applique à 500.</span>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-start gap-3 p-4 bg-light-apple rounded-4">
-                            <i class="bi bi-person-check-fill text-primary fs-4 mt-1 flex-shrink-0" aria-hidden="true"></i>
-                            <div>
-                                <strong class="d-block mb-1">Réduction de la charge cognitive</strong>
-                                <span class="text-muted">Éviter que l'utilisateur ne se perde dans des interfaces denses, compétence transférable à tout produit B2B complexe.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- APPROCHE UX -->
-    <section class="py-5 bg-light-apple">
-        <div class="container py-5 reveal">
-            <span class="badge bg-primary rounded-pill px-3 py-2 mb-4 text-uppercase tracking-widest d-inline-block">Approche UX</span>
-            <h2 class="display-5 fw-bold mb-2">4 principes non négociables.</h2>
-            <p class="fs-5 text-muted mb-5 max-width-800">Des règles appliquées sous contrainte réelle. Pas des valeurs d'agence.</p>
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-3">
-                    <div class="p-4 bg-white rounded-5 h-100 shadow-sm text-center">
-                        <i class="bi bi-translate fs-2 text-primary mb-3 d-block" aria-hidden="true"></i>
-                        <h3 class="fw-bold mb-2">Clarté Cognitive</h3>
-                        <p class="small text-muted mb-0">Toute information complexe doit pouvoir s'exprimer en une décision simple. Si ce n'est pas possible, c'est un problème de conception, pas d'utilisateur.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="p-4 bg-white rounded-5 h-100 shadow-sm text-center">
-                        <i class="bi bi-shield-check fs-2 text-primary mb-3 d-block" aria-hidden="true"></i>
-                        <h3 class="fw-bold mb-2">Prévention d'erreur</h3>
-                        <p class="small text-muted mb-0">Une bonne interface empêche l'erreur avant qu'elle arrive. L'alerte post-achat est un échec UX. L'alerte pré-achat est un succès.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="p-4 bg-white rounded-5 h-100 shadow-sm text-center">
-                        <i class="bi bi-arrow-repeat fs-2 text-primary mb-3 d-block" aria-hidden="true"></i>
-                        <h3 class="fw-bold mb-2">Itération documentée</h3>
-                        <p class="small text-muted mb-0">Chaque décision de design laisse une trace. Pas par souci de méthode, mais parce qu'un choix non justifié ne peut pas être amélioré.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="p-4 bg-white rounded-5 h-100 shadow-sm text-center">
-                        <i class="bi bi-grid-1x2 fs-2 text-primary mb-3 d-block" aria-hidden="true"></i>
-                        <h3 class="fw-bold mb-2">Cohérence systémique</h3>
-                        <p class="small text-muted mb-0">Un composant conçu pour un écran doit fonctionner sur cinquante. Le Design System est la colonne vertébrale, pas un bonus.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PONT VERS DAFA — seul bloc autorisé sur cette page -->
-    <section class="py-5 bg-dark text-white">
+    <!-- ET MOI LÀ-DEDANS ? -->
+    <section class="py-5 about-cta-section">
         <div class="container py-5 text-center reveal">
-            <span class="badge bg-primary rounded-pill px-3 py-2 mb-4 text-uppercase tracking-widest d-inline-block">La preuve par le travail</span>
-            <h2 class="display-5 fw-bold mb-4">8 mois de travail. Tout part de là.</h2>
-            <p class="fs-4 opacity-75 mb-5 max-width-800 mx-auto">J'ai construit un projet complet, de A à Z, seul, sans budget, depuis Liège, Belgique. Produit, prototype interactif, démarche UX documentée. C'est là-dedans que tout ce que vous venez de lire prend forme.</p>
-            <a href="case-study.html" class="btn btn-primary btn-apple rounded-pill px-5 py-3 fw-bold shadow fs-5">Découvrir le projet</a>
+            <h2 class="display-5 fw-bold tracking-tight mb-4">Et moi là-dedans&nbsp;?</h2>
+            <p class="fs-4 text-muted mb-5 mx-auto" style="max-width:600px;">Un designer qui connaît ses propres angles morts.</p>
+            <div class="d-flex flex-wrap gap-3 justify-content-center">
+                <a href="contact.html" class="btn btn-primary btn-apple rounded-pill px-5 py-3 fw-bold shadow fs-5">Me contacter</a>
+                <a href="https://www.linkedin.com/in/essam-libert-b0673a38b" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light rounded-pill px-5 py-3 fw-bold fs-5">
+                    <i class="bi bi-linkedin me-2" aria-hidden="true"></i>LinkedIn
+                </a>
+            </div>
         </div>
     </section>
 
