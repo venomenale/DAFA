@@ -153,21 +153,24 @@
 <main class="flex-grow-1">
 
     <!-- HERO -->
-    <section class="pt-5 mt-5 pb-5" style="position:relative;overflow:hidden;background:#0a0a0a;">
-        <div class="c-blob" style="width:380px;height:380px;background:#0d6efd;top:-80px;right:-100px;--bd:13s;opacity:.09;"></div>
-        <div class="c-blob" style="width:280px;height:280px;background:#00f2ff;bottom:-60px;left:-80px;--bd:17s;animation-delay:-6s;opacity:.07;"></div>
+    <section class="pt-5 mt-5 pb-5" style="position:relative;overflow:hidden;background:#0a0a0a;min-height:420px;">
+        <div class="c-blob" style="width:380px;height:380px;background:#0d6efd;top:-80px;left:-60px;--bd:13s;opacity:.08;"></div>
+        <div class="c-blob" style="width:260px;height:260px;background:#00f2ff;bottom:-40px;left:20%;--bd:17s;animation-delay:-6s;opacity:.06;"></div>
+        <!-- Photo décorative — panneau droit desktop -->
+        <div class="d-none d-lg-block" style="position:absolute;top:0;right:0;width:40%;height:100%;z-index:0;pointer-events:none;">
+            <img src="images/Contact.jpg" alt="" aria-hidden="true" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+            <div style="position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.35) 55%,transparent 100%);"></div>
+        </div>
         <div class="container pt-4 pb-2 animate-fade-in" style="position:relative;z-index:1;">
             <div class="row align-items-end g-4">
-                <div class="col-lg-8">
+                <div class="col-lg-7">
                     <h1 class="fw-bold tracking-tight mb-3" style="font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.03em;">
                         Démarrons<br><span class="text-gradient">quelque chose.</span>
                     </h1>
-                    <p class="fs-5 mb-0" style="color:rgba(255,255,255,.55);max-width:520px;">
+                    <p class="fs-5 mb-4" style="color:rgba(255,255,255,.55);max-width:480px;">
                         Collaborer, tester DAFA, ou simplement échanger : je lis chaque message et réponds sous 24h.
                     </p>
-                </div>
-                <div class="col-lg-4">
-                    <div class="d-flex flex-column gap-2">
+                    <div class="d-flex flex-column gap-2" style="max-width:320px;">
                         <div class="info-chip"><i class="bi bi-clock text-primary" aria-hidden="true"></i>Réponse sous 24h</div>
                         <div class="info-chip"><i class="bi bi-geo-alt text-primary" aria-hidden="true"></i>Liège · Remote possible</div>
                     </div>
