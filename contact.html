@@ -153,29 +153,28 @@
 <main class="flex-grow-1">
 
     <!-- HERO -->
-    <section class="pt-5 mt-5 pb-5" style="position:relative;overflow:hidden;background:#0a0a0a;min-height:420px;">
+    <section class="pt-5 mt-5 pb-0 pb-lg-5" style="position:relative;overflow:hidden;background:#0a0a0a;">
         <div class="c-blob" style="width:380px;height:380px;background:#0d6efd;top:-80px;left:-60px;--bd:13s;opacity:.08;"></div>
-        <div class="c-blob" style="width:260px;height:260px;background:#00f2ff;bottom:-40px;left:20%;--bd:17s;animation-delay:-6s;opacity:.06;"></div>
-        <!-- Photo décorative — panneau droit desktop -->
+        <!-- Photo — panneau droit desktop -->
         <div class="d-none d-lg-block" style="position:absolute;top:0;right:0;width:40%;height:100%;z-index:0;pointer-events:none;">
             <img src="images/Contact.jpg" alt="" aria-hidden="true" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
             <div style="position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.35) 55%,transparent 100%);"></div>
         </div>
-        <div class="container pt-4 pb-2 animate-fade-in" style="position:relative;z-index:1;">
-            <div class="row align-items-end g-4">
-                <div class="col-lg-7">
-                    <h1 class="fw-bold tracking-tight mb-3" style="font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.03em;">
-                        Démarrons<br><span class="text-gradient">quelque chose.</span>
-                    </h1>
-                    <p class="fs-5 mb-4" style="color:rgba(255,255,255,.55);max-width:480px;">
-                        Collaborer, tester DAFA, ou simplement échanger : je lis chaque message et réponds sous 24h.
-                    </p>
-                    <div class="d-flex flex-column gap-2" style="max-width:320px;">
-                        <div class="info-chip"><i class="bi bi-clock text-primary" aria-hidden="true"></i>Réponse sous 24h</div>
-                        <div class="info-chip"><i class="bi bi-geo-alt text-primary" aria-hidden="true"></i>Liège · Remote possible</div>
-                    </div>
-                </div>
+        <div class="container pt-4 pb-4 animate-fade-in" style="position:relative;z-index:1;">
+            <div class="col-lg-7">
+                <h1 class="fw-bold tracking-tight mb-3" style="font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.03em;">
+                    Démarrons<br><span class="text-gradient">quelque chose.</span>
+                </h1>
+                <p class="fs-5 mb-0" style="color:rgba(255,255,255,.55);max-width:480px;">
+                    Collaborer, tester DAFA, ou simplement échanger : je lis chaque message et réponds sous 24h.
+                </p>
             </div>
+        </div>
+        <!-- Photo — bande mobile (sous le texte) -->
+        <div class="d-lg-none" style="position:relative;margin-top:2rem;">
+            <img src="images/Contact.jpg" alt="" aria-hidden="true" style="width:100%;height:260px;object-fit:cover;object-position:center 20%;">
+            <div style="position:absolute;top:0;left:0;right:0;height:45%;background:linear-gradient(to bottom,#0a0a0a,transparent);pointer-events:none;"></div>
+            <div style="position:absolute;bottom:0;left:0;right:0;height:45%;background:linear-gradient(to top,#16161a,transparent);pointer-events:none;"></div>
         </div>
     </section>
 
@@ -190,7 +189,7 @@
 
                     <!-- Coordonnées -->
                     <div class="d-flex flex-column gap-3 mb-4">
-                        <a href="mailto:info@essamlibert.com?subject=Stage%20UX%2FUI%202026%20Portfolio%20DAFA" class="d-flex align-items-center gap-3 p-4 contact-card">
+                        <a href="mailto:info@essamlibert.com" class="d-flex align-items-center gap-3 p-4 contact-card">
                             <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width:2.5rem;height:2.5rem;background:rgba(13,110,253,.15);">
                                 <i class="bi bi-envelope-fill text-primary" aria-hidden="true"></i>
                             </div>
@@ -220,42 +219,6 @@
                             </div>
                             <i class="bi bi-arrow-right text-muted" aria-hidden="true"></i>
                         </a>
-                        <a href="images/CV_A4_UX_compressed.pdf" download="CV_Essam_Libert_UX_Designer.pdf" class="d-flex align-items-center gap-3 p-4 text-white rounded-4 text-decoration-none cv-btn-shimmer">
-                            <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width:2.5rem;height:2.5rem;background:rgba(255,255,255,.2);">
-                                <i class="bi bi-download text-white" aria-hidden="true"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <p class="small mb-0" style="opacity:.75;">Curriculum Vitae</p>
-                                <p class="fw-bold mb-0">Télécharger mon CV (PDF)</p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- Ce que j'apporte -->
-                    <div class="p-4 rounded-4" style="background:rgba(0,242,255,.04);border:1px solid rgba(0,242,255,.1);">
-                        <p class="section-label mb-3">Ce que j'apporte</p>
-                        <div class="d-flex flex-column gap-2">
-                            <div class="d-flex align-items-center gap-2">
-                                <i class="bi bi-check-circle-fill text-primary flex-shrink-0" aria-hidden="true"></i>
-                                <span class="small">Prototype Figma 50+ écrans opérationnel</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-2">
-                                <i class="bi bi-check-circle-fill text-primary flex-shrink-0" aria-hidden="true"></i>
-                                <span class="small">Design System complet, cohérent à l'échelle</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-2">
-                                <i class="bi bi-check-circle-fill text-primary flex-shrink-0" aria-hidden="true"></i>
-                                <span class="small">Intégration front (HTML / CSS / Bootstrap)</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-2">
-                                <i class="bi bi-check-circle-fill text-primary flex-shrink-0" aria-hidden="true"></i>
-                                <span class="small">200h formation IA certifiée Google</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-2">
-                                <i class="bi bi-check-circle-fill text-primary flex-shrink-0" aria-hidden="true"></i>
-                                <span class="small">Rigueur opérationnelle (background sécurité)</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -276,11 +239,7 @@
                         <fieldset class="border-0 p-0 mb-4">
                             <legend class="fw-semibold mb-3 small text-uppercase tracking-widest text-muted">Motif du contact</legend>
                             <div class="d-flex flex-wrap gap-2">
-                                <input type="radio" class="btn-check" name="motif" id="motif-stage" value="Stage" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary rounded-pill px-3 py-2 small fw-bold" for="motif-stage">
-                                    <i class="bi bi-briefcase me-1" aria-hidden="true"></i>Proposer un stage
-                                </label>
-                                <input type="radio" class="btn-check" name="motif" id="motif-dafa" value="DAFA" autocomplete="off">
+                                <input type="radio" class="btn-check" name="motif" id="motif-dafa" value="DAFA" autocomplete="off" checked>
                                 <label class="btn btn-outline-primary rounded-pill px-3 py-2 small fw-bold" for="motif-dafa">
                                     <i class="bi bi-phone me-1" aria-hidden="true"></i>Tester DAFA
                                 </label>
