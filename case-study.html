@@ -39,9 +39,7 @@
     <link rel="preload" href="css/bootstrap.min.css" as="style">
     <link rel="preload" href="css/style.css" as="style">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-
     <link rel="stylesheet" href="css/style.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" media="print" onload="this.media='all'">
 
     <script type="importmap">
@@ -53,169 +51,466 @@
     }
     </script>
     <style>
-    /* Dark theme overrides — case-study.html */
-    body.apple-theme{background-color:#0a0a0a!important;color:#e4e4e9!important;}
-    body.bg-light-apple{background-color:#0a0a0a!important;}
-    .bg-light-apple{background-color:#16161a!important;}
-    .bg-white{background-color:#111115!important;}
+    body.apple-theme{background-color:#070709!important;color:#e4e4e9!important;}
     .text-dark{color:#e4e4e9!important;}
     .text-muted{color:#8e8e93!important;}
     .border{border-color:rgba(255,255,255,.09)!important;}
     .shadow-sm{box-shadow:0 1px 8px rgba(0,0,0,.55)!important;}
     .shadow-2xl{box-shadow:0 40px 100px rgba(0,0,0,.72)!important;}
-    .badge.bg-white{background-color:#252529!important;color:#e4e4e9!important;}
-    blockquote.border-start{color:#e4e4e9;}
-    /* Headings permanently hidden — particles ARE the text */
-    .ptcl-heading{}
-    /* Badge readability on dark */
+    blockquote.border-start{color:rgba(255,255,255,.8);}
     .badge.bg-warning{background:rgba(255,193,7,.12)!important;color:#ffc107!important;border:1px solid rgba(255,193,7,.3)!important;}
-    /* Stat cards — manifeste style */
     .stat-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:1rem .75rem;text-align:center;transition:border-color .25s;}
     .stat-card:hover{border-color:rgba(0,242,255,.35);}
     .stat-num{font-weight:800;background:linear-gradient(135deg,#00f2ff,#7b61ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;font-size:clamp(1.5rem,3vw,2.2rem);}
+    .text-gradient{background:linear-gradient(90deg,#00f2ff,#7b61ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .persona-img{width:100%;height:200px;object-fit:cover;display:block;}
+    footer .text-white-50{color:rgba(255,255,255,.72)!important;}
+    footer a.text-white-50:hover{color:#fff!important;}
+    .phone-glow{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);width:120px;height:24px;background:radial-gradient(ellipse,rgba(0,242,255,.22) 0%,transparent 70%);filter:blur(10px);pointer-events:none;}
     </style>
 </head>
 
-
-<body class="apple-theme bg-light-apple d-flex flex-column min-vh-100">
+<body class="apple-theme d-flex flex-column min-vh-100">
 <div id="scroll-progress" aria-hidden="true"></div>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-nav border-bottom border-secondary border-opacity-25" aria-label="Navigation principale">
-            <div class="container">
-                <a class="navbar-brand fw-bold tracking-tight" href="index.html">ESSAM LIBERT</a>
-                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="case-study.html">DAFA</a></li>
-                        <li class="nav-item"><a class="nav-link" href="manifeste.html">Manifeste</a></li>
-                        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-nav border-bottom border-secondary border-opacity-25" aria-label="Navigation principale">
+        <div class="container">
+            <a class="navbar-brand fw-bold tracking-tight" href="index.html">ESSAM LIBERT</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="case-study.html">Case Study</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
 
 <main class="flex-grow-1">
 
-    <!-- ANIMATION LOGO DAFA — Particles -->
-    <section id="dafa-particle-section" class="pt-5 mt-5" style="background:transparent;line-height:0;position:relative;">
-        <canvas id="dafa-canvas" aria-label="Sphère holographique DAFA — interactive" role="img" style="display:block;width:100%;touch-action:none;"></canvas>
-        <p id="dafa-hint" style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font:500 9px 'Courier New',monospace;color:rgba(0,242,255,.28);letter-spacing:.14em;pointer-events:none;margin:0;white-space:nowrap;">DRAG · SCROLL · CLICK</p>
-        <!-- Fondu vers le blanc de la page -->
-        <div style="position:absolute;bottom:0;left:0;right:0;height:28%;background:linear-gradient(to bottom,transparent,#0a0a0a);pointer-events:none;z-index:3;"></div>
-    </section>
-
     <!-- HERO -->
-    <section class="py-5 bg-white shadow-sm">
-        <div class="container py-4 animate-fade-in">
+    <section class="pt-5 mt-5" style="position:relative;overflow:hidden;background:#070709;padding-bottom:3rem;">
+        <div aria-hidden="true" style="position:absolute;width:800px;height:700px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,242,255,.055) 0%,transparent 70%);top:-30%;left:-15%;pointer-events:none;z-index:0;"></div>
+        <div aria-hidden="true" style="position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(123,97,255,.06) 0%,transparent 70%);bottom:-20%;right:-10%;pointer-events:none;z-index:0;"></div>
+        <div class="container py-4 animate-fade-in" style="position:relative;z-index:1;">
             <div class="d-flex flex-wrap gap-2 mb-3">
                 <span class="badge bg-primary rounded-pill px-3 py-2 text-uppercase tracking-widest">UX Case Study</span>
                 <span class="badge bg-warning text-dark rounded-pill px-3 py-2 text-uppercase tracking-widest">
                     <i class="bi bi-hammer me-1" aria-hidden="true"></i>En cours · Prototype V3
                 </span>
             </div>
-            <h1 class="display-2 fw-bold text-dark tracking-tight mb-3">DAFA : De la frustration à l'interface.</h1>
-            <p class="fs-4 text-muted max-width-800">
+            <h1 class="display-2 fw-bold tracking-tight mb-3" style="background:linear-gradient(90deg,#ffffff,rgba(255,255,255,.72));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">DAFA : De la frustration à l'interface.</h1>
+            <p class="fs-4 mb-4 max-width-800" style="color:rgba(255,255,255,.6);">
                 Documenter le processus UX complet d'une application de simulation pré-achat tech : de la découverte du problème à la conception du prototype haute-fidélité, en toute transparence sur ce qui est fait et ce qui reste à venir.
             </p>
             <div class="row g-3 mt-3">
-                <div class="col-6 col-md-3">
-                    <div class="stat-card">
-                        <div class="stat-num mb-1">8</div>
-                        <div class="small text-muted text-uppercase">Mois projet</div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="stat-card">
-                        <div class="stat-num mb-1">50+</div>
-                        <div class="small text-muted text-uppercase">Écrans Figma</div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="stat-card">
-                        <div class="stat-num mb-1">99</div>
-                        <div class="small text-muted text-uppercase">PageSpeed</div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="stat-card">
-                        <div class="stat-num mb-1">Solo</div>
-                        <div class="small text-muted text-uppercase">Rôle</div>
-                    </div>
-                </div>
+                <div class="col-6 col-md-3"><div class="stat-card"><div class="stat-num mb-1">8</div><div class="small text-muted text-uppercase">Mois projet</div></div></div>
+                <div class="col-6 col-md-3"><div class="stat-card"><div class="stat-num mb-1">50+</div><div class="small text-muted text-uppercase">Écrans Figma</div></div></div>
+                <div class="col-6 col-md-3"><div class="stat-card"><div class="stat-num mb-1">99</div><div class="small text-muted text-uppercase">PageSpeed</div></div></div>
+                <div class="col-6 col-md-3"><div class="stat-card"><div class="stat-num mb-1">Solo</div><div class="small text-muted text-uppercase">Rôle</div></div></div>
             </div>
             <div class="d-flex flex-wrap gap-2 mt-3">
-                <span class="badge bg-dark rounded-pill px-3 py-2">Figma</span>
-                <span class="badge bg-dark rounded-pill px-3 py-2">Design System</span>
-                <span class="badge bg-dark rounded-pill px-3 py-2">HTML / CSS / JS</span>
-                <span class="badge bg-dark rounded-pill px-3 py-2">Bootstrap 5</span>
-                <span class="badge bg-dark rounded-pill px-3 py-2">Google Analytics</span>
-                <span class="badge bg-dark rounded-pill px-3 py-2">Prototypage HF</span>
+                <span class="badge rounded-pill px-3 py-2" style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.75);">Figma</span>
+                <span class="badge rounded-pill px-3 py-2" style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.75);">Design System</span>
+                <span class="badge rounded-pill px-3 py-2" style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.75);">HTML / CSS / JS</span>
+                <span class="badge rounded-pill px-3 py-2" style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.75);">Bootstrap 5</span>
+                <span class="badge rounded-pill px-3 py-2" style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.75);">Google Analytics</span>
+                <span class="badge rounded-pill px-3 py-2" style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.75);">Prototypage HF</span>
             </div>
         </div>
     </section>
 
+    <!-- PHASE 1 : DÉCOUVERTE -->
+    <section class="py-5" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#07070e 0%,#0b0b14 100%);">
+        <div aria-hidden="true" style="position:absolute;width:700px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,242,255,.045) 0%,transparent 70%);top:-10%;right:-5%;pointer-events:none;z-index:0;"></div>
+        <div class="container py-5 reveal" style="position:relative;z-index:1;">
+            <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 1 · Découverte</span>
+            <div class="row align-items-start g-5">
+                <div class="col-lg-5">
+                    <h2 class="display-5 fw-bold mb-4">Le problème naît d'une impasse personnelle.</h2>
+                    <p class="fs-5 mb-3" style="color:rgba(255,255,255,.65);">
+                        Tout démarre d'un setup multi-appareils : PC, console, projecteur, barre de son — mais un seul port HDMI 2.1 disponible. Trois mois à disséquer des fiches techniques, des forums contradictoires, des spécifications délibérément opaques avant de trouver la solution.
+                    </p>
+                    <p class="fs-5" style="color:rgba(255,255,255,.65);">
+                        La conclusion n'était pas technique : <strong style="color:#e4e4e9;">l'information existait</strong>. Elle était structurée pour décourager la vérification autonome et orienter vers l'achat impulsif.
+                    </p>
+                    <blockquote class="border-start border-primary border-4 ps-4 my-4 fs-5 fst-italic">
+                        "J'ai passé 3 mois à chercher la solution. Les gens n'ont pas ce temps. J'ai décidé de créer l'outil qui fait ce travail pour eux."
+                    </blockquote>
+                </div>
+                <div class="col-lg-7">
+                    <div class="p-5 rounded-5 mb-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(0,242,255,.12);">
+                        <h3 class="fw-bold mb-3 h4" style="color:#00f2ff;">Le problème structurel identifié</h3>
+                        <p class="fs-5 mb-0" style="color:rgba(255,255,255,.7);">Les fiches techniques sont rédigées par des équipes marketing, pas par des ingénieurs. Les termes ("HDMI 2.1", "Dolby Atmos", "HDR10+") sont utilisés comme arguments de vente sans que leur compatibilité croisée ne soit jamais expliquée. L'utilisateur est placé dans une <strong style="color:#e4e4e9;">asymétrie d'information délibérée</strong>.</p>
+                    </div>
+                    <div class="p-4 rounded-5" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);">
+                        <h3 class="fw-bold mb-3 h6" style="color:rgba(255,255,255,.85);">Signaux observés validant le problème</h3>
+                        <div class="d-flex align-items-start gap-3 mb-3">
+                            <i class="bi bi-chat-square-text-fill fs-5 mt-1" style="color:rgba(0,242,255,.8);" aria-hidden="true"></i>
+                            <p class="mb-0" style="color:rgba(255,255,255,.6);"><strong style="color:rgba(255,255,255,.85);">Forums Reddit tech</strong> : fils récurrents sur des problèmes de compatibilité HDMI, bridage inexpliqué, demandes d'aide en masse post-achat.</p>
+                        </div>
+                        <div class="d-flex align-items-start gap-3 mb-3">
+                            <i class="bi bi-star-half fs-5 mt-1" style="color:rgba(0,242,255,.8);" aria-hidden="true"></i>
+                            <p class="mb-0" style="color:rgba(255,255,255,.6);"><strong style="color:rgba(255,255,255,.85);">Avis Amazon / Fnac 2–3 étoiles</strong> : pattern identique : "fonctionne mais pas comme annoncé", "incompatible avec mon setup", "bridé vs ce que j'avais".</p>
+                        </div>
+                        <div class="d-flex align-items-start gap-3">
+                            <i class="bi bi-search fs-5 mt-1" style="color:rgba(0,242,255,.8);" aria-hidden="true"></i>
+                            <p class="mb-0" style="color:rgba(255,255,255,.6);"><strong style="color:rgba(255,255,255,.85);">Requêtes Google</strong> : volume élevé sur "câble HDMI 2.1 vraiment 4K120fps", "compatible PS5 projecteur" : le problème dépasse le cas personnel.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHASE 2 : DÉFINITION -->
+    <section class="py-5" style="position:relative;overflow:hidden;background:#070709;">
+        <div aria-hidden="true" style="position:absolute;width:700px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(123,97,255,.055) 0%,transparent 70%);top:10%;left:-10%;pointer-events:none;z-index:0;"></div>
+        <div class="container py-5 reveal" style="position:relative;z-index:1;">
+            <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 2 · Définition</span>
+            <h2 class="display-5 fw-bold mb-2">Qui est vraiment touché ?</h2>
+            <p class="fs-5 mb-5 max-width-800" style="color:rgba(255,255,255,.6);">
+                Deux profils utilisateurs définis à partir des patterns observés et représentatifs des situations d'achat problématiques rencontrées dans les forums et retours produits.
+            </p>
+            <div class="row g-4 mb-5">
+                <!-- Thomas -->
+                <div class="col-lg-6">
+                    <div class="rounded-5 overflow-hidden h-100" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);">
+                        <img src="images/projecteur.png" alt="Thomas, 28 ans — gamer avec setup projecteur" class="persona-img" loading="lazy">
+                        <div class="p-4 pt-3" style="background:rgba(0,242,255,.04);border-bottom:1px solid rgba(0,242,255,.1);">
+                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-2" style="width:3rem;height:3rem;background:linear-gradient(135deg,#00f2ff,#7b61ff);">
+                                <span class="fw-bold" style="font-size:1.1rem;color:#070709;">T</span>
+                            </div>
+                            <h3 class="fw-bold mb-1 h4">Thomas, 28 ans</h3>
+                            <p class="small mb-0" style="color:rgba(255,255,255,.45);">Gamer semi-expert · Setup en évolution constante</p>
+                        </div>
+                        <div class="p-4">
+                            <p style="color:rgba(255,255,255,.65);">Il connaît les termes techniques mais n'a pas le temps de tout vérifier. Il achète vite, découvre le problème au déballage, finit sur Reddit pour comprendre.</p>
+                            <p class="fw-semibold small mb-2" style="color:rgba(255,255,255,.9);">Points de douleur</p>
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                <span class="badge rounded-pill px-3 py-2" style="background:rgba(255,59,48,.12);color:rgba(255,100,90,.9);border:1px solid rgba(255,59,48,.25);">Retours fréquents</span>
+                                <span class="badge rounded-pill px-3 py-2" style="background:rgba(255,59,48,.12);color:rgba(255,100,90,.9);border:1px solid rgba(255,59,48,.25);">Bridage post-achat</span>
+                                <span class="badge rounded-pill px-3 py-2" style="background:rgba(255,59,48,.12);color:rgba(255,100,90,.9);border:1px solid rgba(255,59,48,.25);">Perte de temps</span>
+                            </div>
+                            <p class="fw-semibold small mb-2" style="color:rgba(255,255,255,.9);">Ce qu'il cherche</p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge rounded-pill px-3 py-2" style="background:rgba(52,199,89,.12);color:rgba(52,199,89,.9);border:1px solid rgba(52,199,89,.25);">Vérification rapide</span>
+                                <span class="badge rounded-pill px-3 py-2" style="background:rgba(52,199,89,.12);color:rgba(52,199,89,.9);border:1px solid rgba(52,199,89,.25);">Verdict sans jargon</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sophie -->
+                <div class="col-lg-6">
+                    <div class="rounded-5 overflow-hidden h-100" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);">
+                        <img src="images/robot.png" alt="Sophie, 42 ans — parent achetant un robot pour la maison" class="persona-img" loading="lazy">
+                        <div class="p-4 pt-3" style="background:rgba(123,97,255,.05);border-bottom:1px solid rgba(123,97,255,.13);">
+                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-2" style="width:3rem;height:3rem;background:linear-gradient(135deg,#e67e22,#d35400);">
+                                <span class="fw-bold" style="font-size:1.1rem;color:#fff;">S</span>
+                            </div>
+                            <h3 class="fw-bold mb-1 h4">Sophie, 42 ans</h3>
+                            <p class="small mb-0" style="color:rgba(255,255,255,.45);">Parent non-expert · Achat pour la maison ou pour offrir</p>
+                        </div>
+                        <div class="p-4">
+                            <p style="color:rgba(255,255,255,.65);">Elle ne maîtrise pas le vocabulaire technique. Elle se fie aux étiquettes et aux vendeurs. Elle repart avec un produit "qui ne marche pas" sans comprendre pourquoi.</p>
+                            <p class="fw-semibold small mb-2" style="color:rgba(255,255,255,.9);">Points de douleur</p>
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                <span class="badge rounded-pill px-3 py-2" style="background:rgba(255,59,48,.12);color:rgba(255,100,90,.9);border:1px solid rgba(255,59,48,.25);">Specs incompréhensibles</span>
+                                <span class="badge rounded-pill px-3 py-2" style="background:rgba(255,59,48,.12);color:rgba(255,100,90,.9);border:1px solid rgba(255,59,48,.25);">Conseil insuffisant</span>
+                                <span class="badge rounded-pill px-3 py-2" style="background:rgba(255,59,48,.12);color:rgba(255,100,90,.9);border:1px solid rgba(255,59,48,.25);">Sentiment manipulé</span>
+                            </div>
+                            <p class="fw-semibold small mb-2" style="color:rgba(255,255,255,.9);">Ce qu'elle cherche</p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge rounded-pill px-3 py-2" style="background:rgba(52,199,89,.12);color:rgba(52,199,89,.9);border:1px solid rgba(52,199,89,.25);">Langage simple</span>
+                                <span class="badge rounded-pill px-3 py-2" style="background:rgba(52,199,89,.12);color:rgba(52,199,89,.9);border:1px solid rgba(52,199,89,.25);">Confiance dans l'achat</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Central question -->
+            <div class="p-5 rounded-5 text-center max-width-800 mx-auto" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);">
+                <p class="fw-bold small text-uppercase tracking-widest mb-2" style="color:#00f2ff;">Question de conception centrale</p>
+                <p class="display-6 fw-bold mb-0">"Comment rendre une décision technique complexe aussi simple qu'un feu rouge ?"</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHASE 3 : IDÉATION -->
+    <section class="py-5" style="position:relative;overflow:hidden;background:linear-gradient(135deg,#09080f 0%,#0a0810 100%);">
+        <div aria-hidden="true" style="position:absolute;width:700px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(123,97,255,.05) 0%,transparent 70%);top:-10%;right:-10%;pointer-events:none;z-index:0;"></div>
+        <div class="container py-5 reveal" style="position:relative;z-index:1;">
+            <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 3 · Idéation</span>
+            <h2 class="display-5 fw-bold mb-2">Les décisions de conception et pourquoi.</h2>
+            <p class="fs-5 mb-5 max-width-800" style="color:rgba(255,255,255,.6);">Chaque choix structurant a une justification UX. Voici les trois décisions clés avec leur raisonnement.</p>
+
+            <!-- Badge system overview -->
+            <div class="p-4 p-md-5 rounded-5 mb-5" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);">
+                <p class="small fw-bold text-uppercase tracking-widest mb-4 text-center" style="color:rgba(255,255,255,.45);">Le système de badges DAFA · 1 à 8</p>
+                <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center mb-4">
+                    <img src="images/1.png" alt="Badge 1 — Critique" style="height:54px;width:auto;" loading="lazy">
+                    <img src="images/2.png" alt="Badge 2 — Critique" style="height:54px;width:auto;" loading="lazy">
+                    <img src="images/3.png" alt="Badge 3 — Critique" style="height:54px;width:auto;" loading="lazy">
+                    <img src="images/4.png" alt="Badge 4 — Standard" style="height:54px;width:auto;" loading="lazy">
+                    <img src="images/5.png" alt="Badge 5 — Standard" style="height:54px;width:auto;" loading="lazy">
+                    <img src="images/6.png" alt="Badge 6 — Standard" style="height:54px;width:auto;" loading="lazy">
+                    <img src="images/7.png" alt="Badge 7 — Optimal" style="height:54px;width:auto;" loading="lazy">
+                    <img src="images/8.png" alt="Badge 8 — Optimal" style="height:54px;width:auto;" loading="lazy">
+                </div>
+                <div class="d-flex flex-wrap gap-3 justify-content-center">
+                    <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-3" style="background:rgba(255,59,48,.1);border:1px solid rgba(255,59,48,.2);">
+                        <div class="d-flex gap-1 align-items-center">
+                            <img src="images/1.png" alt="" style="height:22px;width:auto;" aria-hidden="true">
+                            <img src="images/2.png" alt="" style="height:22px;width:auto;" aria-hidden="true">
+                            <img src="images/3.png" alt="" style="height:22px;width:auto;" aria-hidden="true">
+                        </div>
+                        <span class="small fw-semibold" style="color:rgba(255,100,80,.9);">Critique — non fonctionnel</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-3" style="background:rgba(255,193,7,.09);border:1px solid rgba(255,193,7,.2);">
+                        <div class="d-flex gap-1 align-items-center">
+                            <img src="images/4.png" alt="" style="height:22px;width:auto;" aria-hidden="true">
+                            <img src="images/5.png" alt="" style="height:22px;width:auto;" aria-hidden="true">
+                            <img src="images/6.png" alt="" style="height:22px;width:auto;" aria-hidden="true">
+                        </div>
+                        <span class="small fw-semibold" style="color:rgba(255,210,50,.9);">Standard — fonctionne, pas optimal</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-3" style="background:rgba(52,199,89,.09);border:1px solid rgba(52,199,89,.2);">
+                        <div class="d-flex gap-1 align-items-center">
+                            <img src="images/7.png" alt="" style="height:22px;width:auto;" aria-hidden="true">
+                            <img src="images/8.png" alt="" style="height:22px;width:auto;" aria-hidden="true">
+                        </div>
+                        <span class="small fw-semibold" style="color:rgba(52,199,89,.9);">Optimisé — performance maximale</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 Decision cards -->
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="p-4 rounded-5 h-100" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);">
+                        <p class="small fw-bold text-uppercase tracking-widest mb-2" style="color:rgba(255,255,255,.4);">Décision 1 · Lisibilité</p>
+                        <h3 class="fw-bold mb-3 h5">Badges 1–8 plutôt qu'un score en pourcentage</h3>
+                        <div class="d-flex flex-column gap-2 mb-3">
+                            <div class="d-flex align-items-center gap-2 p-2 rounded-3" style="background:rgba(255,59,48,.08);">
+                                <div class="d-flex gap-1">
+                                    <img src="images/1.png" alt="Badge 1" style="height:24px;width:auto;" loading="lazy">
+                                    <img src="images/2.png" alt="Badge 2" style="height:24px;width:auto;" loading="lazy">
+                                    <img src="images/3.png" alt="Badge 3" style="height:24px;width:auto;" loading="lazy">
+                                </div>
+                                <span class="small" style="color:rgba(255,255,255,.6);">Critique</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 p-2 rounded-3" style="background:rgba(255,193,7,.07);">
+                                <div class="d-flex gap-1">
+                                    <img src="images/4.png" alt="Badge 4" style="height:24px;width:auto;" loading="lazy">
+                                    <img src="images/5.png" alt="Badge 5" style="height:24px;width:auto;" loading="lazy">
+                                    <img src="images/6.png" alt="Badge 6" style="height:24px;width:auto;" loading="lazy">
+                                </div>
+                                <span class="small" style="color:rgba(255,255,255,.6);">Standard</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 p-2 rounded-3" style="background:rgba(52,199,89,.07);">
+                                <div class="d-flex gap-1">
+                                    <img src="images/7.png" alt="Badge 7" style="height:24px;width:auto;" loading="lazy">
+                                    <img src="images/8.png" alt="Badge 8" style="height:24px;width:auto;" loading="lazy">
+                                </div>
+                                <span class="small" style="color:rgba(255,255,255,.6);">Optimisé</span>
+                            </div>
+                        </div>
+                        <p class="small fw-bold text-uppercase tracking-widest mb-1" style="color:#00f2ff;">Pourquoi ce choix</p>
+                        <p class="small mb-0" style="color:rgba(255,255,255,.6);">Un pourcentage (73%) n'a pas de signification intuitive. Un badge coloré + chiffre unique = décision immédiate, charge cognitive zéro. Principe du "Système 1" de Kahneman : réponse rapide sans effort d'analyse.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="p-4 rounded-5 h-100" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);">
+                        <p class="small fw-bold text-uppercase tracking-widest mb-2" style="color:rgba(255,255,255,.4);">Décision 2 · Prévention</p>
+                        <h3 class="fw-bold mb-3 h5">Simulateur d'écosystème avant le scanner produit seul</h3>
+                        <div class="p-3 rounded-4 mb-3" style="background:rgba(255,255,255,.05);">
+                            <div class="d-flex align-items-center gap-2 mb-2 small">
+                                <i class="bi bi-display" style="color:#00f2ff;" aria-hidden="true"></i>
+                                <span style="color:rgba(255,255,255,.75);">Mon setup actuel</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 mb-2 small">
+                                <i class="bi bi-plus-circle-fill text-success" aria-hidden="true"></i>
+                                <span style="color:rgba(255,255,255,.75);">J'ajoute : Écran 4K 144Hz</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 small">
+                                <i class="bi bi-exclamation-triangle-fill text-warning" aria-hidden="true"></i>
+                                <span style="color:rgba(255,210,50,.9);">Câble HDMI actuel insuffisant</span>
+                            </div>
+                        </div>
+                        <p class="small fw-bold text-uppercase tracking-widest mb-1" style="color:#00f2ff;">Pourquoi ce choix</p>
+                        <p class="small mb-0" style="color:rgba(255,255,255,.6);">Le vrai problème n'est pas le produit isolé, c'est la chaîne. Scanner un produit seul est réactif. Le simulateur d'écosystème est proactif — il réplique le raisonnement d'un technicien expert qui audite un setup complet.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="p-4 rounded-5 h-100" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);">
+                        <p class="small fw-bold text-uppercase tracking-widest mb-2" style="color:rgba(255,255,255,.4);">Décision 3 · Transparence</p>
+                        <h3 class="fw-bold mb-3 h5">Afficher le coût total d'optimisation, pas le prix produit seul</h3>
+                        <div class="p-3 rounded-4 mb-3" style="background:rgba(255,255,255,.05);">
+                            <div class="d-flex justify-content-between mb-1 small">
+                                <span style="color:rgba(255,255,255,.6);">Écran annoncé</span><strong>349 €</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2 small" style="color:#ffc107;">
+                                <span>+ Câble HDMI manquant</span><strong>+ 35 €</strong>
+                            </div>
+                            <div class="d-flex justify-content-between small fw-bold pt-2" style="border-top:1px solid rgba(255,255,255,.09);">
+                                <span>Coût réel</span><strong style="color:#00f2ff;">384 €</strong>
+                            </div>
+                        </div>
+                        <p class="small fw-bold text-uppercase tracking-widest mb-1" style="color:#00f2ff;">Pourquoi ce choix</p>
+                        <p class="small mb-0" style="color:rgba(255,255,255,.6);">Le prix affiché est la source n°1 de déception post-achat. Révéler la facture complète en amont transforme DAFA en conseiller financier — c'est là que le produit sort du marché des comparateurs classiques.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHASE 4 : ARCHITECTURE & DESIGN SYSTEM -->
+    <section class="py-5" style="position:relative;overflow:hidden;background:#0a0a0f;">
+        <div aria-hidden="true" style="position:absolute;width:700px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,242,255,.035) 0%,transparent 70%);bottom:-10%;right:-5%;pointer-events:none;z-index:0;"></div>
+        <div class="container py-5 reveal" style="position:relative;z-index:1;">
+            <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 4 · Architecture &amp; Design</span>
+            <h2 class="display-5 fw-bold mb-2">Structure de l'application et Design System.</h2>
+            <p class="fs-5 mb-5 max-width-800" style="color:rgba(255,255,255,.6);">Toute complexité technique doit être absorbée par l'interface, pas transférée à l'utilisateur.</p>
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <h3 class="fw-bold mb-4 h5">Flux principal utilisateur</h3>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);">
+                            <span class="badge bg-primary rounded-circle fw-bold flex-shrink-0 d-flex align-items-center justify-content-center" style="width:2rem;height:2rem;">1</span>
+                            <div><strong>Onboarding</strong><span style="color:rgba(255,255,255,.6);"> : Ajout du setup existant (1–3 appareils)</span></div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);">
+                            <span class="badge bg-primary rounded-circle fw-bold flex-shrink-0 d-flex align-items-center justify-content-center" style="width:2rem;height:2rem;">2</span>
+                            <div><strong>Scanner</strong><span style="color:rgba(255,255,255,.6);"> : Scan ou recherche manuelle d'un produit cible</span></div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);">
+                            <span class="badge bg-primary rounded-circle fw-bold flex-shrink-0 d-flex align-items-center justify-content-center" style="width:2rem;height:2rem;">3</span>
+                            <div><strong>Analyse</strong><span style="color:rgba(255,255,255,.6);"> : Badge de compatibilité généré + alertes ciblées</span></div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);">
+                            <span class="badge bg-primary rounded-circle fw-bold flex-shrink-0 d-flex align-items-center justify-content-center" style="width:2rem;height:2rem;">4</span>
+                            <div><strong>Facture réelle</strong><span style="color:rgba(255,255,255,.6);"> : Coût total avec accessoires manquants inclus</span></div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(52,199,89,.07);border:1px solid rgba(52,199,89,.2);">
+                            <span class="badge bg-success rounded-circle fw-bold flex-shrink-0 d-flex align-items-center justify-content-center" style="width:2rem;height:2rem;">5</span>
+                            <div><strong>Décision</strong><span style="color:rgba(255,255,255,.6);"> : Achat confirmé ou alternative proposée par l'IA</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="fw-bold mb-4 h5">Design System (open-source, read-only)</h3>
+                    <p class="mb-4" style="color:rgba(255,255,255,.6);">Un Design System complet construit en parallèle de l'application mobile pour garantir la cohérence sur 50+ écrans et accélérer les futures itérations.</p>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);">
+                            <i class="bi bi-palette-fill text-primary fs-5" aria-hidden="true"></i>
+                            <div><strong>Tokens de couleur</strong><span style="color:rgba(255,255,255,.6);"> : Palette sémantique (critique, standard, optimal, neutre)</span></div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);">
+                            <i class="bi bi-type text-primary fs-5" aria-hidden="true"></i>
+                            <div><strong>Typographie</strong><span style="color:rgba(255,255,255,.6);"> : Hiérarchie à 4 niveaux, optimisée mobile-first</span></div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);">
+                            <i class="bi bi-grid-3x3-gap-fill text-primary fs-5" aria-hidden="true"></i>
+                            <div><strong>Composants</strong><span style="color:rgba(255,255,255,.6);"> : Badges, cards, alertes, boutons, scanner UI</span></div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);">
+                            <i class="bi bi-phone-fill text-primary fs-5" aria-hidden="true"></i>
+                            <div><strong>Grille</strong><span style="color:rgba(255,255,255,.6);"> : 4 colonnes mobile / 12 colonnes desktop, Apple-style spacing</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BRIDGE -->
+    <div class="py-4" style="background:#05050a;">
+        <div class="container text-center">
+            <p class="fs-5 mb-0" style="color:rgba(255,255,255,.55);">La démarche est posée. Voilà le produit qu'elle a construit.</p>
+        </div>
+    </div>
+
+    <!-- ANIMATION LOGO DAFA — Particles -->
+    <section id="dafa-particle-section" style="background:transparent;line-height:0;position:relative;">
+        <canvas id="dafa-canvas" aria-label="Sphère holographique DAFA — interactive" role="img" style="display:block;width:100%;touch-action:none;"></canvas>
+        <p id="dafa-hint" style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font:500 9px 'Courier New',monospace;color:rgba(0,242,255,.28);letter-spacing:.14em;pointer-events:none;margin:0;white-space:nowrap;">DRAG · SCROLL · CLICK</p>
+        <div style="position:absolute;bottom:0;left:0;right:0;height:28%;background:linear-gradient(to bottom,transparent,#070709);pointer-events:none;z-index:3;"></div>
+    </section>
+
     <!-- LE PRODUIT : DAFA -->
-    <section class="py-5 bg-white">
-        <div class="container py-5 reveal">
+    <section class="py-5" style="position:relative;overflow:hidden;background:#070709;">
+        <div aria-hidden="true" style="position:absolute;width:700px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,242,255,.05) 0%,transparent 70%);top:-10%;right:-5%;pointer-events:none;z-index:0;"></div>
+        <div class="container py-5 reveal" style="position:relative;z-index:1;">
             <div class="row g-5 align-items-center">
                 <div class="col-lg-6">
                     <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Le produit</span>
                     <h2 class="display-4 fw-bold tracking-tight mb-4">Votre bouclier anti-marketing.</h2>
-                    <p class="fs-4 text-muted mb-5">
+                    <p class="fs-4 mb-5" style="color:rgba(255,255,255,.65);">
                         J'aurais pu lister des compétences. J'ai préféré construire quelque chose. DAFA traduit des spécifications techniques illisibles en décisions simples et vérifiées, en appliquant la même rigueur que sur un poste X-Ray.
                     </p>
                     <div class="row g-4">
                         <div class="col-sm-6">
-                            <div class="p-4 bg-light-apple rounded-4 border shadow-sm">
+                            <div class="p-4 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);">
                                 <i class="bi bi-cpu text-primary fs-2 mb-3 d-block" aria-hidden="true"></i>
-                                <h3 class="fw-bold">Vérité Technique</h3>
-                                <p class="small text-muted mb-0">Comprenez ce que vous achetez au-delà des promesses marketing.</p>
+                                <h3 class="fw-bold h5">Vérité Technique</h3>
+                                <p class="small mb-0" style="color:rgba(255,255,255,.6);">Comprenez ce que vous achetez au-delà des promesses marketing.</p>
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="p-4 bg-light-apple rounded-4 border shadow-sm">
+                            <div class="p-4 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);">
                                 <i class="bi bi-check-circle-fill text-primary fs-2 mb-3 d-block" aria-hidden="true"></i>
-                                <h3 class="fw-bold">Compatibilité 100%</h3>
-                                <p class="small text-muted mb-0">Certification algorithmique : vos composants fonctionnent ensemble, garanti.</p>
+                                <h3 class="fw-bold h5">Compatibilité 100%</h3>
+                                <p class="small mb-0" style="color:rgba(255,255,255,.6);">Certification algorithmique : vos composants fonctionnent ensemble, garanti.</p>
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="p-4 bg-light-apple rounded-4 border shadow-sm">
+                            <div class="p-4 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);">
                                 <i class="bi bi-tag-fill text-primary fs-2 mb-3 d-block" aria-hidden="true"></i>
-                                <h3 class="fw-bold">Le Juste Prix</h3>
-                                <p class="small text-muted mb-0">DAFA révèle la valeur réelle des composants pour éviter la "taxe marketing".</p>
+                                <h3 class="fw-bold h5">Le Juste Prix</h3>
+                                <p class="small mb-0" style="color:rgba(255,255,255,.6);">DAFA révèle la valeur réelle des composants pour éviter la "taxe marketing".</p>
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="p-4 bg-light-apple rounded-4 border shadow-sm">
+                            <div class="p-4 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);">
                                 <i class="bi bi-receipt text-primary fs-2 mb-3 d-block" aria-hidden="true"></i>
-                                <h3 class="fw-bold">Facture Réelle</h3>
-                                <p class="small text-muted mb-0">Prix produit + accessoires manquants = coût total avant l'achat, pas après.</p>
+                                <h3 class="fw-bold h5">Facture Réelle</h3>
+                                <p class="small mb-0" style="color:rgba(255,255,255,.6);">Prix produit + accessoires manquants = coût total avant l'achat, pas après.</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="p-5 bg-dark text-white rounded-5 shadow-2xl mb-4">
-                        <h3 class="h4 fw-bold text-primary mb-3">Le système de badges DAFA</h3>
-                        <p class="opacity-75 mb-4">Chaque produit reçoit un score de compatibilité de 1 à 8. Pas de pourcentage, pas de jargon : une couleur, un chiffre, une décision immédiate.</p>
-                        <div class="d-flex flex-column gap-2">
-                            <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(255,255,255,0.06);">
-                                <span class="badge bg-danger px-2 py-1 fw-bold">1–3</span>
-                                <span class="small opacity-75">Critique : système bridé ou incompatible</span>
+                    <div class="p-5 rounded-5 mb-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(0,242,255,.15);">
+                        <h3 class="h4 fw-bold mb-3" style="color:#00f2ff;">Le système de badges DAFA</h3>
+                        <p class="mb-4" style="color:rgba(255,255,255,.65);">Chaque produit reçoit un score de compatibilité de 1 à 8. Pas de pourcentage, pas de jargon : une couleur, un chiffre, une décision immédiate.</p>
+                        <div class="d-flex flex-column gap-3">
+                            <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(255,255,255,.05);">
+                                <div class="d-flex gap-1 flex-shrink-0">
+                                    <img src="images/1.png" alt="Badge 1" style="height:32px;width:auto;" loading="lazy">
+                                    <img src="images/2.png" alt="Badge 2" style="height:32px;width:auto;" loading="lazy">
+                                    <img src="images/3.png" alt="Badge 3" style="height:32px;width:auto;" loading="lazy">
+                                </div>
+                                <span class="small" style="color:rgba(255,255,255,.65);">Critique : système bridé ou incompatible</span>
                             </div>
-                            <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(255,255,255,0.06);">
-                                <span class="badge bg-warning text-dark px-2 py-1 fw-bold">4–6</span>
-                                <span class="small opacity-75">Standard : fonctionne, pas au plein potentiel</span>
+                            <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(255,255,255,.05);">
+                                <div class="d-flex gap-1 flex-shrink-0">
+                                    <img src="images/4.png" alt="Badge 4" style="height:32px;width:auto;" loading="lazy">
+                                    <img src="images/5.png" alt="Badge 5" style="height:32px;width:auto;" loading="lazy">
+                                    <img src="images/6.png" alt="Badge 6" style="height:32px;width:auto;" loading="lazy">
+                                </div>
+                                <span class="small" style="color:rgba(255,255,255,.65);">Standard : fonctionne, pas au plein potentiel</span>
                             </div>
-                            <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(255,255,255,0.06);">
-                                <span class="badge bg-success px-2 py-1 fw-bold">7–8</span>
-                                <span class="small opacity-75">Optimisé : performance maximale garantie</span>
+                            <div class="d-flex align-items-center gap-3 p-3 rounded-4" style="background:rgba(255,255,255,.05);">
+                                <div class="d-flex gap-1 flex-shrink-0">
+                                    <img src="images/7.png" alt="Badge 7" style="height:32px;width:auto;" loading="lazy">
+                                    <img src="images/8.png" alt="Badge 8" style="height:32px;width:auto;" loading="lazy">
+                                </div>
+                                <span class="small" style="color:rgba(255,255,255,.65);">Optimisé : performance maximale garantie</span>
                             </div>
                         </div>
                     </div>
@@ -225,19 +520,18 @@
     </section>
 
     <!-- AVANT / APRÈS DAFA -->
-    <section class="py-5 bg-dark text-white">
-        <div class="container py-5 reveal">
+    <section class="py-5" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#060609 0%,#08080d 100%);">
+        <div class="container py-5 reveal" style="position:relative;z-index:1;">
             <div class="text-center mb-5">
-                <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">La puissance de DAFA en un coup d'oeil</span>
+                <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">La puissance de DAFA en un coup d'œil</span>
                 <h2 class="display-4 fw-bold tracking-tight mb-3">Sans DAFA. Avec DAFA.</h2>
-                <p class="fs-5 mx-auto max-width-800" style="opacity:.65;">La même télé. Deux lectures totalement différentes.</p>
+                <p class="fs-5 mx-auto max-width-800" style="color:rgba(255,255,255,.55);">La même télé. Deux lectures totalement différentes.</p>
             </div>
             <div class="row g-4 align-items-stretch">
-
                 <!-- AVANT -->
                 <div class="col-lg-6">
                     <div class="h-100 rounded-5 overflow-hidden d-flex flex-column" style="border:2px solid rgba(255,255,255,0.1);">
-                        <div class="px-4 py-3" style="background:rgba(255,255,255,0.05); border-bottom:1px solid rgba(255,255,255,0.08);">
+                        <div class="px-4 py-3" style="background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.08);">
                             <span class="small fw-bold text-uppercase tracking-widest" style="color:rgba(255,59,48,.9);">
                                 <i class="bi bi-x-circle-fill me-1" aria-hidden="true"></i>Sans DAFA · Fiche produit réelle
                             </span>
@@ -261,21 +555,19 @@
                                 <span class="badge rounded-pill px-2 py-1 small fw-normal" style="background:rgba(255,255,255,0.1);">Dolby Vision IQ</span>
                                 <span class="badge rounded-pill px-2 py-1 small fw-normal" style="background:rgba(255,255,255,0.1);">HDR10+</span>
                                 <span class="badge rounded-pill px-2 py-1 small fw-normal" style="background:rgba(255,255,255,0.1);">Neural Quantum Processor</span>
-                                <span class="badge rounded-pill px-2 py-1 small fw-normal" style="background:rgba(255,255,255,0.1);">Object Tracking Sound+</span>
                             </div>
-                            <p class="small mb-4" style="opacity:.6; line-height:1.6;">Profitez d'une résolution 8K 4x supérieure au 4K, d'un processeur Quantum Neural pour un upscaling IA de vos contenus. Compatible HDMI 2.1 48Gbps pour 4K@120fps. Dolby Atmos, Bixby & Alexa intégrés...</p>
-                            <div class="mt-auto d-flex align-items-center gap-2 p-3 rounded-4" style="background:rgba(255,59,48,.12); border:1px solid rgba(255,59,48,.25);">
+                            <p class="small mb-4" style="opacity:.6;line-height:1.6;">Profitez d'une résolution 8K 4x supérieure au 4K, d'un processeur Quantum Neural pour un upscaling IA de vos contenus. Compatible HDMI 2.1 48Gbps pour 4K@120fps. Dolby Atmos, Bixby &amp; Alexa intégrés...</p>
+                            <div class="mt-auto d-flex align-items-center gap-2 p-3 rounded-4" style="background:rgba(255,59,48,.12);border:1px solid rgba(255,59,48,.25);">
                                 <i class="bi bi-question-circle-fill flex-shrink-0" style="color:rgba(255,59,48,.9);" aria-hidden="true"></i>
                                 <span class="small fw-semibold" style="color:rgba(255,59,48,.9);">Compatible avec mon setup PS5 + barre de son ?</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- APRÈS -->
                 <div class="col-lg-6">
-                    <div class="h-100 rounded-5 overflow-hidden d-flex flex-column" style="border:2px solid rgba(0,113,227,.45); box-shadow:0 0 48px rgba(0,113,227,.18);">
-                        <div class="px-4 py-3" style="background:rgba(0,113,227,.15); border-bottom:1px solid rgba(0,113,227,.25);">
+                    <div class="h-100 rounded-5 overflow-hidden d-flex flex-column" style="border:2px solid rgba(0,113,227,.45);box-shadow:0 0 48px rgba(0,113,227,.18);">
+                        <div class="px-4 py-3" style="background:rgba(0,113,227,.15);border-bottom:1px solid rgba(0,113,227,.25);">
                             <span class="small fw-bold text-primary text-uppercase tracking-widest">
                                 <i class="bi bi-check-circle-fill me-1" aria-hidden="true"></i>Avec DAFA · Verdict instantané
                             </span>
@@ -290,8 +582,6 @@
                                     <p class="small mb-0" style="opacity:.45;">Analysé avec votre setup · PS5 + barre de son</p>
                                 </div>
                             </div>
-
-                            <!-- Badge DAFA central -->
                             <div class="text-center py-4 px-3 rounded-4 mb-4" style="background:rgba(255,255,255,0.05);">
                                 <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width:72px;height:72px;background:linear-gradient(135deg,#ff9f0a,#e67700);">
                                     <span class="display-6 fw-bold text-white">5</span>
@@ -299,8 +589,6 @@
                                 <p class="fw-bold mb-1">Fonctionne, mais pas au plein potentiel</p>
                                 <p class="small mb-0" style="opacity:.65;">Votre câble HDMI limite la TV à 4K@60fps.<br>Elle peut faire 4K@120fps avec le bon câble.</p>
                             </div>
-
-                            <!-- Alertes -->
                             <div class="d-flex flex-column gap-2 mb-3">
                                 <div class="d-flex align-items-center gap-2 p-2 rounded-3" style="background:rgba(255,159,10,.15);">
                                     <i class="bi bi-exclamation-triangle-fill text-warning flex-shrink-0" style="font-size:.8rem;" aria-hidden="true"></i>
@@ -311,8 +599,6 @@
                                     <span class="small">PS5 compatible · eARC OK avec votre barre de son</span>
                                 </div>
                             </div>
-
-                            <!-- Facture réelle -->
                             <div class="p-3 rounded-4 mt-auto" style="background:rgba(255,255,255,0.06);">
                                 <p class="small fw-bold text-uppercase tracking-widest mb-2" style="opacity:.72;">Facture réelle</p>
                                 <div class="d-flex justify-content-between small mb-1">
@@ -328,443 +614,135 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- PROTOTYPE -->
-    <section id="prototype-section" class="py-5 bg-light-apple">
-        <div class="container py-5 reveal">
-            <div class="text-center mb-5">
-                <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Prototype interactif · Figma V3</span>
-                <h2 class="display-3 fw-bold tracking-tight mb-3">Prenez le contrôle.</h2>
-                <p class="fs-4 text-muted mx-auto max-width-800">Explorez l'interface complète de DAFA. Onboarding, scanner de specs, système de badges, alertes de compatibilité.</p>
-                <div class="row g-3 justify-content-center mt-4 mb-5">
-                    <div class="col-auto"><span class="badge bg-white text-dark border rounded-pill px-3 py-2"><i class="bi bi-phone text-primary me-1" aria-hidden="true"></i>Flux d'onboarding</span></div>
-                    <div class="col-auto"><span class="badge bg-white text-dark border rounded-pill px-3 py-2"><i class="bi bi-upc-scan text-primary me-1" aria-hidden="true"></i>Scanner de specs</span></div>
-                    <div class="col-auto"><span class="badge bg-white text-dark border rounded-pill px-3 py-2"><i class="bi bi-patch-check text-primary me-1" aria-hidden="true"></i>Badges 1–8</span></div>
-                    <div class="col-auto"><span class="badge bg-white text-dark border rounded-pill px-3 py-2"><i class="bi bi-exclamation-triangle text-primary me-1" aria-hidden="true"></i>Alertes compatibilité</span></div>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-6">
-                    <div class="phone-frame-container mx-auto">
-                        <a href="https://www.figma.com/proto/SWCbHvDAKlID6yNduDaMsR/DAFA_App_Master_V3_Essam?node-id=145-176&scaling=scale-down&hide-ui=1" target="_blank" rel="noopener noreferrer" class="d-block position-relative text-decoration-none" aria-label="Lancer le prototype interactif DAFA">
-                            <img src="images/DAFA.webp" alt="Interface de l'application DAFA" class="phone-iframe" style="object-fit: cover; width: 100%; height: 100%;" width="375" height="812" loading="lazy">
-                            <div class="position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-center align-items-center" style="background: rgba(0,0,0,0.5);">
-                                <div class="bg-primary rounded-circle shadow-lg d-flex justify-content-center align-items-center" style="width:80px;height:80px;">
-                                    <i class="bi bi-play-fill text-white" style="font-size:3rem;margin-left:5px;" aria-hidden="true"></i>
-                                </div>
-                                <p class="text-white fw-bold mt-3 fs-5">Lancer le prototype</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- BRIDGE : PRODUIT → DÉMARCHE -->
-    <div class="py-4 bg-dark text-white">
-        <div class="container text-center">
-            <p class="fs-5 mb-0 opacity-75">Maintenant que vous avez vu le résultat. Voici comment j'y suis arrivé.</p>
-        </div>
-    </div>
-
-    <!-- PHASE 1 : DÉCOUVERTE -->
-    <section class="py-5">
-        <div class="container py-5 reveal">
-            <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 1 · Découverte</span>
-            <div class="row align-items-start g-5">
-                <div class="col-lg-5">
-                    <h2 class="display-5 fw-bold mb-4">Le problème naît d'une impasse personnelle.</h2>
-                    <p class="fs-5 text-muted mb-3">
-                        Tout démarre d'un setup multi-appareils : PC, console, projecteur, barre de son mais un seul port HDMI 2.1 disponible. Trois mois à disséquer des fiches techniques, des forums contradictoires, des spécifications délibérément opaques avant de trouver la solution.
-                    </p>
-                    <p class="fs-5 text-muted">
-                        La conclusion n'était pas technique : <strong>l'information existait</strong>. Elle était structurée pour décourager la vérification autonome et orienter vers l'achat impulsif.
-                    </p>
-                    <blockquote class="border-start border-primary border-4 ps-4 my-4 fs-5 fst-italic text-dark">
-                        "J'ai passé 3 mois à chercher la solution. Les gens n'ont pas ce temps. J'ai décidé de créer l'outil qui fait ce travail pour eux."
-                    </blockquote>
-                </div>
-                <div class="col-lg-7">
-                    <div class="p-5 bg-dark text-white rounded-5 shadow-lg mb-4">
-                        <h3 class="text-primary fw-bold mb-3 h4">Le problème structurel identifié</h3>
-                        <p class="fs-5 opacity-75 mb-0">Les fiches techniques sont rédigées par des équipes marketing, pas par des ingénieurs. Les termes ("HDMI 2.1", "Dolby Atmos", "HDR10+") sont utilisés comme arguments de vente sans que leur compatibilité croisée ne soit jamais expliquée. L'utilisateur est placé dans une <strong>asymétrie d'information délibérée</strong>.</p>
-                    </div>
-                    <div class="p-4 bg-white rounded-5 border shadow-sm">
-                        <h3 class="fw-bold text-dark mb-3 h6">Signaux observés validant le problème</h3>
-                        <div class="d-flex align-items-start gap-3 mb-3">
-                            <i class="bi bi-chat-square-text-fill text-primary fs-5 mt-1" aria-hidden="true"></i>
-                            <p class="mb-0 text-muted"><strong class="text-dark">Forums Reddit tech</strong> : fils récurrents sur des problèmes de compatibilité HDMI, bridage inexpliqué, demandes d'aide en masse post-achat.</p>
-                        </div>
-                        <div class="d-flex align-items-start gap-3 mb-3">
-                            <i class="bi bi-star-half text-primary fs-5 mt-1" aria-hidden="true"></i>
-                            <p class="mb-0 text-muted"><strong class="text-dark">Avis Amazon / Fnac 2–3 étoiles</strong> : pattern identique : "fonctionne mais pas comme annoncé", "incompatible avec mon setup", "bridé vs ce que j'avais".</p>
-                        </div>
-                        <div class="d-flex align-items-start gap-3">
-                            <i class="bi bi-search text-primary fs-5 mt-1" aria-hidden="true"></i>
-                            <p class="mb-0 text-muted"><strong class="text-dark">Requêtes Google</strong> : volume élevé sur "câble HDMI 2.1 vraiment 4K120fps", "compatible PS5 projecteur" : le problème dépasse le cas personnel.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PHASE 2 : DÉFINITION -->
-    <section class="py-5 bg-white">
-        <div class="container py-5 reveal">
-            <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 2 · Définition</span>
-            <h2 class="display-5 fw-bold mb-2">Qui est vraiment touché ?</h2>
-            <p class="fs-5 text-muted mb-5 max-width-800">
-                Deux profils utilisateurs définis à partir des patterns observés et représentatifs des situations d'achat problématiques rencontrées dans les forums et retours produits.
-            </p>
-            <div class="row g-4 mb-5">
-                <div class="col-lg-6">
-                    <div class="p-0 bg-white border rounded-5 overflow-hidden h-100 shadow-sm">
-                        <div class="p-4 bg-dark text-white">
-                            <div class="badge bg-primary fw-bold rounded-circle mb-2 d-flex align-items-center justify-content-center" style="width:3rem;height:3rem;font-size:1.1rem;">T</div>
-                            <h3 class="fw-bold mb-1 h4">Thomas, 28 ans</h3>
-                            <p class="opacity-50 small mb-0">Gamer semi-expert · Setup en évolution constante</p>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-muted">Il connaît les termes techniques mais n'a pas le temps de tout vérifier. Il achète vite, découvre le problème au déballage, finit sur Reddit pour comprendre.</p>
-                            <p class="fw-semibold small text-dark mb-2">Points de douleur</p>
-                            <div class="d-flex flex-wrap gap-2 mb-3">
-                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3 py-2">Retours fréquents</span>
-                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3 py-2">Bridage post-achat</span>
-                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3 py-2">Perte de temps</span>
-                            </div>
-                            <p class="fw-semibold small text-dark mb-2">Ce qu'il cherche</p>
-                            <div class="d-flex flex-wrap gap-2">
-                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-2">Vérification rapide</span>
-                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-2">Verdict sans jargon</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="p-0 bg-white border rounded-5 overflow-hidden h-100 shadow-sm">
-                        <div class="p-4 text-white" style="background:#0a2a4a;">
-                            <div class="badge fw-bold rounded-circle mb-2 d-flex align-items-center justify-content-center" style="width:3rem;height:3rem;font-size:1.1rem;background:#e67e22;">S</div>
-                            <h3 class="fw-bold mb-1 h4">Sophie, 42 ans</h3>
-                            <p class="opacity-50 small mb-0">Parent non-expert · Achat pour la maison ou pour offrir</p>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-muted">Elle ne maîtrise pas le vocabulaire technique. Elle se fie aux étiquettes et aux vendeurs. Elle repart avec un produit "qui ne marche pas" sans comprendre pourquoi.</p>
-                            <p class="fw-semibold small text-dark mb-2">Points de douleur</p>
-                            <div class="d-flex flex-wrap gap-2 mb-3">
-                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3 py-2">Specs incompréhensibles</span>
-                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3 py-2">Conseil insuffisant</span>
-                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3 py-2">Sentiment manipulé</span>
-                            </div>
-                            <p class="fw-semibold small text-dark mb-2">Ce qu'elle cherche</p>
-                            <div class="d-flex flex-wrap gap-2">
-                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-2">Langage simple</span>
-                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-2">Confiance dans l'achat</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="p-5 bg-dark text-white rounded-5 text-center max-width-800 mx-auto">
-                <p class="text-primary fw-bold small text-uppercase tracking-widest mb-2">Question de conception centrale</p>
-                <p class="display-6 fw-bold mb-0">"Comment rendre une décision technique complexe aussi simple qu'un feu rouge ?"</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- PHASE 3 : IDÉATION -->
-    <section class="py-5">
-        <div class="container py-5 reveal">
-            <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 3 · Idéation</span>
-            <h2 class="display-5 fw-bold mb-2">Les décisions de conception et pourquoi.</h2>
-            <p class="fs-5 text-muted mb-5 max-width-800">Chaque choix structurant a une justification UX. Voici les trois décisions clés avec leur raisonnement.</p>
-            <div class="row g-4">
-                <div class="col-lg-4">
-                    <div class="p-4 bg-white border rounded-5 h-100 shadow-sm bento-box">
-                        <p class="small fw-bold text-muted text-uppercase tracking-widest mb-2">Décision 1 · Lisibilité</p>
-                        <h3 class="fw-bold mb-3 h5">Badges 1–8 plutôt qu'un score en pourcentage</h3>
-                        <div class="d-flex align-items-center gap-2 p-2 bg-light-apple rounded-3 mb-2">
-                            <span class="badge bg-danger px-2 py-1 fw-bold">1–3</span>
-                            <span class="small text-muted">Critique : non fonctionnel</span>
-                        </div>
-                        <div class="d-flex align-items-center gap-2 p-2 bg-light-apple rounded-3 mb-2">
-                            <span class="badge bg-warning text-dark px-2 py-1 fw-bold">4–6</span>
-                            <span class="small text-muted">Standard : fonctionne, pas optimal</span>
-                        </div>
-                        <div class="d-flex align-items-center gap-2 p-2 bg-light-apple rounded-3 mb-3">
-                            <span class="badge bg-success px-2 py-1 fw-bold">7–8</span>
-                            <span class="small text-muted">Optimisé : performance maximale</span>
-                        </div>
-                        <p class="small fw-bold text-primary text-uppercase tracking-widest mb-1">Pourquoi ce choix</p>
-                        <p class="small text-muted mb-0">Un pourcentage (73%) n'a pas de signification intuitive. Un badge coloré + chiffre unique = décision immédiate, charge cognitive zéro. Principe du "Système 1" de Kahneman : réponse rapide sans effort d'analyse.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="p-4 bg-white border rounded-5 h-100 shadow-sm bento-box">
-                        <p class="small fw-bold text-muted text-uppercase tracking-widest mb-2">Décision 2 · Prévention</p>
-                        <h3 class="fw-bold mb-3 h5">Simulateur d'écosystème avant le scanner produit seul</h3>
-                        <div class="p-3 bg-light-apple rounded-4 mb-3">
-                            <div class="d-flex align-items-center gap-2 mb-2 small">
-                                <i class="bi bi-display text-primary" aria-hidden="true"></i>
-                                <span>Mon setup actuel</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-2 mb-2 small">
-                                <i class="bi bi-plus-circle-fill text-success" aria-hidden="true"></i>
-                                <span>J'ajoute : Écran 4K 144Hz</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-2 small text-danger">
-                                <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
-                                <span>Câble HDMI actuel insuffisant</span>
-                            </div>
-                        </div>
-                        <p class="small fw-bold text-primary text-uppercase tracking-widest mb-1">Pourquoi ce choix</p>
-                        <p class="small text-muted mb-0">Le vrai problème n'est pas le produit isolé, c'est la chaîne. Scanner un produit seul est réactif. Le simulateur d'écosystème est proactif, il réplique le raisonnement d'un technicien expert qui audite un setup complet.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="p-4 bg-white border rounded-5 h-100 shadow-sm bento-box">
-                        <p class="small fw-bold text-muted text-uppercase tracking-widest mb-2">Décision 3 · Transparence</p>
-                        <h3 class="fw-bold mb-3 h5">Afficher le coût total d'optimisation, pas le prix produit seul</h3>
-                        <div class="p-3 bg-light-apple rounded-4 mb-3">
-                            <div class="d-flex justify-content-between mb-1 small">
-                                <span>Écran annoncé</span><strong>349 €</strong>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2 small text-warning">
-                                <span>+ Câble HDMI manquant</span><strong>+ 35 €</strong>
-                            </div>
-                            <div class="d-flex justify-content-between border-top pt-2 small">
-                                <span class="fw-bold">Coût réel</span><strong class="text-primary">384 €</strong>
-                            </div>
-                        </div>
-                        <p class="small fw-bold text-primary text-uppercase tracking-widest mb-1">Pourquoi ce choix</p>
-                        <p class="small text-muted mb-0">Le prix affiché est la source n°1 de déception post-achat. Révéler la facture complète en amont transforme DAFA en conseiller financier; c'est là que le produit sort du marché des comparateurs classiques.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PHASE 4 : ARCHITECTURE & DESIGN SYSTEM -->
-    <section class="py-5 bg-white">
-        <div class="container py-5 reveal">
-            <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 4 · Architecture & Design</span>
-            <h2 class="display-5 fw-bold mb-2">Structure de l'application et Design System.</h2>
-            <p class="fs-5 text-muted mb-5 max-width-800">Toute complexité technique doit être absorbée par l'interface, pas transférée à l'utilisateur.</p>
-            <div class="row g-5">
-                <div class="col-lg-6">
-                    <h3 class="fw-bold mb-4 h5">Flux principal utilisateur</h3>
-                    <div class="d-flex flex-column gap-3">
-                        <div class="d-flex align-items-center gap-3 p-3 bg-light-apple border rounded-4">
-                            <span class="badge bg-primary rounded-circle fw-bold flex-shrink-0 d-flex align-items-center justify-content-center" style="width:2rem;height:2rem;">1</span>
-                            <div><strong>Onboarding</strong> : Ajout du setup existant (1–3 appareils)</div>
-                        </div>
-                        <div class="d-flex align-items-center gap-3 p-3 bg-light-apple border rounded-4">
-                            <span class="badge bg-primary rounded-circle fw-bold flex-shrink-0 d-flex align-items-center justify-content-center" style="width:2rem;height:2rem;">2</span>
-                            <div><strong>Scanner</strong> : Scan ou recherche manuelle d'un produit cible</div>
-                        </div>
-                        <div class="d-flex align-items-center gap-3 p-3 bg-light-apple border rounded-4">
-                            <span class="badge bg-primary rounded-circle fw-bold flex-shrink-0 d-flex align-items-center justify-content-center" style="width:2rem;height:2rem;">3</span>
-                            <div><strong>Analyse</strong> : Badge de compatibilité généré + alertes ciblées</div>
-                        </div>
-                        <div class="d-flex align-items-center gap-3 p-3 bg-light-apple border rounded-4">
-                            <span class="badge bg-primary rounded-circle fw-bold flex-shrink-0 d-flex align-items-center justify-content-center" style="width:2rem;height:2rem;">4</span>
-                            <div><strong>Facture réelle</strong> : Coût total avec accessoires manquants inclus</div>
-                        </div>
-                        <div class="d-flex align-items-center gap-3 p-3 bg-success bg-opacity-10 border border-success border-opacity-25 rounded-4">
-                            <span class="badge bg-success rounded-circle fw-bold flex-shrink-0 d-flex align-items-center justify-content-center" style="width:2rem;height:2rem;">5</span>
-                            <div><strong>Décision</strong> : Achat confirmé ou alternative proposée par l'IA</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <h3 class="fw-bold mb-4 h5">Design System (open-source, read-only)</h3>
-                    <p class="text-muted mb-4">Un Design System complet construit en parallèle de l'application mobile pour garantir la cohérence sur 50+ écrans et accélérer les futures itérations.</p>
-                    <div class="d-flex flex-column gap-3">
-                        <div class="d-flex align-items-center gap-3 p-3 bg-light-apple border rounded-4">
-                            <i class="bi bi-palette-fill text-primary fs-5" aria-hidden="true"></i>
-                            <div><strong>Tokens de couleur</strong> : Palette sémantique (critique, standard, optimal, neutre)</div>
-                        </div>
-                        <div class="d-flex align-items-center gap-3 p-3 bg-light-apple border rounded-4">
-                            <i class="bi bi-type text-primary fs-5" aria-hidden="true"></i>
-                            <div><strong>Typographie</strong> : Hiérarchie à 4 niveaux, optimisée mobile-first</div>
-                        </div>
-                        <div class="d-flex align-items-center gap-3 p-3 bg-light-apple border rounded-4">
-                            <i class="bi bi-grid-3x3-gap-fill text-primary fs-5" aria-hidden="true"></i>
-                            <div><strong>Composants</strong> : Badges, cards, alertes, boutons, scanner UI</div>
-                        </div>
-                        <div class="d-flex align-items-center gap-3 p-3 bg-light-apple border rounded-4">
-                            <i class="bi bi-phone-fill text-primary fs-5" aria-hidden="true"></i>
-                            <div><strong>Grille</strong> : 4 colonnes mobile / 12 colonnes desktop, Apple-style spacing</div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
     <!-- PHASE 5 : PROTOTYPE -->
-    <section class="py-5">
-        <div class="container py-5 reveal">
+    <section class="py-5" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#08080e 0%,#0b0b14 100%);">
+        <div aria-hidden="true" style="position:absolute;width:700px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(123,97,255,.04) 0%,transparent 70%);top:10%;left:-10%;pointer-events:none;z-index:0;"></div>
+        <div class="container py-5 reveal" style="position:relative;z-index:1;">
             <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 5 · Prototype haute-fidélité</span>
-            <div class="row align-items-center g-5">
+            <h2 class="display-5 fw-bold mb-4">Prototype V3 : état actuel.</h2>
+            <p class="fs-5 mb-5 max-width-800" style="color:rgba(255,255,255,.6);">Le prototype est fonctionnel, navigable, et couvre les flux principaux. Il représente l'état du projet à 8 mois de développement.</p>
+            <div class="row g-4">
                 <div class="col-lg-6">
-                    <h2 class="display-5 fw-bold mb-4">Prototype V3 : état actuel.</h2>
-                    <p class="fs-5 text-muted mb-4">Le prototype est fonctionnel, navigable, et couvre les flux principaux. Il représente l'état du projet à 8 mois de développement.</p>
                     <div class="d-flex flex-column gap-3">
-                        <div class="d-flex gap-3 align-items-center">
-                            <i class="bi bi-check-circle-fill text-success fs-5" aria-hidden="true"></i>
-                            <span><strong>Flux d'onboarding complet</strong> : ajout de setup, navigation initiale</span>
+                        <div class="d-flex gap-3 align-items-center p-3 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);">
+                            <i class="bi bi-check-circle-fill text-success fs-5 flex-shrink-0" aria-hidden="true"></i>
+                            <span><strong>Flux d'onboarding complet</strong><span style="color:rgba(255,255,255,.6);"> : ajout de setup, navigation initiale</span></span>
                         </div>
-                        <div class="d-flex gap-3 align-items-center">
-                            <i class="bi bi-check-circle-fill text-success fs-5" aria-hidden="true"></i>
-                            <span><strong>Écran de scanning</strong> : interface scanner + résultat avec badge</span>
+                        <div class="d-flex gap-3 align-items-center p-3 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);">
+                            <i class="bi bi-check-circle-fill text-success fs-5 flex-shrink-0" aria-hidden="true"></i>
+                            <span><strong>Écran de scanning</strong><span style="color:rgba(255,255,255,.6);"> : interface scanner + résultat avec badge</span></span>
                         </div>
-                        <div class="d-flex gap-3 align-items-center">
-                            <i class="bi bi-check-circle-fill text-success fs-5" aria-hidden="true"></i>
-                            <span><strong>Détail produit</strong> : lecture de specs, système de badges 1–8</span>
+                        <div class="d-flex gap-3 align-items-center p-3 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);">
+                            <i class="bi bi-check-circle-fill text-success fs-5 flex-shrink-0" aria-hidden="true"></i>
+                            <span><strong>Détail produit</strong><span style="color:rgba(255,255,255,.6);"> : lecture de specs, système de badges 1–8</span></span>
                         </div>
-                        <div class="d-flex gap-3 align-items-center">
-                            <i class="bi bi-check-circle-fill text-success fs-5" aria-hidden="true"></i>
-                            <span><strong>Simulateur d'écosystème (partiel)</strong> : ajout virtuel + alerte</span>
+                        <div class="d-flex gap-3 align-items-center p-3 rounded-4" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);">
+                            <i class="bi bi-check-circle-fill text-success fs-5 flex-shrink-0" aria-hidden="true"></i>
+                            <span><strong>Simulateur d'écosystème (partiel)</strong><span style="color:rgba(255,255,255,.6);"> : ajout virtuel + alerte</span></span>
                         </div>
-                        <div class="d-flex gap-3 align-items-center text-muted">
-                            <i class="bi bi-circle fs-5" aria-hidden="true"></i>
-                            <span><strong>Récapitulatif coût total</strong> : en cours de finalisation</span>
+                        <div class="d-flex gap-3 align-items-center p-3 rounded-4" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);">
+                            <i class="bi bi-circle fs-5 flex-shrink-0" style="color:rgba(255,255,255,.3);" aria-hidden="true"></i>
+                            <span style="color:rgba(255,255,255,.5);"><strong style="color:rgba(255,255,255,.6);">Récapitulatif coût total</strong> : en cours de finalisation</span>
                         </div>
-                        <div class="d-flex gap-3 align-items-center text-muted">
-                            <i class="bi bi-circle fs-5" aria-hidden="true"></i>
-                            <span><strong>Module IA personnalisé</strong> : planifié, non prototypé</span>
+                        <div class="d-flex gap-3 align-items-center p-3 rounded-4" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);">
+                            <i class="bi bi-circle fs-5 flex-shrink-0" style="color:rgba(255,255,255,.3);" aria-hidden="true"></i>
+                            <span style="color:rgba(255,255,255,.5);"><strong style="color:rgba(255,255,255,.6);">Module IA personnalisé</strong> : planifié, non prototypé</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="p-4 bg-dark text-white rounded-5 shadow-lg">
-                        <p class="text-white-50 small text-uppercase tracking-widest mb-3">Prototype interactif · Figma V3</p>
-                        <div class="row g-3 mb-3">
-                            <div class="col-6">
-                                <div class="p-3 bg-white bg-opacity-10 rounded-4 text-center">
-                                    <div class="fs-3 fw-bold text-white">50+</div>
-                                    <div class="small text-white-50">écrans Figma</div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="p-3 bg-white bg-opacity-10 rounded-4 text-center">
-                                    <div class="fs-3 fw-bold text-white">V3</div>
-                                    <div class="small text-white-50">version actuelle</div>
-                                </div>
-                            </div>
+                <div class="col-lg-6 d-flex align-items-center">
+                    <div class="p-4 rounded-5 w-100" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);">
+                        <p class="small fw-bold text-uppercase tracking-widest mb-3" style="color:rgba(255,255,255,.45);">Métriques du projet</p>
+                        <div class="row g-3">
+                            <div class="col-6"><div class="stat-card"><div class="stat-num mb-1">50+</div><div class="small text-muted text-uppercase">Écrans Figma</div></div></div>
+                            <div class="col-6"><div class="stat-card"><div class="stat-num mb-1">V3</div><div class="small text-muted text-uppercase">Version actuelle</div></div></div>
+                            <div class="col-6"><div class="stat-card"><div class="stat-num mb-1">8</div><div class="small text-muted text-uppercase">Mois de dev</div></div></div>
+                            <div class="col-6"><div class="stat-card"><div class="stat-num mb-1">Solo</div><div class="small text-muted text-uppercase">Conception</div></div></div>
                         </div>
-                        <p class="small opacity-50 mb-0">Prototype navigable disponible en haut de page.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- APERÇU ÉCRANS PROTOTYPE -->
-    <section class="py-5 bg-light-apple">
-        <div class="container py-4 reveal">
+    <!-- 4 ÉCRANS CLÉS -->
+    <section class="py-5" style="position:relative;overflow:hidden;background:#070709;">
+        <div aria-hidden="true" style="position:absolute;width:800px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,242,255,.04) 0%,transparent 70%);top:-10%;right:-10%;pointer-events:none;z-index:0;"></div>
+        <div aria-hidden="true" style="position:absolute;width:600px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(123,97,255,.035) 0%,transparent 70%);bottom:-10%;left:-5%;pointer-events:none;z-index:0;"></div>
+        <div class="container py-5 reveal" style="position:relative;z-index:1;">
             <div class="text-center mb-5">
                 <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Aperçu du prototype V3</span>
-                <h2 class="display-5 fw-bold mb-2">4 écrans clés.</h2>
-                <p class="fs-5 text-muted max-width-800 mx-auto">Les flux principaux tels qu'ils apparaissent dans Figma : coffre-fort, analyse produit, profil utilisateur, marketplace.</p>
+                <h2 class="display-5 fw-bold mb-3">4 écrans <span class="text-gradient">clés.</span></h2>
+                <p class="fs-5 max-width-800 mx-auto" style="color:rgba(255,255,255,.6);">Coffre-fort, check-up produit, profil utilisateur, marketplace — les flux principaux tels qu'ils apparaissent dans Figma V3.</p>
             </div>
-            <div class="row g-4 justify-content-center align-items-start">
+            <div class="row g-4 justify-content-center align-items-end mb-5">
 
-                <!-- Écran 1 : Mon Coffre-fort -->
                 <div class="col-lg-3 col-md-6 text-center">
-                    <div class="mx-auto mb-3" style="max-width:200px; background:#0c0c10; border-radius:28px; padding:14px; border:2px solid rgba(255,255,255,.11); box-shadow:0 24px 64px rgba(0,0,0,.70);">
-                        <img src="images/DAFA3.webp" alt="Écran Mon Coffre-fort — liste des équipements avec statut garantie et alertes d'expiration" class="img-fluid rounded-4" width="200" loading="lazy">
+                    <div class="mx-auto mb-4 position-relative" style="max-width:200px;">
+                        <div class="phone-glow"></div>
+                        <div style="background:#0c0c10;border-radius:28px;padding:14px;border:2px solid rgba(255,255,255,.11);box-shadow:0 24px 64px rgba(0,0,0,.70);">
+                            <img src="images/DAFA3.webp" alt="Écran Mon Coffre-fort — liste des équipements avec statut garantie et alertes d'expiration" class="img-fluid rounded-4" width="200" loading="lazy">
+                        </div>
                     </div>
                     <h3 class="fw-bold mb-1 h5">Mon Coffre-fort</h3>
-                    <p class="small text-muted">Garanties, factures, alertes d'expiration par équipement</p>
+                    <p class="small" style="color:rgba(255,255,255,.5);">Garanties, factures, alertes d'expiration par équipement</p>
                 </div>
 
-                <!-- Écran 2 : Check-up produit -->
                 <div class="col-lg-3 col-md-6 text-center">
-                    <div class="mx-auto mb-3" style="max-width:200px; background:#0c0c10; border-radius:28px; padding:14px; border:2px solid rgba(255,255,255,.11); box-shadow:0 24px 64px rgba(0,0,0,.70);">
-                        <img src="images/DAFA4.webp" alt="Écran Check-up produit — badges 1 à 8 par composant, diagnostic de compatibilité ciblé" class="img-fluid rounded-4" width="200" loading="lazy">
+                    <div class="mx-auto mb-4 position-relative" style="max-width:200px;">
+                        <div class="phone-glow"></div>
+                        <div style="background:#0c0c10;border-radius:28px;padding:14px;border:2px solid rgba(255,255,255,.11);box-shadow:0 24px 64px rgba(0,0,0,.70);">
+                            <img src="images/DAFA4.webp" alt="Écran Check-up produit — badges 1 à 8 par composant, diagnostic de compatibilité ciblé" class="img-fluid rounded-4" width="200" loading="lazy">
+                        </div>
                     </div>
                     <h3 class="fw-bold mb-1 h5">Check-up produit</h3>
-                    <p class="small text-muted">Badges 1–8 par composant, diagnostic de compatibilité ciblé</p>
+                    <p class="small" style="color:rgba(255,255,255,.5);">Badges 1–8 par composant, diagnostic de compatibilité ciblé</p>
                 </div>
 
-                <!-- Écran 3 : Profil & Gamification -->
                 <div class="col-lg-3 col-md-6 text-center">
-                    <div class="mx-auto mb-3" style="max-width:200px; background:#0c0c10; border-radius:28px; padding:14px; border:2px solid rgba(255,255,255,.11); box-shadow:0 24px 64px rgba(0,0,0,.70);">
-                        <img src="images/DAFA1.webp" alt="Écran Profil utilisateur — système de grades, économies réalisées, progression" class="img-fluid rounded-4" width="200" loading="lazy">
+                    <div class="mx-auto mb-4 position-relative" style="max-width:200px;">
+                        <div class="phone-glow"></div>
+                        <div style="background:#0c0c10;border-radius:28px;padding:14px;border:2px solid rgba(255,255,255,.11);box-shadow:0 24px 64px rgba(0,0,0,.70);">
+                            <img src="images/DAFA1.webp" alt="Écran Profil utilisateur — système de grades, économies réalisées, progression" class="img-fluid rounded-4" width="200" loading="lazy">
+                        </div>
                     </div>
-                    <h3 class="fw-bold mb-1 h5">Profil & Grades</h3>
-                    <p class="small text-muted">Système de progression, économies réalisées, rang utilisateur</p>
+                    <h3 class="fw-bold mb-1 h5">Profil &amp; Grades</h3>
+                    <p class="small" style="color:rgba(255,255,255,.5);">Système de progression, économies réalisées, rang utilisateur</p>
                 </div>
 
-                <!-- Écran 4 : Marketplace -->
                 <div class="col-lg-3 col-md-6 text-center">
-                    <div class="mx-auto mb-3" style="max-width:200px; background:#0c0c10; border-radius:28px; padding:14px; border:2px solid rgba(255,255,255,.11); box-shadow:0 24px 64px rgba(0,0,0,.70);">
-                        <img src="images/DAFA2.webp" alt="Écran Marketplace — accessoires certifiés compatibles avec prix négociés" class="img-fluid rounded-4" width="200" loading="lazy">
+                    <div class="mx-auto mb-4 position-relative" style="max-width:200px;">
+                        <div class="phone-glow"></div>
+                        <div style="background:#0c0c10;border-radius:28px;padding:14px;border:2px solid rgba(255,255,255,.11);box-shadow:0 24px 64px rgba(0,0,0,.70);">
+                            <img src="images/DAFA2.webp" alt="Écran Marketplace — accessoires certifiés compatibles avec prix négociés" class="img-fluid rounded-4" width="200" loading="lazy">
+                        </div>
                     </div>
                     <h3 class="fw-bold mb-1 h5">Marketplace intégrée</h3>
-                    <p class="small text-muted">Accessoires certifiés compatibles, prix négociés</p>
+                    <p class="small" style="color:rgba(255,255,255,.5);">Accessoires certifiés compatibles, prix négociés</p>
                 </div>
 
             </div>
-        </div>
-    </section>
-
-    <!-- PHASE 6 : TESTS À VENIR -->
-    <section class="py-5 bg-white">
-        <div class="container py-5 reveal">
-            <span class="badge bg-warning text-dark rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Phase 6 · Tests utilisateurs · À venir</span>
-            <h2 class="display-5 fw-bold mb-2">Ce qui vient ensuite.</h2>
-            <p class="fs-5 text-muted mb-5 max-width-800">
-                Le prototype est en phase de recrutement de testeurs. L'objectif : valider ou invalider les hypothèses de conception avec de vraies données comportementales.
-            </p>
-            <div class="row g-4 mb-5">
-                <div class="col-lg-4">
-                    <div class="p-4 bg-light-apple border rounded-5 h-100">
-                        <i class="bi bi-people-fill text-primary display-6 mb-3" aria-hidden="true"></i>
-                        <h3 class="fw-bold h5">Recrutement de testeurs</h3>
-                        <p class="text-muted mb-0">5–8 participants correspondant aux profils Thomas et Sophie. Méthode : test modéré sur prototype Figma + protocole think-aloud.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="p-4 bg-light-apple border rounded-5 h-100">
-                        <i class="bi bi-question-circle-fill text-primary display-6 mb-3" aria-hidden="true"></i>
-                        <h3 class="fw-bold h5">Hypothèses à tester</h3>
-                        <p class="text-muted mb-0">Le badge 1–8 est-il compris en moins de 3 secondes ? L'alerte de compatibilité est-elle perçue avant la confirmation d'achat ?</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="p-4 bg-light-apple border rounded-5 h-100">
-                        <i class="bi bi-arrow-repeat text-primary display-6 mb-3" aria-hidden="true"></i>
-                        <h3 class="fw-bold h5">Itérations prévues</h3>
-                        <p class="text-muted mb-0">Les résultats alimenteront la V4 du prototype. Points à risque identifiés : lisibilité du scanner sur fond sombre, hiérarchie de l'écran "coût total".</p>
-                    </div>
-                </div>
-            </div>
-            <div class="p-4 p-md-5 bg-dark text-white rounded-5 d-flex flex-wrap gap-3 align-items-center justify-content-between">
-                <div>
-                    <strong class="fs-5">Vous voulez tester le prototype ?</strong>
-                    <p class="mb-0 opacity-75">Votre retour a une valeur directe sur le produit final.</p>
-                </div>
-                <a href="contact.html" class="btn btn-primary fw-bold rounded-pill px-4 py-2">Devenir testeur</a>
+            <div class="text-center">
+                <a href="https://www.figma.com/proto/SWCbHvDAKlID6yNduDaMsR/DAFA_App_Master_V3_Essam?node-id=145-176&scaling=scale-down&hide-ui=1" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary rounded-pill px-4 py-2 fw-bold">
+                    <i class="bi bi-play-circle me-2" aria-hidden="true"></i>Explorer le prototype complet
+                </a>
             </div>
         </div>
     </section>
 
     <!-- CTA FINAL -->
-    <section class="py-5 bg-dark text-white">
-        <div class="container py-5 reveal">
+    <section class="py-5" style="position:relative;overflow:hidden;background:linear-gradient(135deg,#06040e 0%,#080812 100%);">
+        <div aria-hidden="true" style="position:absolute;width:700px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(123,97,255,.07) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;"></div>
+        <div class="container py-5 reveal" style="position:relative;z-index:1;">
             <div class="row justify-content-center">
                 <div class="col-lg-7 text-center">
                     <i class="bi bi-quote text-primary display-3 d-block mb-3" style="opacity:0.4;" aria-hidden="true"></i>
                     <p class="display-6 fw-bold fst-italic mb-4" style="line-height:1.2;">La méritocratie<br>n'existe pas.</p>
-                    <p class="fs-5 opacity-75 mb-0">Identifier un problème. Construire. Livrer.<br>Sans brief, sans budget. C'est ma façon de travailler.</p>
+                    <p class="fs-5 mb-0" style="color:rgba(255,255,255,.65);">Identifier un problème. Construire. Livrer.<br>Sans brief, sans budget. C'est ma façon de travailler.</p>
                 </div>
             </div>
         </div>
@@ -772,12 +750,12 @@
 
 </main>
 
-<footer class="bg-dark text-white py-5 border-top border-secondary border-opacity-25 mt-auto">
+<footer class="py-5 border-top mt-auto" style="background:#05050a;border-color:rgba(255,255,255,.1)!important;">
     <div class="container">
         <div class="row g-4 mb-4">
             <div class="col-md-4">
                 <p class="fw-bold mb-1">ESSAM LIBERT</p>
-                <p class="small text-white-50 mb-3">UX Designer · Dispo immédiat · Liège</p>
+                <p class="small text-white-50 mb-3">UX Designer · Liège, Belgique</p>
                 <a href="mailto:info@essamlibert.com?subject=Alternance%20UX%2FUI%202026%20%E2%80%94%20Portfolio%20DAFA" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2">
                     <i class="bi bi-envelope" aria-hidden="true"></i>info@essamlibert.com
                 </a>
@@ -786,9 +764,8 @@
                 <p class="small fw-bold text-uppercase tracking-widest text-white-50 mb-3">Navigation</p>
                 <div class="d-flex flex-column gap-2">
                     <a href="index.html" class="small text-white-50 text-decoration-none">Accueil</a>
-                    <a href="case-study.html" class="small text-white-50 text-decoration-none">DAFA</a>
+                    <a href="case-study.html" class="small text-white-50 text-decoration-none">Case Study</a>
                     <a href="manifeste.html" class="small text-white-50 text-decoration-none">Manifeste</a>
-                    <a href="services.html" class="small text-white-50 text-decoration-none">Services</a>
                     <a href="contact.html" class="small text-white-50 text-decoration-none">Contact</a>
                 </div>
             </div>
@@ -802,9 +779,9 @@
                 </a>
             </div>
         </div>
-        <div class="border-top border-secondary border-opacity-25 pt-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <div class="pt-3 d-flex flex-wrap justify-content-between align-items-center gap-2" style="border-top:1px solid rgba(255,255,255,.1);">
             <p class="small text-white-50 mb-0">&copy; 2026 DAFA Project.</p>
-            <a href="legal.html" class="small text-white-50 text-decoration-none">Mentions Légales & RGPD</a>
+            <a href="legal.html" class="small text-white-50 text-decoration-none">Mentions Légales &amp; RGPD</a>
         </div>
     </div>
 </footer>
@@ -843,7 +820,6 @@
   if (!canvas || !section) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  /* Defer Three.js until sphere section approaches viewport */
   await new Promise(resolve => {
     const obs = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) { obs.disconnect(); resolve(); }
@@ -856,7 +832,6 @@
 
   const veryMob = window.innerWidth < 400;
   const mob = window.innerWidth < 600;
-  /* Post-processing loaded only on desktop — saves ~200 KB on mobile */
   let EffectComposer, RenderPass, UnrealBloomPass;
   if (!mob) {
     [{ EffectComposer }, { RenderPass }, { UnrealBloomPass }] = await Promise.all([
@@ -868,7 +843,6 @@
   const W   = window.innerWidth;
   const H   = Math.min(mob ? Math.round(W * 1.05) : Math.round(W * 0.62), mob ? 560 : 520);
 
-  /* ── Renderer ── */
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: !mob, alpha: true });
   renderer.setSize(W, H);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, mob ? 1.5 : 2));
@@ -876,12 +850,10 @@
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.2;
 
-  /* ── Scene & Camera ── */
   const scene  = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(50, W / H, 0.1, 100);
   camera.position.z = 7;
 
-  /* ── OrbitControls ── */
   const controls = new OrbitControls(camera, canvas);
   controls.enableDamping   = true;
   controls.dampingFactor   = 0.05;
@@ -891,7 +863,6 @@
   controls.minDistance     = 4;
   controls.maxDistance     = 14;
 
-  /* ── Perlin Noise 3D ── */
   const _p = new Uint8Array(512);
   { const a=Array.from({length:256},(_,i)=>i); for(let i=255;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} for(let i=0;i<512;i++) _p[i]=a[i&255]; }
   const _fd=t=>t*t*t*(t*(t*6-15)+10), _lp=(a,b,t)=>a+t*(b-a);
@@ -904,7 +875,6 @@
     return _lp(w,_lp(v,_lp(u,_gr(_p[AA],x,y,z),_gr(_p[BA],x-1,y,z)),_lp(u,_gr(_p[AB],x,y-1,z),_gr(_p[BB],x-1,y-1,z))),_lp(v,_lp(u,_gr(_p[AA+1],x,y,z-1),_gr(_p[BA+1],x-1,y,z-1)),_lp(u,_gr(_p[AB+1],x,y-1,z-1),_gr(_p[BB+1],x-1,y-1,z-1))));
   }
 
-  /* ── Constants ── */
   const R      = 2.2;
   const N_REG  = veryMob ? 600  : mob ? 1800 : 6000;
   const N_SPEC = veryMob ? 220  : mob ? 280  : 1400;
@@ -912,13 +882,11 @@
   const PHI_G  = Math.PI * (3 - Math.sqrt(5));
   const T_OFF  = Math.PI * 1.618;
 
-  /* ── Particle buffers ── */
   const positions  = new Float32Array(N_TOT * 3);
   const basePos    = new Float32Array(N_TOT * 3);
   const colors     = new Float32Array(N_TOT * 3);
   const specTarget = new Float32Array(N_SPEC * 3);
 
-  /* Regular (cyan) — Fibonacci sphere */
   for (let i=0; i<N_REG; i++) {
     const y=1-(i/(N_REG-1))*2, r=Math.sqrt(1-y*y), th=PHI_G*i;
     const bx=Math.cos(th)*r*R, by=y*R, bz=Math.sin(th)*r*R;
@@ -926,7 +894,6 @@
     colors[i*3]=0; colors[i*3+1]=0.95; colors[i*3+2]=1;
   }
 
-  /* Special (white) — Fibonacci sphere with thetaOffset (bug fix: no index offset) */
   for (let i=0; i<N_SPEC; i++) {
     const ii=N_REG+i;
     const y=1-(i/(N_SPEC-1))*2, r=Math.sqrt(1-y*y), th=PHI_G*i+T_OFF;
@@ -935,7 +902,6 @@
     colors[ii*3]=1; colors[ii*3+1]=1; colors[ii*3+2]=1;
   }
 
-  /* ── Sample DAFA text → 3D target positions ── */
   (function () {
     const tw=360, th=120;
     const off=document.createElement('canvas');
@@ -958,7 +924,6 @@
     }
   })();
 
-  /* ── Unified geometry (vertex colors) ── */
   const geom    = new THREE.BufferGeometry();
   const posAttr = new THREE.BufferAttribute(positions, 3);
   posAttr.setUsage(THREE.DynamicDrawUsage);
@@ -969,7 +934,6 @@
     sizeAttenuation: true, transparent: true, opacity: 0.92, depthWrite: false,
   })));
 
-  /* ── Line segments — precomputed once via spatial buckets ── */
   const BKT=0.5, bk=(x,y,z)=>`${Math.round(x/BKT)},${Math.round(y/BKT)},${Math.round(z/BKT)}`;
   const bkts=new Map();
   for(let i=0;i<N_REG;i++){const k=bk(basePos[i*3],basePos[i*3+1],basePos[i*3+2]); if(!bkts.has(k))bkts.set(k,[]); bkts.get(k).push(i);}
@@ -994,7 +958,6 @@
   lGeom.setAttribute('position', new THREE.BufferAttribute(lv,3));
   scene.add(new THREE.LineSegments(lGeom, new THREE.LineBasicMaterial({color:0x00c8ee,transparent:true,opacity:0.07})));
 
-  /* ── Post-processing: bloom desktop only, direct render on mobile ── */
   let composer = null;
   if (!mob) {
     composer = new EffectComposer(renderer);
@@ -1002,7 +965,6 @@
     composer.addPass(new UnrealBloomPass(new THREE.Vector2(W,H),1.6,0.4,0.08));
   }
 
-  /* ── DAFA state machine ── */
   const T_CYC=14.4, T_SPH=6.0, T_IN=2.2, T_HLD=4.0, T_RET=2.2;
   const eio=t=>t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
   function getLerpT(e){
@@ -1014,7 +976,6 @@
     return 0;
   }
 
-  /* ── Floating words (click to toggle) ── */
   const WORDS=['DIAGNOSTIC','AUTOMATIQUE','FIABILITÉ','ACHATS','DONNÉES','ANALYSE','DÉTECTION','OPTIMISATION','QUALITÉ','FLUX','ERREURS','RAPPORT'];
   const wPos3D=WORDS.map((_,i)=>{
     const phi=Math.acos(1-2*(i+0.5)/WORDS.length), theta=Math.PI*(1+Math.sqrt(5))*i;
@@ -1038,13 +999,11 @@
     }
   });
 
-  /* ── Mouse repulsion ── */
   const m2D=new THREE.Vector2(-99,-99), _ray=new THREE.Raycaster();
   const _pl=new THREE.Plane(new THREE.Vector3(0,0,1),0), _mw=new THREE.Vector3();
   canvas.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect(); m2D.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);});
   canvas.addEventListener('mouseleave',()=>m2D.set(-99,-99));
 
-  /* ── Animation loop ── */
   const clock=new THREE.Clock();
   function animate(){
     requestAnimationFrame(animate);
@@ -1090,83 +1049,6 @@
   animate();
 })();
 </script>
-
-<!-- Section dot navigation — lights up active section in cyan, matches particle theme -->
-<script>
-(function(){
-  const sections=Array.from(document.querySelectorAll('main > section:not(#dafa-particle-section)'));
-  if(sections.length<2) return;
-
-  const shortLabel=s=>{
-    const h=s.querySelector('h1,h2');
-    if(!h) return '';
-    const t=h.textContent.trim();
-    return t.length>22?t.slice(0,20)+'…':t;
-  };
-
-  /* Build nav */
-  const nav=document.createElement('nav');
-  nav.setAttribute('aria-label','Navigation sections');
-  nav.style.cssText='position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:12px;opacity:0;transition:opacity .4s ease;';
-
-  const DOT_DEF='8px';const DOT_ACT='11px';
-  const dots=sections.map(sec=>{
-    const btn=document.createElement('button');
-    btn.setAttribute('aria-label',shortLabel(sec));
-    btn.style.cssText=`width:${DOT_DEF};height:${DOT_DEF};border-radius:50%;border:none;padding:0;background:rgba(255,255,255,.20);cursor:pointer;transition:all .35s cubic-bezier(.16,1,.3,1);position:relative;flex-shrink:0;`;
-
-    /* Tooltip — desktop only */
-    const tip=document.createElement('span');
-    tip.textContent=shortLabel(sec);
-    tip.setAttribute('aria-hidden','true');
-    tip.style.cssText='position:absolute;right:18px;top:50%;transform:translateY(-50%);white-space:nowrap;font:500 11px/1 -apple-system,BlinkMacSystemFont,sans-serif;color:#e4e4e9;background:rgba(10,10,10,.88);padding:4px 9px;border-radius:7px;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(8px);';
-    btn.appendChild(tip);
-
-    btn.addEventListener('mouseenter',()=>tip.style.opacity='1');
-    btn.addEventListener('mouseleave',()=>tip.style.opacity='0');
-    btn.addEventListener('click',()=>sec.scrollIntoView({behavior:'smooth',block:'start'}));
-    nav.appendChild(btn);
-    return {btn,tip};
-  });
-
-  document.body.appendChild(nav);
-
-  /* Activate dot */
-  let activeIdx=-1;
-  const activate=i=>{
-    if(i===activeIdx) return;
-    if(activeIdx>=0){
-      dots[activeIdx].btn.style.cssText=dots[activeIdx].btn.style.cssText
-        .replace(/width:[^;]+/,`width:${DOT_DEF}`).replace(/height:[^;]+/,`height:${DOT_DEF}`)
-        .replace(/background:[^;]+/,'background:rgba(255,255,255,.20)')
-        .replace(/box-shadow:[^;]+;?/,'');
-    }
-    activeIdx=i;
-    const b=dots[i].btn;
-    b.style.width=DOT_ACT; b.style.height=DOT_ACT;
-    b.style.background='rgba(0,242,255,.88)';
-    b.style.boxShadow='0 0 10px rgba(0,242,255,.55)';
-  };
-
-  const io=new IntersectionObserver(entries=>{
-    let best=-1,bestRatio=0;
-    entries.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>bestRatio){bestRatio=e.intersectionRatio;best=sections.indexOf(e.target);}});
-    if(best>=0) activate(best);
-  },{threshold:[0.15,0.4,0.6],rootMargin:'-5% 0px -30% 0px'});
-
-  sections.forEach(s=>io.observe(s));
-
-  /* Show only after scrolling past sphere */
-  const sphere=document.getElementById('dafa-particle-section');
-  const showAt=sphere?sphere.offsetTop+sphere.offsetHeight*.6:300;
-  window.addEventListener('scroll',()=>{
-    const show=window.scrollY>showAt;
-    nav.style.opacity=show?'1':'0';
-    nav.style.pointerEvents=show?'auto':'none';
-  },{passive:true});
-})();
-</script>
-
 
 </body>
 </html>
