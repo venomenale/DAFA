@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-bs-theme="dark">
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3MCZVBHXH2"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-3MCZVBHXH2');
+      gtag('config', 'G-3MCZVBHXH2', { anonymize_ip: true });
     </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Mentions légales et politique de confidentialité RGPD du portfolio Essam Libert, UX/UI Designer basé à Liège, Belgique.">
+    <meta name="description" content="Mentions légales et politique de confidentialité RGPD du portfolio Essam Libert, UX Designer basé à Liège, Belgique.">
     <meta name="robots" content="noindex, follow">
     <title>Mentions Légales & RGPD | Essam Libert · UX Designer Liège</title>
     <link rel="canonical" href="https://essamlibert.com/legal.html"/>
@@ -26,25 +26,91 @@
     <link rel="preload" href="css/bootstrap.min.css" as="style">
     <link rel="preload" href="css/style.css" as="style">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-
     <link rel="stylesheet" href="css/style.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" media="print" onload="this.media='all'">
+
+    <style>
+    body.apple-theme{background-color:#070709!important;color:#e4e4e9!important;}
+    .text-muted{color:#8e8e93!important;}
+    .section-label{font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#00f2ff;opacity:.8;}
+    .text-gradient{background:linear-gradient(90deg,#00f2ff,#7b61ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+    /* Legal cards */
+    .legal-card{
+        background:rgba(255,255,255,.04);
+        border:1px solid rgba(255,255,255,.08);
+        border-radius:20px;
+        padding:2rem 2rem;
+        margin-bottom:1.25rem;
+        transition:border-color .25s;
+    }
+    .legal-card:hover{border-color:rgba(0,242,255,.18);}
+    .legal-card h2{
+        font-size:1.1rem;
+        font-weight:700;
+        color:#e4e4e9;
+        margin-bottom:1rem;
+        display:flex;
+        align-items:center;
+        gap:.65rem;
+    }
+    .legal-card h2 .num{
+        display:inline-flex;align-items:center;justify-content:center;
+        width:28px;height:28px;border-radius:50%;
+        background:rgba(0,242,255,.12);
+        border:1px solid rgba(0,242,255,.2);
+        font-size:.75rem;font-weight:700;
+        color:#00f2ff;flex-shrink:0;
+    }
+    .legal-card p, .legal-card li{
+        color:rgba(255,255,255,.65);
+        font-size:.95rem;
+        line-height:1.7;
+    }
+    .legal-card strong{color:rgba(255,255,255,.85);}
+    .legal-card a{color:#00f2ff;text-decoration:none;}
+    .legal-card a:hover{text-decoration:underline;}
+    .legal-card ul{padding-left:1.2rem;}
+    .legal-card ul li{margin-bottom:.55rem;}
+    .service-row{
+        display:flex;align-items:flex-start;gap:.75rem;
+        padding:.75rem 1rem;
+        background:rgba(255,255,255,.03);
+        border:1px solid rgba(255,255,255,.06);
+        border-radius:12px;
+        margin-bottom:.5rem;
+    }
+    .service-row .svc-icon{
+        font-size:1.1rem;color:#00f2ff;flex-shrink:0;margin-top:2px;
+    }
+    .service-row p{margin:0;font-size:.88rem;color:rgba(255,255,255,.6);}
+    .service-row strong{color:rgba(255,255,255,.85);font-size:.9rem;}
+    .right-badge{
+        display:inline-flex;align-items:center;gap:.5rem;
+        padding:.4rem .9rem;border-radius:999px;
+        background:rgba(0,242,255,.08);border:1px solid rgba(0,242,255,.18);
+        font-size:.82rem;color:#00f2ff;margin:.2rem;
+    }
+
+    /* Footer */
+    footer .text-white-50{color:rgba(255,255,255,.72)!important;}
+    footer a.text-white-50:hover{color:#fff!important;}
+    </style>
 </head>
 
-<body class="apple-theme bg-light-apple d-flex flex-column min-vh-100">
+<body class="apple-theme d-flex flex-column min-vh-100">
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-nav border-bottom border-secondary border-opacity-25">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-nav border-bottom border-secondary border-opacity-25" aria-label="Navigation principale">
         <div class="container">
             <a class="navbar-brand fw-bold tracking-tight" href="index.html">ESSAM LIBERT</a>
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Ouvrir le menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="case-study.html">DAFA</a></li>
+                    <li class="nav-item"><a class="nav-link" href="case-study.html">Case Study</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                 </ul>
             </div>
@@ -52,58 +118,246 @@
     </nav>
 </header>
 
-<main class="container py-5 pt-5 mt-5 flex-grow-1">
-    <div class="mt-4 mb-5">
-        <span class="badge bg-primary rounded-pill px-3 py-2 mb-3 text-uppercase tracking-widest">Informations légales</span>
-        <h1 class="display-4 fw-bold tracking-tight">Mentions Légales & RGPD</h1>
-        <p class="text-muted fs-5">Dernière mise à jour : avril 2026</p>
+<main class="flex-grow-1">
+
+<!-- HERO -->
+<section class="pt-5 pb-4" style="background:linear-gradient(180deg,#070709 0%,#09090e 100%);position:relative;overflow:hidden;">
+    <div aria-hidden="true" style="position:absolute;width:600px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,242,255,.04) 0%,transparent 70%);top:-10%;right:-5%;pointer-events:none;"></div>
+    <div class="container pt-5 mt-3 pb-2">
+        <span class="section-label d-block mb-3">Informations légales · Mai 2026</span>
+        <h1 class="display-4 fw-bold mb-3" style="letter-spacing:-.02em;">Mentions Légales <span class="text-gradient">&amp; RGPD</span></h1>
+        <p class="fs-5 mb-0" style="color:rgba(255,255,255,.55);max-width:600px;">
+            Ce document décrit qui gère ce site, quelles données sont collectées et comment, et quels sont vos droits en vertu du droit belge et du RGPD européen.
+        </p>
     </div>
+</section>
 
-    <section class="mb-4 bg-white p-4 rounded-4 shadow-sm border animate-fade-in">
-        <h2 class="h4 fw-bold mb-3">1. Éditeur du site</h2>
-        <p class="text-muted mb-1"><strong>Nom :</strong> Essam Libert</p>
-        <p class="text-muted mb-1"><strong>Statut :</strong> Particulier : Portfolio étudiant / Projet personnel</p>
-        <p class="text-muted mb-1"><strong>Localisation :</strong> Amay, Liège, Belgique</p>
-        <p class="text-muted mb-0"><strong>Contact :</strong> <a href="mailto:info@essamlibert.com" class="text-primary text-decoration-none">info@essamlibert.com</a></p>
-    </section>
+<!-- CONTENU -->
+<section class="py-5" style="background:#070709;">
+    <div class="container" style="max-width:860px;">
 
-    <section class="mb-4 bg-white p-4 rounded-4 shadow-sm border animate-fade-in">
-        <h2 class="h4 fw-bold mb-3">2. Hébergement</h2>
-        <p class="text-muted mb-1">Le site est hébergé par <strong>GitHub Inc.</strong> via GitHub Pages.</p>
-        <p class="text-muted mb-0">88 Colin P Kelly Jr St, San Francisco, CA 94107, États-Unis.</p>
-    </section>
+        <!-- 1. Éditeur -->
+        <div class="legal-card">
+            <h2><span class="num">1</span>Éditeur du site</h2>
+            <div class="service-row">
+                <i class="bi bi-person-fill svc-icon" aria-hidden="true"></i>
+                <div>
+                    <strong>Essam Libert</strong>
+                    <p>Particulier · Portfolio étudiant et projet personnel<br>
+                    Amay, Province de Liège, Belgique<br>
+                    <a href="mailto:info@essamlibert.com">info@essamlibert.com</a> · <a href="tel:+32492617614">+32 492 61 76 14</a></p>
+                </div>
+            </div>
+            <p class="mt-2 mb-0">Ce site est un portfolio personnel présentant des travaux de design UX/UI et, en particulier, le projet <strong>DAFA</strong> (prototype d'application mobile). Il n'a pas de vocation commerciale directe et n'effectue aucune transaction financière.</p>
+        </div>
 
-    <section class="mb-4 bg-white p-4 rounded-4 shadow-sm border animate-fade-in">
-        <h2 class="h4 fw-bold mb-3">3. Politique de confidentialité (RGPD)</h2>
-        <p class="text-muted mb-3">Conformément au Règlement Général sur la Protection des Données (RGPD UE 2016/679), voici comment sont traitées vos données :</p>
-        <ul class="text-muted mb-0">
-            <li class="mb-2"><strong>Données collectées :</strong> Uniquement le nom, l'adresse e-mail et le message fournis volontairement via le formulaire de contact, géré par le service tiers Formspree.</li>
-            <li class="mb-2"><strong>Finalité :</strong> Réponse aux sollicitations professionnelles et communication autour du prototype DAFA. Aucune donnée n'est revendue à des tiers.</li>
-            <li class="mb-2"><strong>Conservation :</strong> Les données sont conservées pour une durée maximale de 2 ans à compter du dernier contact.</li>
-            <li class="mb-2"><strong>Exercice de vos droits :</strong> Vous disposez d'un droit d'accès, de rectification et d'effacement de vos données (articles 15 à 17 du RGPD), exerceable par e-mail à l'adresse ci-dessus.</li>
-            <li><strong>Réclamation :</strong> En cas de litige, vous pouvez saisir l'Autorité de protection des données belge (APD) : <a href="mailto:contact@apd-gba.be" class="text-primary text-decoration-none">contact@apd-gba.be</a>.</li>
-        </ul>
-    </section>
+        <!-- 2. Hébergement -->
+        <div class="legal-card">
+            <h2><span class="num">2</span>Hébergement</h2>
+            <div class="service-row">
+                <i class="bi bi-server svc-icon" aria-hidden="true"></i>
+                <div>
+                    <strong>GitHub Pages — GitHub, Inc.</strong>
+                    <p>88 Colin P Kelly Jr St, San Francisco, CA 94107, États-Unis<br>
+                    <a href="https://pages.github.com" target="_blank" rel="noopener noreferrer">pages.github.com</a> · Politique de confidentialité GitHub : <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">docs.github.com</a></p>
+                </div>
+            </div>
+            <p class="mb-0">GitHub peut collecter des données techniques de base (adresses IP, logs d'accès) dans le cadre de l'infrastructure d'hébergement, conformément à sa propre politique de confidentialité.</p>
+        </div>
 
-    <section class="mb-5 bg-white p-4 rounded-4 shadow-sm border animate-fade-in">
-        <h2 class="h4 fw-bold mb-3">4. Cookies et mesure d'audience</h2>
-        <p class="text-muted mb-0">Ce site utilise Google Analytics à des fins de mesure d'audience strictement statistique. Le suivi est configuré pour anonymiser les adresses IP et ne permet pas d'identifier ou de cibler individuellement un visiteur à des fins publicitaires. Aucun cookie publicitaire n'est déposé.</p>
-    </section>
+        <!-- 3. Propriété intellectuelle -->
+        <div class="legal-card">
+            <h2><span class="num">3</span>Propriété intellectuelle</h2>
+            <p>L'ensemble du contenu de ce site (textes, maquettes, captures d'écran du prototype DAFA, visuels, code source) est la propriété exclusive d'Essam Libert, sauf mention contraire explicite.</p>
+            <p>Toute reproduction, distribution, modification ou utilisation à des fins commerciales sans autorisation écrite préalable est strictement interdite, sous réserve des exceptions légales prévues par le droit belge en matière de droit d'auteur (Loi du 30 juin 1994 relative au droit d'auteur).</p>
+            <p class="mb-0">Les bibliothèques open-source utilisées (Bootstrap, Three.js) sont soumises à leurs licences respectives (MIT). Le prototype DAFA visible dans le case study est un projet personnel non commercialisé.</p>
+        </div>
 
-    <div class="text-center mt-5 mb-4">
-        <a href="index.html" class="btn btn-outline-dark btn-apple rounded-pill px-5 py-3 fw-bold shadow-sm">
-            <i class="bi bi-arrow-left me-2" aria-hidden="true"></i>Retour à l'accueil
-        </a>
+        <!-- 4. Services tiers -->
+        <div class="legal-card">
+            <h2><span class="num">4</span>Services tiers intégrés</h2>
+            <p>Ce site fait appel aux services externes suivants. Chacun peut collecter des données selon sa propre politique :</p>
+
+            <div class="service-row">
+                <i class="bi bi-bar-chart-fill svc-icon" aria-hidden="true"></i>
+                <div>
+                    <strong>Google Analytics 4 (GA4) — Google LLC</strong>
+                    <p>Mesure d'audience anonymisée. Les adresses IP sont tronquées avant tout traitement (<code>anonymize_ip: true</code>). Aucune donnée personnelle identifiable n'est transmise à des fins publicitaires. Politique : <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">policies.google.com/privacy</a></p>
+                </div>
+            </div>
+
+            <div class="service-row">
+                <i class="bi bi-envelope-fill svc-icon" aria-hidden="true"></i>
+                <div>
+                    <strong>Formspree — Formspree, Inc.</strong>
+                    <p>Traitement des soumissions du formulaire de contact. Les données du formulaire (prénom, nom, e-mail, téléphone, message) sont transmises à Formspree pour acheminement vers l'adresse e-mail du propriétaire du site. Politique : <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer">formspree.io/legal/privacy-policy</a></p>
+                </div>
+            </div>
+
+            <div class="service-row">
+                <i class="bi bi-shield-check-fill svc-icon" aria-hidden="true"></i>
+                <div>
+                    <strong>Cloudflare Turnstile — Cloudflare, Inc.</strong>
+                    <p>Système anti-spam invisible sur le formulaire de contact. Turnstile analyse des signaux comportementaux (mouvements de souris, interactions clavier) pour distinguer un humain d'un robot, sans stocker de données personnelles identifiables. Aucun cookie publicitaire n'est déposé par ce service. Politique : <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">cloudflare.com/privacypolicy</a></p>
+                </div>
+            </div>
+
+            <div class="service-row">
+                <i class="bi bi-diagram-3-fill svc-icon" aria-hidden="true"></i>
+                <div>
+                    <strong>jsDelivr CDN — ProspectOne Sp. z o.o.</strong>
+                    <p>Chargement des bibliothèques Bootstrap, Bootstrap Icons et Three.js via un réseau de distribution. jsDelivr peut collecter des logs d'accès anonymes. Politique : <a href="https://www.jsdelivr.com/terms/privacy-policy-jsdelivr-net" target="_blank" rel="noopener noreferrer">jsdelivr.com/terms/privacy-policy</a></p>
+                </div>
+            </div>
+
+            <div class="service-row">
+                <i class="bi bi-fonts svc-icon" aria-hidden="true"></i>
+                <div>
+                    <strong>Google Fonts — Google LLC</strong>
+                    <p>Police Inter chargée depuis les serveurs de Google. Google peut recevoir l'adresse IP du visiteur lors de la requête de chargement de la police. Politique : <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">policies.google.com/privacy</a></p>
+                </div>
+            </div>
+
+            <div class="service-row">
+                <i class="bi bi-grid-fill svc-icon" aria-hidden="true"></i>
+                <div>
+                    <strong>Figma — Figma, Inc.</strong>
+                    <p>Le prototype interactif DAFA est hébergé sur la plateforme Figma. Un lien externe est fourni ; en y accédant, vous êtes soumis aux conditions de Figma. Politique : <a href="https://www.figma.com/privacy" target="_blank" rel="noopener noreferrer">figma.com/privacy</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Données personnelles collectées -->
+        <div class="legal-card">
+            <h2><span class="num">5</span>Données personnelles collectées</h2>
+            <p>Les seules données personnelles collectées activement sur ce site proviennent du <strong>formulaire de contact</strong> :</p>
+            <ul>
+                <li><strong>Prénom et nom</strong> — pour personnaliser la réponse</li>
+                <li><strong>Adresse e-mail</strong> — pour répondre à votre message</li>
+                <li><strong>Numéro de téléphone</strong> — facultatif, uniquement si fourni</li>
+                <li><strong>Motif de contact et message</strong> — pour traiter votre demande</li>
+            </ul>
+            <p><strong>Base légale (RGPD art. 6) :</strong> consentement explicite de l'utilisateur lors de l'envoi du formulaire.</p>
+            <p><strong>Finalité :</strong> répondre aux sollicitations professionnelles, aux propositions de collaboration ou d'alternance, et aux demandes d'information relatives au projet DAFA.</p>
+            <p class="mb-0"><strong>Durée de conservation :</strong> les données sont conservées au maximum <strong>2 ans</strong> à compter du dernier échange. Aucune donnée n'est revendue à des tiers ni utilisée à des fins publicitaires.</p>
+        </div>
+
+        <!-- 6. Cookies -->
+        <div class="legal-card">
+            <h2><span class="num">6</span>Cookies et traceurs</h2>
+            <p>Ce site dépose un nombre minimal de cookies techniques et analytiques :</p>
+            <div class="table-responsive mb-3">
+                <table class="table table-sm" style="font-size:.87rem;color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.08);">
+                    <thead style="color:rgba(255,255,255,.85);">
+                        <tr>
+                            <th scope="col">Nom / Service</th>
+                            <th scope="col">Finalité</th>
+                            <th scope="col">Durée</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>_ga</code>, <code>_ga_*</code> (Google Analytics)</td>
+                            <td>Mesure d'audience anonymisée (pages vues, durée de session)</td>
+                            <td>13 mois</td>
+                        </tr>
+                        <tr>
+                            <td>Cloudflare Turnstile</td>
+                            <td>Détection anti-robot sur le formulaire de contact</td>
+                            <td>Session</td>
+                        </tr>
+                        <tr>
+                            <td>Aucun cookie publicitaire</td>
+                            <td colspan="2">Ce site ne dépose aucun cookie de ciblage ou de reciblage publicitaire.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mb-0">Vous pouvez refuser ou supprimer les cookies Google Analytics via l'extension officielle : <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">tools.google.com/dlpage/gaoptout</a>. La suppression des cookies de session peut affecter le fonctionnement du formulaire de contact.</p>
+        </div>
+
+        <!-- 7. Vos droits RGPD -->
+        <div class="legal-card">
+            <h2><span class="num">7</span>Vos droits (RGPD)</h2>
+            <p>Conformément au Règlement (UE) 2016/679 et à la loi belge du 30 juillet 2018 relative à la protection des personnes physiques à l'égard des traitements de données à caractère personnel, vous disposez des droits suivants :</p>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <span class="right-badge"><i class="bi bi-eye me-1" aria-hidden="true"></i>Accès (art. 15)</span>
+                <span class="right-badge"><i class="bi bi-pencil me-1" aria-hidden="true"></i>Rectification (art. 16)</span>
+                <span class="right-badge"><i class="bi bi-trash me-1" aria-hidden="true"></i>Effacement (art. 17)</span>
+                <span class="right-badge"><i class="bi bi-pause-circle me-1" aria-hidden="true"></i>Limitation (art. 18)</span>
+                <span class="right-badge"><i class="bi bi-x-circle me-1" aria-hidden="true"></i>Opposition (art. 21)</span>
+                <span class="right-badge"><i class="bi bi-download me-1" aria-hidden="true"></i>Portabilité (art. 20)</span>
+            </div>
+            <p>Pour exercer l'un de ces droits, contactez : <a href="mailto:info@essamlibert.com">info@essamlibert.com</a>. Une réponse sera apportée dans un délai maximum de <strong>30 jours</strong>.</p>
+            <p class="mb-0">En cas de réclamation non résolue, vous pouvez saisir l'<strong>Autorité de Protection des Données (APD)</strong> belge :<br>
+            Rue de la Presse 35, 1000 Bruxelles · <a href="mailto:contact@apd-gba.be">contact@apd-gba.be</a> · <a href="https://www.autoriteprotectiondonnees.be" target="_blank" rel="noopener noreferrer">autoriteprotectiondonnees.be</a></p>
+        </div>
+
+        <!-- 8. Liens hypertextes -->
+        <div class="legal-card">
+            <h2><span class="num">8</span>Liens hypertextes</h2>
+            <p>Ce site contient des liens vers des sites tiers (LinkedIn, Figma, GitHub). Ces liens sont fournis à titre informatif uniquement. Essam Libert ne contrôle pas le contenu de ces sites externes et décline toute responsabilité quant à leur contenu, leur disponibilité ou leur politique de confidentialité.</p>
+            <p class="mb-0">Tout lien entrant vers ce site est autorisé, à condition de ne pas déformer ou détourner son contenu.</p>
+        </div>
+
+        <!-- 9. Responsabilité -->
+        <div class="legal-card">
+            <h2><span class="num">9</span>Limitation de responsabilité</h2>
+            <p>Ce site est un portfolio personnel fourni en l'état. Les informations présentées sont susceptibles d'évoluer sans préavis. Essam Libert ne saurait être tenu responsable des dommages directs ou indirects résultant de l'utilisation du site ou de son inaccessibilité temporaire.</p>
+            <p class="mb-0">Le prototype DAFA présenté est un projet conceptuel non commercialisé. Les données, personas et exemples utilisés dans le case study sont fictifs ou anonymisés.</p>
+        </div>
+
+        <!-- 10. Droit applicable -->
+        <div class="legal-card">
+            <h2><span class="num">10</span>Droit applicable et juridiction</h2>
+            <p class="mb-0">Les présentes mentions légales sont régies par le droit belge. Tout litige relatif à leur interprétation relève de la compétence des tribunaux de l'arrondissement judiciaire de <strong>Liège (Belgique)</strong>, sauf disposition légale impérative contraire.</p>
+        </div>
+
+        <!-- Retour -->
+        <div class="text-center mt-5 mb-3">
+            <a href="index.html" class="btn btn-outline-light rounded-pill px-5 py-3 fw-bold">
+                <i class="bi bi-arrow-left me-2" aria-hidden="true"></i>Retour à l'accueil
+            </a>
+        </div>
+
     </div>
+</section>
+
 </main>
 
-<footer class="bg-dark text-white py-5 border-top border-secondary border-opacity-25 mt-auto">
-    <div class="container text-center">
-        <p class="fw-bold mb-2">ESSAM LIBERT | UX DESIGNER</p>
-        <p class="small text-white-75 mb-0">
-            &copy; 2026 DAFA Project. |
-            <a href="legal.html" class="text-white-75 text-decoration-none border-bottom border-secondary p-2 d-inline-block">Mentions Légales & RGPD</a>
-        </p>
+<footer class="py-5 border-top mt-auto" style="background:#05050a;border-color:rgba(255,255,255,.1)!important;">
+    <div class="container">
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <p class="fw-bold mb-1">ESSAM LIBERT</p>
+                <p class="small text-white-50 mb-3">UX Designer · Liège, Belgique</p>
+                <a href="mailto:info@essamlibert.com" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2">
+                    <i class="bi bi-envelope" aria-hidden="true"></i>info@essamlibert.com
+                </a>
+            </div>
+            <div class="col-md-4">
+                <p class="small fw-bold text-uppercase tracking-widest text-white-50 mb-3">Navigation</p>
+                <div class="d-flex flex-column gap-2">
+                    <a href="index.html" class="small text-white-50 text-decoration-none">Accueil</a>
+                    <a href="case-study.html" class="small text-white-50 text-decoration-none">Case Study</a>
+                    <a href="manifeste.html" class="small text-white-50 text-decoration-none">Manifeste</a>
+                    <a href="contact.html" class="small text-white-50 text-decoration-none">Contact</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <p class="small fw-bold text-uppercase tracking-widest text-white-50 mb-3">Retrouvez-moi</p>
+                <a href="https://www.linkedin.com/in/essam-libert-b0673a38b" target="_blank" rel="noopener noreferrer" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-linkedin" aria-hidden="true"></i>LinkedIn
+                </a>
+                <a href="https://www.figma.com/proto/SWCbHvDAKlID6yNduDaMsR/DAFA_App_Master_V3_Essam?node-id=145-176&scaling=scale-down&hide-ui=1" target="_blank" rel="noopener noreferrer" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2">
+                    <i class="bi bi-play-circle" aria-hidden="true"></i>Prototype DAFA
+                </a>
+            </div>
+        </div>
+        <div class="border-top pt-3 d-flex flex-wrap justify-content-between align-items-center gap-2" style="border-color:rgba(255,255,255,.1)!important;">
+            <p class="small text-white-50 mb-0">&copy; 2026 Essam Libert.</p>
+            <a href="legal.html" class="small text-white-50 text-decoration-none">Mentions Légales &amp; RGPD</a>
+        </div>
     </div>
 </footer>
 
