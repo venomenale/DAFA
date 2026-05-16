@@ -57,6 +57,7 @@
     .reveal.visible{opacity:1;transform:none;}
     footer .text-white-50{color:rgba(255,255,255,.72)!important;}
     footer a.text-white-50:hover{color:#fff!important;}
+    @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
     blockquote.border-start{color:rgba(255,255,255,.8);}
     </style>
 </head>
@@ -746,6 +747,68 @@
     </div>
 </section>
 
+<!-- LISTE D'ATTENTE -->
+<section class="py-5" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#08080e 0%,#070709 100%);">
+    <div aria-hidden="true" style="position:absolute;width:800px;height:700px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,242,255,.06) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;"></div>
+    <div class="container py-4 reveal" style="position:relative;z-index:1;">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-6 text-center">
+
+                <div class="d-inline-flex align-items-center gap-2 mb-4 px-3 py-2 rounded-pill" style="background:rgba(0,242,255,.08);border:1px solid rgba(0,242,255,.2);">
+                    <span style="width:8px;height:8px;border-radius:50%;background:#00f2ff;display:inline-block;animation:pulse-dot 2s ease-in-out infinite;"></span>
+                    <span class="small fw-semibold" style="color:#00f2ff;letter-spacing:.05em;">Accès anticipé · Bêta en préparation</span>
+                </div>
+
+                <h2 class="display-5 fw-bold mb-3" style="letter-spacing:-.02em;">
+                    DAFA arrive.<br>
+                    <span class="text-gradient">Soyez les premiers à l'essayer.</span>
+                </h2>
+                <p class="fs-5 mb-5 mx-auto" style="color:rgba(255,255,255,.55);max-width:480px;">
+                    Vous voulez savoir quand DAFA est disponible ? Laissez votre e-mail. On vous prévient, c'est tout.
+                </p>
+
+                <!-- Formulaire -->
+                <form id="waitlist-form" novalidate>
+                    <input type="hidden" name="_subject" value="[DAFA] Accès anticipé — nouvelle inscription">
+                    <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center mb-3" style="max-width:500px;margin:0 auto;">
+                        <input type="email" name="email" required
+                               class="form-control form-control-lg rounded-pill"
+                               placeholder="votre@email.com"
+                               style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);color:#fff;flex:1;"
+                               aria-label="Votre adresse e-mail">
+                        <button type="submit" id="waitlist-btn" class="btn btn-primary fw-bold rounded-pill px-4 flex-shrink-0" style="white-space:nowrap;">
+                            Je veux être prévenu&nbsp;<i class="bi bi-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="form-check d-inline-flex align-items-center gap-2 mb-3" style="text-align:left;">
+                        <input class="form-check-input flex-shrink-0" type="checkbox" id="waitlist-consent" name="consentement" value="oui" required style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);">
+                        <label class="form-check-label small" for="waitlist-consent" style="color:rgba(255,255,255,.45);">
+                            J'accepte de recevoir uniquement les mises à jour sur DAFA. Pas de spam, désabonnement en un clic.
+                        </label>
+                    </div>
+                    <p id="waitlist-error" class="small mb-0" style="color:rgba(255,59,48,.8);display:none;">Veuillez renseigner votre e-mail et cocher le consentement.</p>
+                </form>
+
+                <!-- État succès -->
+                <div id="waitlist-success" style="display:none;">
+                    <div class="d-inline-flex align-items-center gap-3 py-4 px-5 rounded-4" style="background:rgba(52,199,89,.07);border:1px solid rgba(52,199,89,.22);">
+                        <i class="bi bi-check-circle-fill text-success fs-2 flex-shrink-0" aria-hidden="true"></i>
+                        <div class="text-start">
+                            <strong class="d-block mb-1">Vous êtes sur la liste.</strong>
+                            <span class="small" style="color:rgba(255,255,255,.55);">On vous prévient dès que DAFA est disponible.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="small mt-4 mb-0" style="color:rgba(255,255,255,.28);">
+                    <i class="bi bi-lock-fill me-1" aria-hidden="true"></i>Données protégées · Jamais revendues · Conformité RGPD
+                </p>
+
+            </div>
+        </div>
+    </div>
+</section>
+
 </main>
 
 <footer class="py-5 border-top mt-auto" style="background:#05050a;border-color:rgba(255,255,255,.1)!important;">
@@ -1062,6 +1125,52 @@
     else renderer.render(scene,camera);
   }
   animate();
+})();
+</script>
+
+<script>
+/* Waitlist AJAX submit */
+(function(){
+    const form    = document.getElementById('waitlist-form');
+    const success = document.getElementById('waitlist-success');
+    const errMsg  = document.getElementById('waitlist-error');
+    const btn     = document.getElementById('waitlist-btn');
+    if(!form) return;
+
+    form.addEventListener('submit', async(e) => {
+        e.preventDefault();
+        errMsg.style.display = 'none';
+
+        const email   = form.querySelector('[name=email]');
+        const consent = form.querySelector('#waitlist-consent');
+        if(!email.value || !consent.checked){
+            errMsg.style.display = 'block';
+            return;
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Envoi…';
+
+        try {
+            const res = await fetch('https://formspree.io/f/xeerrkzy', {
+                method:'POST',
+                body: new FormData(form),
+                headers:{ 'Accept':'application/json' }
+            });
+            if(res.ok){
+                form.style.display = 'none';
+                success.style.display = 'block';
+                success.scrollIntoView({behavior:'smooth', block:'center'});
+            } else {
+                throw new Error('server');
+            }
+        } catch {
+            btn.disabled = false;
+            btn.innerHTML = 'Je veux être prévenu&nbsp;<i class="bi bi-arrow-right" aria-hidden="true"></i>';
+            errMsg.textContent = 'Une erreur est survenue. Réessayez ou écrivez à info@essamlibert.com';
+            errMsg.style.display = 'block';
+        }
+    });
 })();
 </script>
 
