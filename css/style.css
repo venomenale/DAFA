@@ -112,79 +112,51 @@ body.apple-theme {
 
 
 /* ============================================================
-   NAV — brand pill (left) · links pill (center) · toggle (right mobile)
+   NAV — floating text (no pill, no background)
    ============================================================ */
 
 .nav-brand-pill{
-    position:fixed;top:1.1rem;left:1.5rem;
+    position:fixed;top:1.5rem;left:2rem;
     z-index:1052;
-    background:rgba(8,8,14,.80);
-    backdrop-filter:blur(24px) saturate(160%);
-    -webkit-backdrop-filter:blur(24px) saturate(160%);
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:999px;
-    padding:.46rem 1.15rem;
-    font-size:.74rem;font-weight:700;letter-spacing:.13em;
-    color:rgba(255,255,255,.85);text-decoration:none;
+    background:none;border:none;border-radius:0;padding:0;box-shadow:none;
+    font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    color:rgba(255,255,255,.9);text-decoration:none;
     white-space:nowrap;
-    transition:color .2s,background .3s,border-color .3s,box-shadow .3s;
-    box-shadow:0 4px 20px rgba(0,0,0,.45);
+    transition:color .2s;
 }
 .nav-brand-pill:hover{color:#fff;}
-.nav-brand-pill.scrolled{
-    background:rgba(5,5,10,.94);
-    border-color:rgba(255,255,255,.15);
-    box-shadow:0 6px 30px rgba(0,0,0,.6);
-}
+.nav-brand-pill.scrolled{color:#fff;}
 
 .nav-island{
-    position:fixed;top:1.1rem;left:50%;transform:translateX(-50%);
+    position:fixed;top:1.5rem;left:50%;transform:translateX(-50%);
     z-index:1050;display:flex;align-items:center;
-    background:rgba(8,8,14,.80);
-    backdrop-filter:blur(24px) saturate(160%);
-    -webkit-backdrop-filter:blur(24px) saturate(160%);
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:999px;
-    padding:.42rem;
-    gap:.08rem;
-    box-shadow:0 4px 28px rgba(0,0,0,.5);
+    background:none;border:none;border-radius:0;padding:0;
+    gap:.1rem;
     white-space:nowrap;
-    transition:background .3s,border-color .3s,box-shadow .3s;
 }
-.nav-island.scrolled{
-    background:rgba(5,5,10,.94);
-    border-color:rgba(255,255,255,.15);
-    box-shadow:0 6px 36px rgba(0,0,0,.65);
-}
+.nav-island.scrolled{}
 .nav-island a{
-    font-size:.84rem;font-weight:500;
-    color:rgba(255,255,255,.55);text-decoration:none;
-    padding:.42rem .88rem;border-radius:999px;
-    transition:color .2s,background .2s;
+    font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+    color:rgba(255,255,255,.45);text-decoration:none;
+    padding:.3rem .8rem;
+    transition:color .2s;
 }
 .nav-island a:hover,.nav-island a.nav-active{
-    color:#fff;background:rgba(255,255,255,.1);
+    color:rgba(255,255,255,.95);
 }
 
 .nav-toggle{
-    position:fixed;top:1.1rem;right:1.5rem;
+    position:fixed;top:1.5rem;right:2rem;
     z-index:1052;
     display:none;align-items:center;justify-content:center;
     flex-direction:column;gap:5px;
-    width:38px;height:38px;
-    background:rgba(8,8,14,.80);
-    backdrop-filter:blur(24px) saturate(160%);
-    -webkit-backdrop-filter:blur(24px) saturate(160%);
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:999px;cursor:pointer;
-    transition:background .2s;
-    box-shadow:0 4px 20px rgba(0,0,0,.45);
+    width:32px;height:32px;
+    background:none;border:none;padding:0;cursor:pointer;
 }
-.nav-toggle:hover{background:rgba(255,255,255,.14);}
 .nav-toggle span{
-    display:block;width:15px;height:1.5px;
+    display:block;width:20px;height:1.5px;
     background:rgba(255,255,255,.85);border-radius:2px;
-    transition:transform .25s ease,opacity .2s,transform .25s;
+    transition:transform .25s ease,opacity .2s;
 }
 .nav-toggle.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
 .nav-toggle.open span:nth-child(2){opacity:0;}
