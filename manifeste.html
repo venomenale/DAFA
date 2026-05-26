@@ -24,9 +24,9 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"></noscript>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preload" href="css/bootstrap.min.css" as="style">
-    <link rel="preload" href="css/style.css?v=2" as="style">
+    <link rel="preload" href="css/style.css?v=3" as="style">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="stylesheet" href="css/style.css?v=3">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" media="print" onload="this.media='all'">
 
     <style>
@@ -160,17 +160,15 @@
 <div id="scroll-progress" aria-hidden="true"></div>
 
 <header>
+<a class="nav-brand-pill" id="nav-brand" href="index.html">ESSAM LIBERT</a>
 <nav class="nav-island" id="main-nav" aria-label="Navigation principale">
-    <a class="nav-brand" href="index.html">ESSAM LIBERT</a>
-    <div class="nav-links-row">
-        <a href="index.html">Accueil</a>
-        <a href="case-study.html">Case Study</a>
-        <a href="manifeste.html" class="nav-active" aria-current="page">Manifeste</a>
-    </div>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-    </button>
+    <a href="index.html">Accueil</a>
+    <a href="case-study.html">Case Study</a>
+    <a href="manifeste.html" class="nav-active" aria-current="page">Manifeste</a>
 </nav>
+<button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+</button>
 <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="Menu principal">
     <a href="index.html">Accueil</a>
     <a href="case-study.html">Case Study</a>
@@ -421,25 +419,30 @@
                 </div>
             </div>
             <div class="col-lg-5 offset-lg-1">
-                <div class="cta-card">
-                    <h3 class="fw-bold h5 mb-4">DAFA : vous évite de regretter votre achat.</h3>
-                    <ul class="list-unstyled d-flex flex-column gap-3 mb-4">
+                <div class="cta-card text-center">
+                    <div class="mb-4">
+                        <div style="width:64px;height:64px;border-radius:50%;background:rgba(0,242,255,.1);border:1px solid rgba(0,242,255,.2);display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+                            <i class="bi bi-envelope" style="font-size:1.6rem;color:#00f2ff;" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="fw-bold h5 mb-1">Un projet ? Une alternance ?</h3>
+                        <p class="text-muted small mb-0">Disponible immédiatement.</p>
+                    </div>
+                    <ul class="list-unstyled d-flex flex-column gap-3 mb-4 text-start">
                         <li class="d-flex align-items-start gap-2 small text-muted">
                             <i class="bi bi-check-circle-fill text-primary flex-shrink-0 mt-1" aria-hidden="true"></i>
-                            Vérifie si le produit marche avec ce que vous avez déjà
+                            UX · Product Design · Recherche utilisateur
                         </li>
                         <li class="d-flex align-items-start gap-2 small text-muted">
                             <i class="bi bi-check-circle-fill text-primary flex-shrink-0 mt-1" aria-hidden="true"></i>
-                            Révèle le vrai prix avant que vous payiez
+                            Reconversion complète, parcours atypique, regard neuf
                         </li>
                         <li class="d-flex align-items-start gap-2 small text-muted">
                             <i class="bi bi-check-circle-fill text-primary flex-shrink-0 mt-1" aria-hidden="true"></i>
-                            Traduit le jargon technique en réponse simple : oui ou non
+                            Liège · Bruxelles · Remote
                         </li>
                     </ul>
-                    <a href="case-study.html" class="btn btn-primary fw-bold rounded-pill px-4 py-2">
-                        Voir le case study
-                        <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i>
+                    <a href="mailto:info@essamlibert.com" class="btn btn-primary fw-bold rounded-pill px-4 py-2 w-100">
+                        <i class="bi bi-envelope-fill me-2" aria-hidden="true"></i>Me contacter
                     </a>
                 </div>
             </div>

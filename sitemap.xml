@@ -6,7 +6,7 @@
     <loc>https://essamlibert.com/</loc>
     <xhtml:link rel="alternate" hreflang="fr-BE" href="https://essamlibert.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://essamlibert.com/"/>
-    <lastmod>2026-04-14</lastmod>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,7 +15,7 @@
     <loc>https://essamlibert.com/case-study.html</loc>
     <xhtml:link rel="alternate" hreflang="fr-BE" href="https://essamlibert.com/case-study.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://essamlibert.com/case-study.html"/>
-    <lastmod>2026-04-14</lastmod>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -24,28 +24,9 @@
     <loc>https://essamlibert.com/manifeste.html</loc>
     <xhtml:link rel="alternate" hreflang="fr-BE" href="https://essamlibert.com/manifeste.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://essamlibert.com/manifeste.html"/>
-    <lastmod>2026-04-28</lastmod>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <url>
-    <loc>https://essamlibert.com/services.html</loc>
-    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://essamlibert.com/services.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://essamlibert.com/services.html"/>
-    <lastmod>2026-04-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://essamlibert.com/contact.html</loc>
-    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://essamlibert.com/contact.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://essamlibert.com/contact.html"/>
-    <lastmod>2026-04-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
 
 </urlset>

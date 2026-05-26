@@ -106,6 +106,7 @@
      6. Nav island — scroll opacity + mobile overlay toggle
   ---------------------------------------------------------- */
   const navIsland  = document.getElementById('main-nav');
+  const navBrand   = document.getElementById('nav-brand');
   const navToggle  = document.getElementById('nav-toggle');
   const navOverlay = document.getElementById('nav-overlay');
 
@@ -123,7 +124,9 @@
       document.body.style.overflow = '';
     };
     window.addEventListener('scroll', () => {
-      navIsland.classList.toggle('scrolled', window.scrollY > 40);
+      const scrolled = window.scrollY > 40;
+      navIsland.classList.toggle('scrolled', scrolled);
+      if (navBrand) navBrand.classList.toggle('scrolled', scrolled);
     }, { passive: true });
     navToggle.addEventListener('click', () =>
       navOverlay.classList.contains('open') ? closeMenu() : openMenu()
