@@ -86,11 +86,30 @@
 <body class="apple-theme bg-light-apple d-flex flex-column min-vh-100">
 <div id="scroll-progress" aria-hidden="true"></div>
 
+<header>
+<nav class="nav-island" id="main-nav" aria-label="Navigation principale">
+    <a class="nav-brand" href="index.html">ESSAM LIBERT</a>
+    <div class="nav-links-row">
+        <a href="index.html" class="nav-active" aria-current="page">Accueil</a>
+        <a href="case-study.html">Case Study</a>
+        <a href="manifeste.html">Manifeste</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="Menu principal">
+    <a href="index.html">Accueil</a>
+    <a href="case-study.html">Case Study</a>
+    <a href="manifeste.html">Manifeste</a>
+</div>
+</header>
+
 <main class="flex-grow-1">
 
     <!-- HERO -->
-    <section class="hero-section d-flex align-items-center pt-5 pb-5">
-        <div class="container pt-4 pb-4">
+    <section class="hero-section d-flex align-items-center pt-5 pb-5" style="padding-top:6rem!important;">
+        <div class="container pt-2 pb-4">
             <div class="row align-items-center g-5">
                 <div class="col-lg-7">
                     <h1 class="display-1 fw-bold tracking-tight mb-4 animate-fade-in anim-delay-2" style="line-height:1.05;">
@@ -152,7 +171,7 @@
             <h2 class="display-5 fw-bold tracking-tight mb-4">Et moi là-dedans&nbsp;?</h2>
             <p class="fs-4 text-muted mb-5 mx-auto" style="max-width:600px;">Un designer qui connaît ses propres angles morts.</p>
             <div class="d-flex flex-wrap gap-3 justify-content-center">
-                <a href="contact.html" class="btn btn-primary btn-apple rounded-pill px-4 py-2 fw-bold shadow">Me contacter</a>
+                <a href="mailto:info@essamlibert.com" class="btn btn-primary btn-apple rounded-pill px-4 py-2 fw-bold shadow">Me contacter</a>
                 <a href="https://www.linkedin.com/in/essam-libert-b0673a38b" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light rounded-pill px-4 py-2 fw-bold">
                     <i class="bi bi-linkedin me-2" aria-hidden="true"></i>LinkedIn
                 </a>
@@ -178,11 +197,13 @@
                     <a href="index.html" class="small text-white-50 text-decoration-none">Accueil</a>
                     <a href="case-study.html" class="small text-white-50 text-decoration-none">Case Study</a>
                     <a href="manifeste.html" class="small text-white-50 text-decoration-none">Manifeste</a>
-                    <a href="contact.html" class="small text-white-50 text-decoration-none">Contact</a>
                 </div>
             </div>
             <div class="col-md-4">
                 <p class="small fw-bold text-uppercase tracking-widest text-white-50 mb-3">Retrouvez-moi</p>
+                <a href="mailto:info@essamlibert.com" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-envelope" aria-hidden="true"></i>info@essamlibert.com
+                </a>
                 <a href="https://www.linkedin.com/in/essam-libert-b0673a38b" target="_blank" rel="noopener noreferrer" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2 mb-2">
                     <i class="bi bi-linkedin" aria-hidden="true"></i>LinkedIn
                 </a>

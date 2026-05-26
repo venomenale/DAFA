@@ -101,21 +101,22 @@
 <body class="apple-theme d-flex flex-column min-vh-100">
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-nav border-bottom border-secondary border-opacity-25" aria-label="Navigation principale">
-        <div class="container">
-            <a class="navbar-brand fw-bold tracking-tight" href="index.html">ESSAM LIBERT</a>
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Ouvrir le menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="case-study.html">Case Study</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<nav class="nav-island" id="main-nav" aria-label="Navigation principale">
+    <a class="nav-brand" href="index.html">ESSAM LIBERT</a>
+    <div class="nav-links-row">
+        <a href="index.html">Accueil</a>
+        <a href="case-study.html">Case Study</a>
+        <a href="manifeste.html">Manifeste</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="Menu principal">
+    <a href="index.html">Accueil</a>
+    <a href="case-study.html">Case Study</a>
+    <a href="manifeste.html">Manifeste</a>
+</div>
 </header>
 
 <main class="flex-grow-1">
@@ -190,15 +191,7 @@
                 <i class="bi bi-envelope-fill svc-icon" aria-hidden="true"></i>
                 <div>
                     <strong>Formspree — Formspree, Inc.</strong>
-                    <p>Traitement des soumissions du formulaire de contact. Les données du formulaire (prénom, nom, e-mail, téléphone, message) sont transmises à Formspree pour acheminement vers l'adresse e-mail du propriétaire du site. Politique : <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer">formspree.io/legal/privacy-policy</a></p>
-                </div>
-            </div>
-
-            <div class="service-row">
-                <i class="bi bi-shield-check-fill svc-icon" aria-hidden="true"></i>
-                <div>
-                    <strong>Cloudflare Turnstile — Cloudflare, Inc.</strong>
-                    <p>Système anti-spam invisible sur le formulaire de contact. Turnstile analyse des signaux comportementaux (mouvements de souris, interactions clavier) pour distinguer un humain d'un robot, sans stocker de données personnelles identifiables. Aucun cookie publicitaire n'est déposé par ce service. Politique : <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">cloudflare.com/privacypolicy</a></p>
+                    <p>Traitement des soumissions du formulaire de liste d'attente (case study). Les données saisies (e-mail) sont transmises à Formspree pour acheminement vers l'adresse e-mail du propriétaire du site. Politique : <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer">formspree.io/legal/privacy-policy</a></p>
                 </div>
             </div>
 
@@ -230,16 +223,13 @@
         <!-- 5. Données personnelles collectées -->
         <div class="legal-card">
             <h2><span class="num">5</span>Données personnelles collectées</h2>
-            <p>Les seules données personnelles collectées activement sur ce site proviennent du <strong>formulaire de contact</strong> :</p>
+            <p>Les seules données personnelles collectées activement sur ce site proviennent du <strong>formulaire de liste d'attente</strong> (page Case Study) :</p>
             <ul>
-                <li><strong>Prénom et nom</strong> — pour personnaliser la réponse</li>
-                <li><strong>Adresse e-mail</strong> — pour répondre à votre message</li>
-                <li><strong>Numéro de téléphone</strong> — facultatif, uniquement si fourni</li>
-                <li><strong>Motif de contact et message</strong> — pour traiter votre demande</li>
+                <li><strong>Adresse e-mail</strong> — pour vous notifier de l'ouverture de la liste d'attente DAFA</li>
             </ul>
             <p><strong>Base légale (RGPD art. 6) :</strong> consentement explicite de l'utilisateur lors de l'envoi du formulaire.</p>
-            <p><strong>Finalité :</strong> répondre aux sollicitations professionnelles, aux propositions de collaboration ou d'alternance, et aux demandes d'information relatives au projet DAFA.</p>
-            <p class="mb-0"><strong>Durée de conservation :</strong> les données sont conservées au maximum <strong>2 ans</strong> à compter du dernier échange. Aucune donnée n'est revendue à des tiers ni utilisée à des fins publicitaires.</p>
+            <p><strong>Finalité :</strong> informer les personnes intéressées du lancement ou de l'évolution du projet DAFA.</p>
+            <p class="mb-0"><strong>Durée de conservation :</strong> les données sont conservées au maximum <strong>2 ans</strong> à compter de l'inscription. Aucune donnée n'est revendue à des tiers ni utilisée à des fins publicitaires.</p>
         </div>
 
         <!-- 6. Cookies -->
@@ -262,18 +252,13 @@
                             <td>13 mois</td>
                         </tr>
                         <tr>
-                            <td>Cloudflare Turnstile</td>
-                            <td>Détection anti-robot sur le formulaire de contact</td>
-                            <td>Session</td>
-                        </tr>
-                        <tr>
                             <td>Aucun cookie publicitaire</td>
                             <td colspan="2">Ce site ne dépose aucun cookie de ciblage ou de reciblage publicitaire.</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p class="mb-0">Vous pouvez refuser ou supprimer les cookies Google Analytics via l'extension officielle : <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">tools.google.com/dlpage/gaoptout</a>. La suppression des cookies de session peut affecter le fonctionnement du formulaire de contact.</p>
+            <p class="mb-0">Vous pouvez refuser ou supprimer les cookies Google Analytics via l'extension officielle : <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">tools.google.com/dlpage/gaoptout</a>.</p>
         </div>
 
         <!-- 7. Vos droits RGPD -->
@@ -341,11 +326,13 @@
                     <a href="index.html" class="small text-white-50 text-decoration-none">Accueil</a>
                     <a href="case-study.html" class="small text-white-50 text-decoration-none">Case Study</a>
                     <a href="manifeste.html" class="small text-white-50 text-decoration-none">Manifeste</a>
-                    <a href="contact.html" class="small text-white-50 text-decoration-none">Contact</a>
                 </div>
             </div>
             <div class="col-md-4">
                 <p class="small fw-bold text-uppercase tracking-widest text-white-50 mb-3">Retrouvez-moi</p>
+                <a href="mailto:info@essamlibert.com" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-envelope" aria-hidden="true"></i>info@essamlibert.com
+                </a>
                 <a href="https://www.linkedin.com/in/essam-libert-b0673a38b" target="_blank" rel="noopener noreferrer" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2 mb-2">
                     <i class="bi bi-linkedin" aria-hidden="true"></i>LinkedIn
                 </a>

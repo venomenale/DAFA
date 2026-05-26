@@ -102,4 +102,34 @@
     });
   });
 
+  /* ----------------------------------------------------------
+     6. Nav island — scroll opacity + mobile overlay toggle
+  ---------------------------------------------------------- */
+  const navIsland  = document.getElementById('main-nav');
+  const navToggle  = document.getElementById('nav-toggle');
+  const navOverlay = document.getElementById('nav-overlay');
+
+  if (navIsland && navToggle && navOverlay) {
+    const openMenu = () => {
+      navOverlay.classList.add('open');
+      navToggle.classList.add('open');
+      navToggle.setAttribute('aria-expanded','true');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeMenu = () => {
+      navOverlay.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    };
+    window.addEventListener('scroll', () => {
+      navIsland.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+    navToggle.addEventListener('click', () =>
+      navOverlay.classList.contains('open') ? closeMenu() : openMenu()
+    );
+    navOverlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+  }
+
 })();
