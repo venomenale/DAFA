@@ -111,6 +111,22 @@ body.apple-theme {
 
 
 
+/* Skip link (accessibility) */
+.skip-link{
+    position:absolute;top:-60px;left:1rem;
+    background:#00f2ff;color:#070709;
+    padding:.45rem 1rem;border-radius:0 0 8px 8px;
+    font-size:.85rem;font-weight:700;text-decoration:none;
+    z-index:9999;transition:top .2s;
+}
+.skip-link:focus-visible{top:0;}
+
+/* Button focus (WCAG) */
+.btn:focus-visible{
+    outline:2px solid #00f2ff;
+    outline-offset:3px;
+}
+
 /* ============================================================
    NAV — floating text (no pill, no background)
    ============================================================ */
@@ -137,12 +153,17 @@ body.apple-theme {
 .nav-island.scrolled{}
 .nav-island a{
     font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
-    color:rgba(255,255,255,.45);text-decoration:none;
+    color:rgba(255,255,255,.62);text-decoration:none;
     padding:.3rem .8rem;
     transition:color .2s;
 }
 .nav-island a:hover,.nav-island a.nav-active{
-    color:rgba(255,255,255,.95);
+    color:#fff;
+}
+.nav-island a:focus-visible,.nav-brand-pill:focus-visible{
+    outline:2px solid rgba(0,242,255,.8);
+    outline-offset:4px;
+    border-radius:4px;
 }
 
 .nav-toggle{

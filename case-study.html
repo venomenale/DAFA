@@ -31,9 +31,9 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"></noscript>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preload" href="css/bootstrap.min.css" as="style">
-    <link rel="preload" href="css/style.css?v=4" as="style">
+    <link rel="preload" href="css/style.css?v=5" as="style">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css?v=4">
+    <link rel="stylesheet" href="css/style.css?v=5">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" media="print" onload="this.media='all'">
 
     <script type="importmap">
@@ -70,8 +70,9 @@
 <body class="apple-theme d-flex flex-column min-vh-100">
 <div id="scroll-progress" style="position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#00f2ff,#7b61ff);width:0%;z-index:9999;transition:width .1s linear;" aria-hidden="true"></div>
 
+<a href="#main-content" class="skip-link">Aller au contenu</a>
 <header>
-<a class="nav-brand-pill" id="nav-brand" href="index.html">ESSAM LIBERT</a>
+<a class="nav-brand-pill" id="nav-brand" href="index.html">EL</a>
 <nav class="nav-island" id="main-nav" aria-label="Navigation principale">
     <a href="index.html">Accueil</a>
     <a href="case-study.html" class="nav-active" aria-current="page">Case Study</a>
@@ -87,7 +88,7 @@
 </div>
 </header>
 
-<main class="flex-grow-1">
+<main id="main-content" class="flex-grow-1">
 
 <!-- PHASE 1 : DÉCOUVERTE -->
 <section class="pt-5 mt-5" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#07070e 0%,#0b0b14 100%);">
@@ -791,6 +792,7 @@
                         </label>
                     </div>
                     <p id="waitlist-error" class="small mb-0" style="color:rgba(255,59,48,.8);display:none;">Veuillez renseigner votre e-mail et cocher le consentement.</p>
+                    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none!important;">
                 </form>
 
                 <!-- État succès -->
