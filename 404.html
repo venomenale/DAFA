@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page introuvable · Essam Libert</title>
-    <meta name="description" content="Page introuvable. Retournez à l'accueil du portfolio d'Essam Libert, UX/UI Designer.">
+    <meta name="description" content="Page introuvable. Retournez à l'accueil du portfolio d'Essam Libert, UX Designer.">
     <meta name="robots" content="noindex">
 
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -16,93 +16,122 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"></noscript>
 
     <link rel="preload" href="css/bootstrap.min.css" as="style">
-    <link rel="preload" href="css/style.css" as="style">
+    <link rel="preload" href="css/style.css?v=2" as="style">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=2">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" media="print" onload="this.media='all'">
+
+    <style>
+    body.apple-theme{background-color:#070709!important;color:#e4e4e9!important;}
+    footer .text-white-50{color:rgba(255,255,255,.72)!important;}
+    footer a.text-white-50:hover{color:#fff!important;}
+
+    .error-glow{
+        font-size:clamp(6rem,22vw,14rem);
+        font-weight:800;
+        letter-spacing:-.04em;
+        line-height:1;
+        background:linear-gradient(135deg,#00f2ff 0%,#7b61ff 100%);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+        background-clip:text;
+        filter:drop-shadow(0 0 60px rgba(0,242,255,.18));
+    }
+    .error-card{
+        background:rgba(255,255,255,.04);
+        border:1px solid rgba(255,255,255,.08);
+        border-radius:28px;
+        padding:clamp(2rem,6vw,4rem);
+        max-width:600px;
+        margin:0 auto;
+    }
+    </style>
 </head>
 
-<body class="apple-theme d-flex flex-column min-vh-100 bg-light-apple">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-nav border-bottom border-secondary border-opacity-25" aria-label="Navigation principale">
-            <div class="container">
-                <a class="navbar-brand fw-bold tracking-tight" href="index.html">ESSAM LIBERT</a>
-                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="case-study.html">DAFA</a></li>
-                        <li class="nav-item"><a class="nav-link" href="manifeste.html">Manifeste</a></li>
-                        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+<body class="apple-theme d-flex flex-column min-vh-100">
 
-    <main class="flex-grow-1 d-flex align-items-center justify-content-center pt-5 mt-5">
-        <div class="container py-5 text-center animate-fade-in">
-            <div class="p-5 bg-dark text-white rounded-5 shadow-2xl mx-auto" style="max-width: 600px;">
-                <div class="display-1 fw-bold text-primary mb-2">404</div>
-                <h1 class="h2 fw-bold mb-3">Cette page n'existe pas.</h1>
-                <p class="fs-5 opacity-75 mb-5">
-                    Comme une fiche technique mal rédigée : l'information que vous cherchez n'est pas là où elle devrait être.
-                </p>
-                <div class="d-flex flex-wrap gap-3 justify-content-center">
-                    <a href="index.html" class="btn btn-primary fw-bold rounded-pill px-4 py-2">
-                        <i class="bi bi-house-fill me-2" aria-hidden="true"></i>Retour à l'accueil
-                    </a>
-                    <a href="case-study.html" class="btn btn-outline-light fw-bold rounded-pill px-4 py-2">
-                        DAFA
-                    </a>
-                    <a href="contact.html" class="btn btn-outline-light fw-bold rounded-pill px-4 py-2">
-                        Contact
-                    </a>
-                </div>
-            </div>
-        </div>
-    </main>
+<header>
+<nav class="nav-island" id="main-nav" aria-label="Navigation principale">
+    <a class="nav-brand" href="index.html">ESSAM LIBERT</a>
+    <div class="nav-links-row">
+        <a href="index.html">Accueil</a>
+        <a href="case-study.html">Case Study</a>
+        <a href="manifeste.html">Manifeste</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="Menu principal">
+    <a href="index.html">Accueil</a>
+    <a href="case-study.html">Case Study</a>
+    <a href="manifeste.html">Manifeste</a>
+</div>
+</header>
 
-    <footer class="bg-dark text-white py-5 border-top border-secondary border-opacity-25 mt-auto">
-        <div class="container">
-            <div class="row g-4 mb-4">
-                <div class="col-md-4">
-                    <p class="fw-bold mb-1">ESSAM LIBERT</p>
-                    <p class="small text-white-50 mb-3">UX Designer · Dispo immédiat · Liège</p>
-                    <a href="mailto:info@essamlibert.com" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2">
-                        <i class="bi bi-envelope" aria-hidden="true"></i>info@essamlibert.com
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <p class="small fw-bold text-uppercase tracking-widest text-white-50 mb-3">Navigation</p>
-                    <div class="d-flex flex-column gap-2">
-                        <a href="index.html" class="small text-white-50 text-decoration-none">Accueil</a>
-                        <a href="case-study.html" class="small text-white-50 text-decoration-none">DAFA</a>
-                        <a href="contact.html" class="small text-white-50 text-decoration-none">Contact</a>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <p class="small fw-bold text-uppercase tracking-widest text-white-50 mb-3">Retrouvez-moi</p>
-                    <a href="https://www.linkedin.com/in/essam-libert-b0673a38b" target="_blank" rel="noopener noreferrer" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2 mb-2">
-                        <i class="bi bi-linkedin" aria-hidden="true"></i>LinkedIn
-                    </a>
-                    <a href="https://www.figma.com/proto/SWCbHvDAKlID6yNduDaMsR/DAFA_App_Master_V3_Essam?node-id=145-176&scaling=scale-down&hide-ui=1" target="_blank" rel="noopener noreferrer" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2">
-                        <i class="bi bi-play-circle" aria-hidden="true"></i>Prototype DAFA
-                    </a>
-                </div>
-            </div>
-            <div class="border-top border-secondary border-opacity-25 pt-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
-                <p class="small text-white-50 mb-0">&copy; 2026 DAFA Project.</p>
-                <a href="legal.html" class="small text-white-50 text-decoration-none">Mentions Légales & RGPD</a>
+<main class="flex-grow-1 d-flex align-items-center justify-content-center py-5" style="padding-top:6rem!important;">
+    <div class="container text-center">
+        <div class="error-card">
+            <p class="error-glow mb-0">404</p>
+            <h1 class="h2 fw-bold mb-3 mt-2">Cette page n'existe pas.</h1>
+            <p class="mb-5" style="color:rgba(255,255,255,.55);font-size:1.05rem;">
+                Comme une fiche technique mal rédigée&nbsp;: l'information que vous cherchez n'est pas là où elle devrait être.
+            </p>
+            <div class="d-flex flex-wrap gap-3 justify-content-center">
+                <a href="index.html" class="btn btn-primary fw-bold rounded-pill px-4 py-2">
+                    <i class="bi bi-house-fill me-2" aria-hidden="true"></i>Retour à l'accueil
+                </a>
+                <a href="case-study.html" class="btn btn-outline-light fw-bold rounded-pill px-4 py-2">
+                    Case Study
+                </a>
+                <a href="mailto:info@essamlibert.com" class="btn btn-outline-light fw-bold rounded-pill px-4 py-2">
+                    <i class="bi bi-envelope me-2" aria-hidden="true"></i>Me contacter
+                </a>
             </div>
         </div>
-    </footer>
+    </div>
+</main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+<footer class="py-5 mt-auto" style="background:#05050a;border-top:1px solid rgba(255,255,255,.1);">
+    <div class="container">
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <p class="fw-bold mb-1">ESSAM LIBERT</p>
+                <p class="small text-white-50 mb-3">UX Designer · Dispo immédiat · Liège</p>
+                <a href="mailto:info@essamlibert.com" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2">
+                    <i class="bi bi-envelope" aria-hidden="true"></i>info@essamlibert.com
+                </a>
+            </div>
+            <div class="col-md-4">
+                <p class="small fw-bold text-uppercase tracking-widest text-white-50 mb-3">Navigation</p>
+                <div class="d-flex flex-column gap-2">
+                    <a href="index.html" class="small text-white-50 text-decoration-none">Accueil</a>
+                    <a href="case-study.html" class="small text-white-50 text-decoration-none">Case Study</a>
+                    <a href="manifeste.html" class="small text-white-50 text-decoration-none">Manifeste</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <p class="small fw-bold text-uppercase tracking-widests text-white-50 mb-3">Retrouvez-moi</p>
+                <a href="mailto:info@essamlibert.com" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-envelope" aria-hidden="true"></i>info@essamlibert.com
+                </a>
+                <a href="https://www.linkedin.com/in/essam-libert-b0673a38b" target="_blank" rel="noopener noreferrer" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-linkedin" aria-hidden="true"></i>LinkedIn
+                </a>
+                <a href="https://www.figma.com/proto/SWCbHvDAKlID6yNduDaMsR/DAFA_App_Master_V3_Essam?node-id=145-176&scaling=scale-down&hide-ui=1" target="_blank" rel="noopener noreferrer" class="small text-white-50 text-decoration-none d-flex align-items-center gap-2">
+                    <i class="bi bi-play-circle" aria-hidden="true"></i>Prototype DAFA
+                </a>
+            </div>
+        </div>
+        <div class="pt-3 d-flex flex-wrap justify-content-between align-items-center gap-2" style="border-top:1px solid rgba(255,255,255,.1);">
+            <p class="small text-white-50 mb-0">&copy; 2026 Essam Libert.</p>
+            <a href="legal.html" class="small text-white-50 text-decoration-none">Mentions Légales &amp; RGPD</a>
+        </div>
+    </div>
+</footer>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+<script src="js/animations.js" defer></script>
 
 </body>
 </html>
