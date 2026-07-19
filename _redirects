@@ -1,0 +1,15 @@
+# Redirections permanentes (301)
+# Anciennes URL distribuées (cartes de visite) et pages supprimées → accueil.
+# Le 301 indique clairement à Google que ces pages ont été déplacées, ce qui
+# les consolide vers "/" au lieu de les laisser en "bloquée / page fantôme".
+
+# Doublon d'URL de la page d'accueil
+/index.html      /   301
+
+# Anciennes pages supprimées
+/services.html   /   301
+/services        /   301
+/about.html      /   301
+/about           /   301
+/contact.html    /   301
+/contact         /   301

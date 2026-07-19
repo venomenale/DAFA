@@ -1,9 +1,9 @@
 User-agent: *
 Allow: /
-Disallow: /contact.html
-Disallow: /services.html
-Disallow: /about.html
-Disallow: /signature.html
+# Note : les anciennes pages (services/about/contact) ne sont plus bloquées ici
+# afin que Google puisse voir leur redirection 301 (voir _redirects) et les
+# consolider proprement vers l'accueil. signature.html est exclue via une balise
+# meta noindex dans la page elle-même.
 
 # Scrapers agressifs
 User-agent: AhrefsBot
