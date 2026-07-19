@@ -1,9 +1,9 @@
 User-agent: *
 Allow: /
-# Note : les anciennes pages (services/about/contact) ne sont plus bloquées ici
-# afin que Google puisse voir leur redirection 301 (voir _redirects) et les
-# consolider proprement vers l'accueil. signature.html est exclue via une balise
-# meta noindex dans la page elle-même.
+# Les anciennes pages (services/about/contact) ont été supprimées : elles
+# renvoient désormais un 404. On ne les bloque plus ici, pour que Googlebot
+# puisse les recrawler, constater le 404 et les retirer de l'index.
+# signature.html est exclue via une balise meta noindex dans la page elle-même.
 
 # Scrapers agressifs
 User-agent: AhrefsBot
