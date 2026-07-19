@@ -1,9 +1,8 @@
 User-agent: *
 Allow: /
-Disallow: /contact.html
-Disallow: /services.html
-Disallow: /about.html
-Disallow: /signature.html
+# Les anciennes pages (services/about/contact) ont été supprimées : elles
+# renvoient désormais un 404. On ne les bloque plus ici, pour que Googlebot
+# puisse les recrawler, constater le 404 et les retirer de l'index.
 
 # Scrapers agressifs
 User-agent: AhrefsBot
